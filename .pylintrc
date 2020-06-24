@@ -1,0 +1,17 @@
+[SIMILARITIES]
+
+# Minimum lines number of a similarity.
+min-similarity-lines=20
+
+# Ignore comments when computing similarities.
+ignore-comments=yes
+
+# Ignore docstrings when computing similarities.
+ignore-docstrings=yes
+
+# Ignore imports when computing similarities.
+ignore-imports=no
+
+
+[MASTER]
+init-hook="from pylint.config import find_pylintrc; import os, sys; sys.path.append(os.path.dirname(find_pylintrc())); sys.path.append('./src')"
