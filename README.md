@@ -1,4 +1,7 @@
-# Mobagel Decanter AI Core SDK
+[![PyPI version](https://badge.fury.io/py/decanter-ai-core-sdk.svg)](https://pypi.org/project/decanter-ai-core-sdk/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/MoBagel/decanter-ai-core-sdk)
+
+# MoBagel Decanter AI Core SDK
 
 Decanter AI Core SDK allows you to call Decanter's API with more easy-to-use
 functions in Python.
@@ -14,8 +17,6 @@ pip install decanter-ai-core-sdk
 ```
 
 ## Simple Example
-
-### Python script:
 ```python
 from decanter import core
 
@@ -40,9 +41,6 @@ $ python -m path_to_file.file
 Progress UploadTask_train:  55%|█████████████████████████████████████████
 ```
 
-### Jupyter:
-![JupyterNotebook](./docs/source/images/jupyter.png)
-
 ## Contributing
 For guidance on setting up a development environment and how to make a
 contribution to Decanter AI Core SDK, see the contributing guidelines.
@@ -50,6 +48,6 @@ contribution to Decanter AI Core SDK, see the contributing guidelines.
 
 ## Links
 For details on design, guidance on setting up a development environment and
-how to make a contribution to Mobagel Decanter Core SDK.
+how to make a contribution to MoBagel Decanter Core SDK.
 
 * Code: https://github.com/MoBagel/decanter-ai-core-sdk

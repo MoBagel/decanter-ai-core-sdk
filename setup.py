@@ -2,6 +2,7 @@ import setuptools
 
 with open('README.md', 'r') as fh:
     long_description = fh.read()
+print(long_description)
 
 requires = [
     'requests',
@@ -22,9 +23,10 @@ dev_requirements = [
 
 setuptools.setup(
     name='decanter-ai-core-sdk',
-    version='0.1.3',
-    author='',
-    author_email='',
+    author='Mobagel',
+    author_email='us@mobagel.com',
+    version='1.0.0',
+    license='MIT',
     description='Decanter AI Core SDK for the easy use of Decanter Core API.',
     long_description=long_description,
     long_description_content_type='text/markdown',
