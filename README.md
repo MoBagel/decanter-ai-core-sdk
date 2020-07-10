@@ -37,7 +37,7 @@ train_data.show()
 ```bash
 $ python -m path_to_file.file
 15:50:09 [    INFO] [Context] no event loop to close
-15:50:09 [    INFO] [Context] connect healty :)
+15:50:09 [    INFO] [Context] connect healthy :)
 Progress UploadTask_train:  55%|█████████████████████████████████████████
 ```
 

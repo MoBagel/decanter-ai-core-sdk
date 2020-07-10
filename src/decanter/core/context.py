@@ -142,7 +142,7 @@ class Context:
             logger.error('[Context] connect not healthy :(')
             raise SystemExit(err)
         else:
-            logger.info('[Context] connect healty :)')
+            logger.info('[Context] connect healthy :)')
 
     @staticmethod
     def get_all_jobs():
