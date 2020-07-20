@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributing Guide &#8212; decanter-ai-core-sdk 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="contributing-guide">
+<span id="contributing"></span><h1>Contributing Guide<a class="headerlink" href="#contributing-guide" title="Permalink to this headline">¶</a></h1>
+<p>Here’s the simple guide on how to develop or contribute to
+decanter-ai-core-sdk.</p>
+<div class="section" id="reporting-issues">
+<h2>Reporting issues<a class="headerlink" href="#reporting-issues" title="Permalink to this headline">¶</a></h2>
+<p>A great way to contribute to the project is to send a detailed report when you
+encounter an issue. We always appreciate a well-written issue report, and will
+thank you for it!</p>
+<p>Check that our <a class="reference external" href="https://github.com/MoBagel/decanter-ai-core-sdk/issues">GitHub issues</a>. doesn’t already include that problem or
+suggestion before submitting an issue. If you find a match, you can use the
+“subscribe” button to get notified on updates. Do not leave random “+1” or “I
+have this too” comments, as they only clutter the discussion, and don’t help
+resolving it. However, if you have ways to reproduce the issue or have
+additional information that may help resolving the issue, please leave
+a comment.</p>
+<div class="section" id="bug-reports">
+<h3>Bug Reports<a class="headerlink" href="#bug-reports" title="Permalink to this headline">¶</a></h3>
+<p>Bug reports are hugely important! Before you raise one, please make sure
+have followed the steps bellow:</p>
+<ul class="simple">
+<li><p>Confirm that the bug hasn’t been reported before. Duplicate bug reports
+are a huge drain on the time of other contributors, and should be avoided
+as much as possible.</p></li>
+<li><p>Please follow the issue template of Bug report, and give detailed and
+clear desciption.</p></li>
+</ul>
+</div>
+<div class="section" id="feature-requests">
+<h3>Feature Requests<a class="headerlink" href="#feature-requests" title="Permalink to this headline">¶</a></h3>
+<p>If you believe there is a feature missing, feel free to raise a feature
+request. Make sure there’s no duplicate feature raised before, and follow
+the issue template of Feature requests.</p>
+</div>
+</div>
+<div class="section" id="code-contributions">
+<h2>Code Contributions<a class="headerlink" href="#code-contributions" title="Permalink to this headline">¶</a></h2>
+<p>When contributing code, you’ll want to follow this checklist:</p>
+<ol class="arabic simple">
+<li><p>Fork the repository and make changes on your fork in a feature branch:</p>
+<ul class="simple">
+<li><p>If it’s a bug fix branch, name it XXXX-something where XXXX is the
+number of the issue.</p></li>
+<li><p>If it’s a feature branch, create an enhancement issue to announce
+your intentions, and name it XXXX-something where XXXX is the number
+of the issue.</p></li>
+</ul>
+</li>
+<li><p>Run the tests <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code> to confirm they all pass on your system. If
+they don’t, you’ll need to investigate why they fail. If you’re unable
+to diagnose this yourself, raise it as a bug report by following the
+guidelines in this document: Bug Reports.</p></li>
+<li><p>Write tests that demonstrate your bug or feature. Ensure that they fail.</p></li>
+<li><p>Write clean code to make your change. Always run <code class="docutils literal notranslate"><span class="pre">pylint</span> <span class="pre">file.py</span></code> on
+each changed file before committing your changes. <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">lint</span></code> for all
+files.</p></li>
+<li><p>Run the entire test suite again, confirming that all tests pass including
+the ones you just added.</p></li>
+<li><p>Send a GitHub Pull Request to the main repository’s master branch. Pull
+request descriptions should be as clear as possible and include a
+reference to all the issues that they address.</p></li>
+</ol>
+<div class="section" id="conventions">
+<h3>Conventions<a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Before anybody starts working on bug fix or feature, any significant
+improvement should be documented as a GitHub issue.</p></li>
+<li><p><strong>Commit messages</strong>: Short summary (max. 50 chars) written in the
+imperative, followed by an optional, more detailed explanatory text
+which is separated from the summary by an empty line.</p></li>
+<li><p><strong>Pull requests</strong>:</p>
+<ul>
+<li><p>Code review comments may be added to your pull request. Discuss,
+then make the suggested modifications and push additional commits
+to your feature branch.</p></li>
+<li><p>Must be cleanly rebased on top of master without multiple branches
+mixed into the PR.</p></li>
+<li><p>Before you make a pull request, squash your commits into logical units
+of work using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">-i</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">-f</span></code></p></li>
+<li><p>Include an issue reference like Closes #XXXX or Fixes #XXXX in the
+pull request description that close an issue. Including references
+automatically closes the issue on a merge.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="documentation-contributions">
+<h2>Documentation Contributions<a class="headerlink" href="#documentation-contributions" title="Permalink to this headline">¶</a></h2>
+<p>Documentation improvements are always welcome! The documentation files live in
+the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> of the codebase. They’re written in reStructuredText, and use
+Sphinx to generate the full suite of documentation.</p>
+<p>When contributing document, you’ll want to follow this checklist:</p>
+<ol class="arabic simple">
+<li><p>Build html by running <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> in <code class="docutils literal notranslate"><span class="pre">docs/</span></code></p></li>
+<li><p>Please do your best to follow the style of the documentation files. This
+means a soft-limit of 79 characters wide in your text files and a
+semi-formal, yet friendly and approachable, prose style. Run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">lint</span></code>
+in <code class="docutils literal notranslate"><span class="pre">docs/</span></code></p></li>
+<li><p>When presenting Python code, use single-quoted strings
+(‘hello’ instead of “hello”).</p></li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">decanter-ai-core-sdk</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/quickstart.html">Quickstart</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">Developer Interface</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="design.html">Design Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reporting-issues">Reporting issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-contributions">Code Contributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-contributions">Documentation Contributions</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="changelog.html" title="previous chapter">Changelog</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, MoBagel.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/notes/contributing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

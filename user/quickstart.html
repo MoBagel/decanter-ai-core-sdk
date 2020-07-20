@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quickstart &#8212; decanter-ai-core-sdk 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Developer Interface" href="../api.html" />
+    <link rel="prev" title="Installation" href="install.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="quickstart">
+<span id="id1"></span><h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>This page gives a good introduction to Decanter AI Core SDK. It assumes you
+already have Decanter AI Core SDK installed. Follow <a class="reference internal" href="install.html"><span class="doc">Installation</span></a> to set up
+a project and install Decanter AI Core SDK first.</p>
+<p>Clone the repository from GitLab:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/MoBagel/decanter-ai-core-sdk.git
+$ <span class="nb">cd</span> decanter-ai-core-sdk
+</pre></div>
+</div>
+<div class="section" id="python-script">
+<span id="python"></span><h2>Python Script<a class="headerlink" href="#python-script" title="Permalink to this headline">¶</a></h2>
+<p>Set the username, password, and host at function <code class="docutils literal notranslate"><span class="pre">core.Context.create()</span></code>
+in file <code class="docutils literal notranslate"><span class="pre">examples/example.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">core</span><span class="o">.</span><span class="n">Context</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">username</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{usr}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{pwd}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{decantercoreserver}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run the command below: sh</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ python -m examples.example
+</pre></div>
+</div>
+</div>
+<div class="section" id="jupyter">
+<span id="id2"></span><h2>Jupyter<a class="headerlink" href="#jupyter" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="jupyter-notebook">
+<h3>Jupyter Notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h3>
+<p>Install <a class="reference external" href="https://jupyter.readthedocs.io/en/latest/install.html">Jupyter Notebook</a>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pip install jupyter notebook
+</pre></div>
+</div>
+<p>Install <cite>ipywidgets</cite> for progress bar.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pip install ipywidgets
+$ jupyter nbextension <span class="nb">enable</span> --py widgetsnbextension
+</pre></div>
+</div>
+<p>Add virtual environment to Jupyter Notebook. Make sure ipykernel is
+installed in the virtual environment.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pip install --user ipykernel
+$ python -m ipykernel install --user --name<span class="o">=</span>myenv
+<span class="c1"># following output</span>
+<span class="c1"># Installed kernelspec myenv in</span>
+<span class="c1"># /home/user/.local/share/jupyter/kernels/myenv</span>
+</pre></div>
+</div>
+<p>Open jupyter notebook</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ jupyter notebook
+</pre></div>
+</div>
+<p>Open the notebook in <code class="docutils literal notranslate"><span class="pre">examples/example.ipynb</span></code>, and select the kernel
+of your environment in the above tool bar <cite>Kernal/Change kernel/myenv</cite></p>
+</div>
+<div class="section" id="jupyter-lab">
+<h3>Jupyter Lab<a class="headerlink" href="#jupyter-lab" title="Permalink to this headline">¶</a></h3>
+<p>Install <a class="reference external" href="https://jupyterlab.readthedocs.io/en/stable/getting_started/installation.html">Jupyter Lab</a>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pip install jupyterlab
+</pre></div>
+</div>
+<p>Install extension for
+<a class="reference external" href="https://ipywidgets.readthedocs.io/en/latest/user_install.html#installing-the-jupyterlab-extension">Progress Bar</a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ jupyter labextension install @jupyter-widgets/jupyterlab-manager
+</pre></div>
+</div>
+<p>Open Jupyter Lab</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ jupyter lab
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">decanter-ai-core-sdk</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python-script">Python Script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jupyter">Jupyter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">Developer Interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notes/design.html">Design Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notes/changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notes/contributing.html">Contributing Guide</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="install.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="../api.html" title="next chapter">Developer Interface</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, MoBagel.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/user/quickstart.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

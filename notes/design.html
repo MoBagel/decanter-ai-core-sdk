@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Notes &#8212; decanter-ai-core-sdk 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="prev" title="Developer Interface" href="../api.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="design-notes">
+<span id="design"></span><h1>Design Notes<a class="headerlink" href="#design-notes" title="Permalink to this headline">¶</a></h1>
+<p>If you are curious why Decanter AI Core SDK does certain things the way it does and not differently,
+this section is for you.</p>
+<div class="section" id="design-decisions">
+<h2>Design Decisions<a class="headerlink" href="#design-decisions" title="Permalink to this headline">¶</a></h2>
+<p>When developer are using decanter’s API, such as using upload api to upload a csv file.
+It needs to start the upload by sending the upload request and keep updating the
+status by keep sending the requests and recieving the responses from get task api. Its not
+that convenient and it’ll block other processes while waiting the task to be done, causing
+a waste for decanter server, since it can process at most four tasks at a time.</p>
+<p>In order to let user handling the tasks more efficiently and instinctively. There are
+three main goals</p>
+<ol class="arabic simple">
+<li><p>User need not be aware of the existence of API.</p></li>
+<li><p>User need not be aware of the task lifecycle.</p></li>
+<li><p>Nonblocking when running tasks that don’t have dependencies relationship.
+(ex. Tasks of uploading train and test data don’t depend on each other,
+making them run concurrently and asynchronously saves more time.)</p></li>
+</ol>
+</div>
+<div class="section" id="design-structure">
+<h2>Design Structure<a class="headerlink" href="#design-structure" title="Permalink to this headline">¶</a></h2>
+<p>We mainly have three actions to do during training models:</p>
+<ul class="simple">
+<li><p>Upload(<cite>Task</cite>) ⇒ DataUpload(<cite>Job</cite>)</p></li>
+<li><p>Train ⇒ Experiment</p></li>
+<li><p>Predict ⇒Predict Result</p></li>
+</ul>
+<p>We structure the result we want to get as <cite>Job</cite> which will stores the
+properties we wish to get easily. Ｗe let every corresponding actions be
+a <cite>Task</cite> which will be executed by <cite>Job</cite> in order to get the result from it.</p>
+<p>The relationship between <a class="reference internal" href="../api.html#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">Job</span></code></a>
+and <a class="reference internal" href="../api.html#decanter.core.jobs.task.Task" title="decanter.core.jobs.task.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a></p>
+<ol class="arabic simple">
+<li><p>Each <cite>Job</cite> has a <cite>Task</cite> and the <cite>Job</cite>’s mission is to execute
+the <cite>Task</cite> and wait for it until it’s done.</p></li>
+<li><p><cite>Job</cite>’s properties (or attributes) is the result of the <cite>Task</cite>.</p></li>
+<li><p>When every <cite>Job</cite> start to execute and get the result from <cite>Task</cite>,
+it needs to wait for all the <cite>Job</cite> in its jobs list to be done.</p></li>
+</ol>
+<p>Ex. <cite>PredictResult &lt;Job&gt;</cite> must wait for <cite>Experiment &lt;Job&gt;</cite>
+and <cite>DataUpload &lt;Job&gt;</cite> to be done.</p>
+<div class="section" id="how-to-do-asynchronously">
+<h3>How to do asynchronously?<a class="headerlink" href="#how-to-do-asynchronously" title="Permalink to this headline">¶</a></h3>
+<p>Why need asynchronously? Since the decanter server can actually handle
+upto 4 tasks running at once, if we do the job synchronously, we could
+only do one task at a  time which is time-wasting.</p>
+<p>Using <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html" title="(in Python v3.8)"><span>Coroutines and Tasks</span></a> in Python asyncio library.
+We use <code class="docutils literal notranslate"><span class="pre">await</span></code> to handle the blocking problems. According to
+<a class="reference external" href="https://www.aeracode.org/2018/02/19/python-async-simplified/">this passage</a>.</p>
+<p>“When you call <code class="docutils literal notranslate"><span class="pre">await</span></code>, the function you’re in gets suspended while whatever
+you asked to wait on happens, and then when it’s finished, the event loop will
+wake the function up again and resume it from the await call, passing any
+result out.”</p>
+<p>Therefore, coroutines that involves time-consuming calls such as calling APIs
+or waiting for pre-requests <cite>Job</cite> to be done will be blocked and idle, and this
+is the condition we can call <code class="docutils literal notranslate"><span class="pre">await</span></code>. It’ll block the currently running
+coroutines and put onto the event loop’s list of paused coroutines so something
+else can be run.</p>
+<p>In <cite>Job</cite> they’re two blocking conditions:</p>
+<ol class="arabic simple">
+<li><p>Waiting for undone pre-requests jobs: Call <code class="docutils literal notranslate"><span class="pre">await</span> <span class="pre">asyncio.sleep()</span></code> to
+suspend the current running coroutine and resume after few seconds. Means
+that <code class="docutils literal notranslate"><span class="pre">Job.wait()</span></code> check the jobs status every five second.</p></li>
+<li><p>Calling API: When calling <code class="docutils literal notranslate"><span class="pre">self.update()</span></code> the <cite>Task</cite> will fetch the
+result from decanter.core server, we use <code class="docutils literal notranslate"><span class="pre">await</span></code> to wait for the result,
+so it can run other coroutines while waiting for the response.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">Job.wait</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># pesudo code of the coroutine Job.wait()</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># check if all the jobs in list is done</span>
+    <span class="c1"># if haven&#39;t call sleep to let other coroutine can be execute</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="nb">all</span> <span class="bp">self</span><span class="o">.</span><span class="n">jobs</span> <span class="ow">is</span> <span class="n">done</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1"># if there&#39;s jobs failed the coroutine fails to and no need to execute</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span> <span class="bp">self</span><span class="o">.</span><span class="n">jobs</span> <span class="ow">is</span> <span class="n">success</span><span class="p">:</span>
+            <span class="k">return</span>
+
+    <span class="c1"># start to execute task</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+    <span class="c1"># keep update task result and Job properties by calling self.update</span>
+    <span class="c1"># finshed when task is done</span>
+    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">not_done</span><span class="p">():</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1"># update the status of the Job</span>
+    <span class="c1"># other jobs that waits for this can know that it&#39;s done</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">status</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="structure-flow-overview">
+<h3>Structure Flow Overview<a class="headerlink" href="#structure-flow-overview" title="Permalink to this headline">¶</a></h3>
+<p>When we create the client of CoreClient() <code class="docutils literal notranslate"><span class="pre">client</span> <span class="pre">=</span> <span class="pre">CoreClient()</span></code> we simply
+create a <cite>Job</cite>. And its coroutines <code class="docutils literal notranslate"><span class="pre">Job.wait()</span></code> will be scheduled to
+execute in the event loop.</p>
+<div class="figure align-default">
+<img alt="../_images/flow_1.png" src="../_images/flow_1.png" />
+</div>
+<p>Notice that the event loop won’t start to run until we call
+<code class="docutils literal notranslate"><span class="pre">context.run()</span></code> and each <cite>Job</cite> has its own <cite>Task</cite> waited to be finished.</p>
+<div class="figure align-default">
+<img alt="../_images/flow_2.png" src="../_images/flow_2.png" />
+</div>
+<p>But each <cite>Job</cite>’s task has different timing to start, as the picture below.
+Ex. exp needs to wait for train data to finish, and pred_res needs to
+wait for test data and exp.</p>
+<div class="figure align-default">
+<img alt="../_images/flow_3.png" src="../_images/flow_3.png" />
+</div>
+<p>When a <cite>Job</cite> is finished, it will set its <code class="docutils literal notranslate"><span class="pre">is_done</span></code> tag to true, and
+leave the event loop.</p>
+<div class="figure align-default">
+<img alt="../_images/flow_4.png" src="../_images/flow_4.png" />
+</div>
+<p>Since the <cite>Job</cite> that waits for other <cite>Job`s will keep monitor its ``is_done`</cite>
+tag, when it finds all of the <cite>Job</cite> it’s waiting is done, it will start to run
+its own <cite>Task</cite>.</p>
+<div class="figure align-default">
+<img alt="../_images/flow_5.png" src="../_images/flow_5.png" />
+</div>
+<div class="figure align-default">
+<img alt="../_images/flow_6.png" src="../_images/flow_6.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">decanter-ai-core-sdk</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/quickstart.html">Quickstart</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">Developer Interface</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Design Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#design-decisions">Design Decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-structure">Design Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../api.html" title="previous chapter">Developer Interface</a></li>
+      <li>Next: <a href="changelog.html" title="next chapter">Changelog</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, MoBagel.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/notes/design.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
