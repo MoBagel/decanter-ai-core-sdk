@@ -3,10 +3,9 @@ import asyncio
 import logging
 
 import pandas as pd
-import requests
-from requests.auth import HTTPBasicAuth
 
 from decanter.core.extra import CoreStatus
+import decanter.core.core_api.worker as worker
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +78,6 @@ class Context:
             asyncio.set_event_loop(asyncio.new_event_loop())
             Context.LOOP = asyncio.get_event_loop()
             logger.debug('[Context] create and set new event loop')
-
         context.healthy()
         return context
 
@@ -132,13 +130,10 @@ class Context:
 
         """
         try:
-            url = '%s/data/test' % Context.HOST
-            res = requests.delete(
-                url, auth=HTTPBasicAuth(Context.USERNAME, Context.PASSWORD),
-                timeout=2)
-            if res.status_code != 400:
+            res = worker.Worker().get_status()
+            if res.status_code // 100 != 2:
                 raise Exception()
-        except (Exception, requests.exceptions.RequestException) as err:
+        except Exception as err:
             logger.error('[Context] connect not healthy :(')
             raise SystemExit(err)
         else:
