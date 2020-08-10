@@ -1,3 +1,4 @@
+# pylint: disable=E1101,R0904,W0611
 """Handle sending Decanter Core API requests.
 
   Basic Usage::
@@ -10,11 +11,12 @@ import logging
 
 import requests
 from requests.auth import HTTPBasicAuth
+from urllib3.exceptions import InsecureRequestWarning
 
-from decanter.core import Context
-
+import decanter.core as core
 
 logger = logging.getLogger(__name__)
+requests.packages.urllib3.disable_warnings()
 
 
 class CoreAPI:
@@ -45,23 +47,23 @@ class CoreAPI:
             Exception: Occurred when raises RequestException
                     or calling wrong http method.
         """
-        basic_auth = HTTPBasicAuth(Context.USERNAME, Context.PASSWORD)
-        url = Context.HOST + url
+        basic_auth = HTTPBasicAuth(core.Context.USERNAME, core.Context.PASSWORD)
+        url = core.Context.HOST + url
         try:
             if http == 'GET':
-                return requests.get(url=url, auth=basic_auth)
+                return requests.get(url=url, auth=basic_auth, verify=False)
             if http == 'POST':
                 return requests.post(
                     url=url, json=json, data=data,
-                    files=files, auth=basic_auth)
+                    files=files, auth=basic_auth, verify=False)
             if http == 'PUT':
                 return requests.put(
                     url=url, json=json, data=data,
-                    files=files, auth=basic_auth)
+                    files=files, auth=basic_auth, verify=False)
             if http == 'DELETE':
                 return requests.delete(
                     url=url, json=json, data=data,
-                    files=files, auth=basic_auth)
+                    files=files, auth=basic_auth, verify=False)
 
             raise Exception('[Core] No such HTTP Method.')
 
@@ -261,3 +263,27 @@ class CoreAPI:
         return self.requests_(
             http='GET',
             url='/experiments/%s/multimodels/%s' % (exp_id, model_id))
+
+    def get_worker_count(self):
+        """Get counts of each type of worker
+
+        Endpoint: /worker/count
+
+        Returns:
+            class: `Response <Response>` object
+        """
+        return self.requests_(
+            http='GET',
+            url='/worker/count')
+
+    def get_worker_status(self):
+        """List status of each worker
+
+        Endpoint: /worker/status
+
+        Returns:
+            class: `Response <Response>` object
+        """
+        return self.requests_(
+            http='GET',
+            url='/worker/status')

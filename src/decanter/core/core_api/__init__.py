@@ -4,3 +4,4 @@ from .api import CoreAPI
 from .model import Model, MultiModel
 from .predict_input import PredictInput, PredictTSInput
 from .train_input import TrainInput, TrainTSInput
+from .worker import Worker
