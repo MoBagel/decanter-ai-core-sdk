@@ -701,13 +701,13 @@ progress key value of response.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="decanter.core.jobs.task.UploodTask">
-<em class="property">class </em><code class="sig-prename descclassname">decanter.core.jobs.task.</code><code class="sig-name descname">UploodTask</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.UploodTask" title="Permalink to this definition">¶</a></dt>
+<dt id="decanter.core.jobs.task.UploadTask">
+<em class="property">class </em><code class="sig-prename descclassname">decanter.core.jobs.task.</code><code class="sig-name descname">UploadTask</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.UploadTask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#decanter.core.jobs.task.CoreTask" title="decanter.core.jobs.task.CoreTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.task.CoreTask</span></code></a></p>
 <p>Upload data to Decanter Core.</p>
 <dl class="py attribute">
-<dt id="decanter.core.jobs.task.UploodTask.file">
-<code class="sig-name descname">file</code><a class="headerlink" href="#decanter.core.jobs.task.UploodTask.file" title="Permalink to this definition">¶</a></dt>
+<dt id="decanter.core.jobs.task.UploadTask.file">
+<code class="sig-name descname">file</code><a class="headerlink" href="#decanter.core.jobs.task.UploadTask.file" title="Permalink to this definition">¶</a></dt>
 <dd><p>The csv file to be uploaded.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -717,8 +717,8 @@ progress key value of response.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="decanter.core.jobs.task.UploodTask.run">
-<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.UploodTask.run" title="Permalink to this definition">¶</a></dt>
+<dt id="decanter.core.jobs.task.UploadTask.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.UploadTask.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute upload data by sending the upload api.</p>
 </dd></dl>
 
@@ -1079,7 +1079,7 @@ Decanter Core server Stores the upload results in DataUpload attributes.</p>
 DataUpload.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.task.UploodTask" title="decanter.core.jobs.task.UploodTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">UploodTask</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.task.UploadTask" title="decanter.core.jobs.task.UploadTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">UploadTask</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2322,7 +2322,7 @@ server or uploading form local zip fils.</p>
 <dd><p>The model’s hyperparameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>JSON</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
