@@ -11,8 +11,8 @@ Welcome to Decanter AI Core SDK's documentation. Get started with
 :doc:`user/quickstart`. The :doc:`api` section describes each component of
 Decanter AI Core SDK in detail.
 
-The User Guide
---------------
+Quick Start
+-----------
 
 This part of the documentation begins with some background information about
 Decanter AI Core SDK, then focuses on step-by-step instructions for getting
@@ -38,8 +38,8 @@ this part of the documentation is for you.
    api
 
 
-Additional Notes
-----------------
+Development Guide
+-----------------
 
 Design notes, legal information and changelog are here for the interested.
 
