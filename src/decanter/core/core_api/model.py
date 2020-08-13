@@ -31,7 +31,7 @@ class Model:
         exp_id (str): The experiment ID of the model.
         importances (dict): The feature importance.
         attributes (dict): Model related scores and feature importance.
-        hyperparameters (JSON): The model's hyperparameters.
+        hyperparameters (dict): The model's hyperparameters.
         created_at (str): The time the model was created at.
         updated_at (str): The time the model was last updated.
         completed_at (str): The time the model was completed_at.

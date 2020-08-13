@@ -15,7 +15,7 @@ from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import update
 from decanter.core.extra.utils import check_response, gen_id
 from decanter.core.jobs.job import Job
-from decanter.core.jobs.task import UploodTask, SetupTask
+from decanter.core.jobs.task import UploadTask, SetupTask
 
 
 logger = logging.getLogger(__name__)
@@ -29,7 +29,7 @@ class DataUpload(Job):
 
     Attributes:
         jobs (list): None, list up jobs that DataUpload needs to wait for.
-        task (:class:`~decanter.core.jobs.task.UploodTask`): Upload task run by
+        task (:class:`~decanter.core.jobs.task.UploadTask`): Upload task run by
             DataUpload.
         accessor (dict): Accessor for files in hdfs.
         schema (dict): The original data schema.
@@ -50,7 +50,7 @@ class DataUpload(Job):
             name (:obj:`str`, optional): Name to track Job progress
         """
         super().__init__(jobs=None,
-                         task=(UploodTask(file, name)
+                         task=(UploadTask(file, name)
                                if file is not None
                                else SetupTask(setup_params, name)),
                          name=gen_id(self.__class__.__name__, name))

@@ -198,7 +198,7 @@ class CoreTask(Task):
         self.status = CoreStatus.FAIL
 
 
-class UploodTask(CoreTask):
+class UploadTask(CoreTask):
     """Upload data to Decanter Core.
 
     Attributes:
