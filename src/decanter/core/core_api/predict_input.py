@@ -6,6 +6,7 @@ import json
 
 from decanter.core.core_api import CoreBody
 
+import logging
 
 class PredictInput:
     """Predict Input for PredictResult Job.
@@ -27,7 +28,7 @@ class PredictInput:
 
     """
     def __init__(
-            self, data, experiment, callback=None,
+            self, data, experiment, select_by='by_CVbest', select_model_by='mse', select_model_id='', callback=None,
             keep_columns=None, threshold=None, version=None):
         """
         Init Predict Input
@@ -49,6 +50,11 @@ class PredictInput:
         self.pred_body = CoreBody.PredictBody.create(
             data_id='tmp_data_id', model_id='tmp_model_id', callback=callback,
             keep_columns=keep_columns, threshold=threshold, version=version)
+        # '''
+        self.select_by = select_by # **
+        self.select_model_by = select_model_by # **
+        self.select_model_id = select_model_id # **
+        # '''
 
     def getPredictParams(self):
         """Using pred_body to create the JSON request body for prediction.
@@ -56,8 +62,31 @@ class PredictInput:
         Returns:
             :obj:`dict`
         """
-        setattr(self.pred_body, 'data_id', self.data.id)
-        setattr(self.pred_body, 'model_id', self.experiment.best_model.id)
+
+        # '''
+        if self.select_by == 'by_CVbest':
+            print(self.select_by, self.select_model_by, '!!!!!!!!!!!')
+            setattr(self.pred_body, 'data_id', self.data.id)
+            setattr(self.pred_body, 'model_id', self.experiment.best_model.id)
+        # else:
+        elif self.select_by == 'by_RC':
+            print(self.select_by, self.select_model_by)
+            if self.select_model_by in self.experiment.recommend_model_id.keys():
+                setattr(self.pred_body, 'data_id', self.data.id)
+                setattr(self.pred_body, 'model_id', self.experiment.recommend_model_id[self.select_model_by])
+            else:
+                logger.error('[%s] no such Metric on model', class_, self.select_model_by) 
+        elif self.select_by == 'by_index':
+            print(self.select_by, self.select_model_by)
+            if self.select_model_id in self.experiment.model_id_list:
+                setattr(self.pred_body, 'data_id', self.data.id)
+                setattr(self.pred_body, 'model_id', self.select_model_id)
+            else:
+                logger.error('[%s] no such model ID', class_, self.model_id) 
+        # '''
+
+        # setattr(self.pred_body, 'data_id', self.data.id)
+        # setattr(self.pred_body, 'model_id', self.experiment.best_model.id)
         params = json.dumps(
             self.pred_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
