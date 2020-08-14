@@ -50,11 +50,9 @@ class PredictInput:
         self.pred_body = CoreBody.PredictBody.create(
             data_id='tmp_data_id', model_id='tmp_model_id', callback=callback,
             keep_columns=keep_columns, threshold=threshold, version=version)
-        # '''
-        self.select_by = select_by # **
-        self.select_model_by = select_model_by # **
-        self.select_model_id = select_model_id # **
-        # '''
+        self.select_by = select_by
+        self.select_model_by = select_model_by
+        self.select_model_id = select_model_id
 
     def getPredictParams(self):
         """Using pred_body to create the JSON request body for prediction.
@@ -63,14 +61,10 @@ class PredictInput:
             :obj:`dict`
         """
 
-        # '''
         if self.select_by == 'by_CVbest':
-            print(self.select_by, self.select_model_by, '!!!!!!!!!!!')
             setattr(self.pred_body, 'data_id', self.data.id)
             setattr(self.pred_body, 'model_id', self.experiment.best_model.id)
-        # else:
         elif self.select_by == 'by_RC':
-            print(self.select_by, self.select_model_by)
             if self.select_model_by in self.experiment.recommend_model_id.keys():
                 setattr(self.pred_body, 'data_id', self.data.id)
                 setattr(self.pred_body, 'model_id', self.experiment.recommend_model_id[self.select_model_by])
@@ -83,10 +77,7 @@ class PredictInput:
                 setattr(self.pred_body, 'model_id', self.select_model_id)
             else:
                 logger.error('[%s] no such model ID', class_, self.model_id) 
-        # '''
 
-        # setattr(self.pred_body, 'data_id', self.data.id)
-        # setattr(self.pred_body, 'model_id', self.experiment.best_model.id)
         params = json.dumps(
             self.pred_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
