@@ -28,7 +28,7 @@ class PredictInput:
 
     """
     def __init__(
-            self, data, experiment, select_by='by_CVbest', select_model_by='mse', select_model_id='', callback=None,
+            self, data, experiment, select_by='by_CVbest', select_model_by='mse', select_model_id=None, callback=None,
             keep_columns=None, threshold=None, version=None):
         """
         Init Predict Input
@@ -71,7 +71,6 @@ class PredictInput:
             else:
                 logger.error('[%s] no such Metric on model', class_, self.select_model_by) 
         elif self.select_by == 'by_index':
-            print(self.select_by, self.select_model_by)
             if self.select_model_id in self.experiment.model_id_list:
                 setattr(self.pred_body, 'data_id', self.data.id)
                 setattr(self.pred_body, 'model_id', self.select_model_id)
