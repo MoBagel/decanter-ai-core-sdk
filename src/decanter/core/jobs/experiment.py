@@ -94,9 +94,6 @@ class Experiment(Job):
     def update_result(self, task_result):
         """Update Job's attribute from Task's result."""
         self.get_best_model()
-        self.recommend_model_id = {rec_dict['evaluator']: rec_dict['model_id'] \
-                                    for rec_dict in task_result['recommendations']}
-        self.model_id_list = task_result['models']
 
     def get_best_model(self):
         """Get the best model in experiment by `select_model_by` and stores

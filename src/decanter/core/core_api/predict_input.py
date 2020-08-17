@@ -7,6 +7,7 @@ import json
 from decanter.core.core_api import CoreBody
 
 import logging
+logger = logging.getLogger(__name__)
 
 class PredictInput:
     """Predict Input for PredictResult Job.
@@ -28,7 +29,7 @@ class PredictInput:
 
     """
     def __init__(
-            self, data, experiment, select_by='by_CVbest', select_model_by='mse', select_model_id=None, callback=None,
+            self, data, experiment, select_by='by_CVbest', select_model_by='mse', select_model_id='', callback=None,
             keep_columns=None, threshold=None, version=None):
         """
         Init Predict Input
@@ -60,27 +61,27 @@ class PredictInput:
         Returns:
             :obj:`dict`
         """
-
+        class_ = self.__class__.__name__
         if self.select_by == 'by_CVbest':
             setattr(self.pred_body, 'data_id', self.data.id)
             setattr(self.pred_body, 'model_id', self.experiment.best_model.id)
         elif self.select_by == 'by_RC':
-            if self.select_model_by in self.experiment.recommend_model_id.keys():
-                setattr(self.pred_body, 'data_id', self.data.id)
-                setattr(self.pred_body, 'model_id', self.experiment.recommend_model_id[self.select_model_by])
-            else:
-                logger.error('[%s] no such Metric on model', class_, self.select_model_by) 
-        elif self.select_by == 'by_index':
-            if self.select_model_id in self.experiment.model_id_list:
+            for rec in self.experiment.recommendations:
+                if self.select_model_by == rec['evaluator']:
+                    setattr(self.pred_body, 'data_id', self.data.id)
+                    setattr(self.pred_body, 'model_id', rec['model_id'])
+        elif self.select_by == 'by_model_id':
+            if self.select_model_id in self.experiment.models:
                 setattr(self.pred_body, 'data_id', self.data.id)
                 setattr(self.pred_body, 'model_id', self.select_model_id)
             else:
-                logger.error('[%s] no such model ID', class_, self.model_id) 
+                logger.error('[%s] no such model ID', class_, self.select_model_id) 
 
         params = json.dumps(
             self.pred_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
         return params
+
 
 
 class PredictTSInput(PredictInput):
