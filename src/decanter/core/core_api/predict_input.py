@@ -29,8 +29,8 @@ class PredictInput:
 
     """
     def __init__(
-            self, data, experiment, select_by='by_CVbest', select_model_by='mse', select_model_id='', callback=None,
-            keep_columns=None, threshold=None, version=None):
+            self, data, experiment, select_by='by_CVbest', select_model_by='mse', select_model_id=None,
+             callback=None, keep_columns=None, threshold=None, version=None):
         """
         Init Predict Input
 
