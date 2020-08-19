@@ -29,8 +29,8 @@ class PredictInput:
 
     """
     def __init__(
-            self, data, experiment, select_model='best', 
-            callback=None, keep_columns=None, threshold=None, version=None):
+            self, data, experiment, select_model='best', callback=None, 
+            keep_columns=None, threshold=None, version=None):
         """
         Init Predict Input
 
