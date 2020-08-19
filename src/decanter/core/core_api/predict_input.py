@@ -29,8 +29,8 @@ class PredictInput:
 
     """
     def __init__(
-            self, data, experiment, select_by='by_CVbest', select_model_by='mse', select_model_id=None,
-             callback=None, keep_columns=None, threshold=None, version=None):
+            self, data, experiment, select_model='best', 
+            callback=None, keep_columns=None, threshold=None, version=None):
         """
         Init Predict Input
 
@@ -51,9 +51,7 @@ class PredictInput:
         self.pred_body = CoreBody.PredictBody.create(
             data_id='tmp_data_id', model_id='tmp_model_id', callback=callback,
             keep_columns=keep_columns, threshold=threshold, version=version)
-        self.select_by = select_by
-        self.select_model_by = select_model_by
-        self.select_model_id = select_model_id
+        self.select_model = select_model
 
     def getPredictParams(self):
         """Using pred_body to create the JSON request body for prediction.
@@ -61,26 +59,26 @@ class PredictInput:
         Returns:
             :obj:`dict`
         """
-        class_ = self.__class__.__name__
-        if self.select_by == 'by_CVbest':
-            setattr(self.pred_body, 'data_id', self.data.id)
-            setattr(self.pred_body, 'model_id', self.experiment.best_model.id)
-        elif self.select_by == 'by_RC':
+        if self.select_model == "best":
+            select_model_id = self.experiment.best_model.id
+        elif self.select_model in self.experiment.models:
+            select_model_id = self.select_model
+        else:
             for rec in self.experiment.recommendations:
-                if self.select_model_by == rec['evaluator']:
-                    setattr(self.pred_body, 'data_id', self.data.id)
-                    setattr(self.pred_body, 'model_id', rec['model_id'])
-        elif self.select_by == 'by_model_id':
-            if self.select_model_id in self.experiment.models:
-                setattr(self.pred_body, 'data_id', self.data.id)
-                setattr(self.pred_body, 'model_id', self.select_model_id)
-            else:
-                logger.error('[%s] no such model ID', class_, self.select_model_id) 
+                if self.select_model == rec['evaluator']:
+                   select_model_id = rec['model_id']
+
+        if 'select_model_id' not in locals().keys():
+            logger.error('[%s] Invalid input value', self.__class__.__name__, self.select_model)
+        else:
+            setattr(self.pred_body, 'data_id', self.data.id)
+            setattr(self.pred_body, 'model_id', select_model_id)
 
         params = json.dumps(
             self.pred_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
         return params
+
 
 
 
