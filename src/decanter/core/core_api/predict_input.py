@@ -3,10 +3,9 @@
 # pylint: disable=too-few-public-methods
 """Settings for the PredictResult and PredictTSResult"""
 import json
-
+import logging
 from decanter.core.core_api import CoreBody
 
-import logging
 logger = logging.getLogger(__name__)
 
 class PredictInput:
