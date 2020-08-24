@@ -141,7 +141,3 @@ dmypy.json
 # vs code
 .vscode
 
-# testing files
-test-decanter.ipynb
-test.csv
-train.csv
