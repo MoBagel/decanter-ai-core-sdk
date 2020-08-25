@@ -75,14 +75,16 @@ class PredictInput:
         elif self.select_model == 'model_id':
             if self.select_opt in self.experiment.models:
                 select_model_id = self.select_opt
-            else:
+            else: 
                 logger.error('[%s] Invalid input model ID', self.__class__.__name__, self.select_opt)
+                raise ValueError('Invalid input model ID: %s'%self.select_opt)
         elif self.select_model == 'recommendation':
             for rec in self.experiment.recommendations:
                 if self.select_opt == rec['evaluator']:
                    select_model_id = rec['model_id']
             if 'select_model_id' not in locals().keys():
                 logger.error('[%s] Invalid input metric', self.__class__.__name__, self.select_opt)    
+                raise ValueError('Invalid input metric: %s'%self.select_opt)
         setattr(self.pred_body, 'data_id', self.data.id)
         setattr(self.pred_body, 'model_id', select_model_id)
 
