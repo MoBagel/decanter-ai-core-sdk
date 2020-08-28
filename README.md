@@ -41,6 +41,14 @@ $ python -m example.file
 Progress UploadTask_train:  55%|█████████████████████████████████████████
 ```
 
+## Auto Time Series Example: Upload Data, Train TSF Experiment and Predict
+train data path: `examples/data/tsf/iris_train.csv`
+test data path: `examples/data/tsf/iris_train_test.csv`
+
+```bash
+$ python example/auto_time_series_example.py
+```
+
 ## Tutorial for Jupyter Notebook
 If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.
 If you need to handle running tasks well, refer to our [jupyter_jobs_handle_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_jobs_handle_example.ipynb).
