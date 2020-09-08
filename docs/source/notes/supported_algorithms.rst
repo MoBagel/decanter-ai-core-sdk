@@ -94,8 +94,6 @@ Example Code
 
 	train_data = client.upload(file=train_file, name="train_data")
 	test_data = client.upload(file=test_file, name="test_data")
-	# from decanter.core.jobs import DataUpload
-	# train_data = DataUpload.create(data_id = "{data_id}", name="train_data")
 
 ``Set train parameters train model``:
 
@@ -121,9 +119,10 @@ Example Code
 Saving Model
 *************
 
+``Getting Mojo model zip file from decanter.core server and download to local.``
+
 .. code-block:: python
 	
-	# Getting Mojo model zip file from decanter.core server and download to local.
     from decanter.core.core_api import Model
     model = Model()
     
