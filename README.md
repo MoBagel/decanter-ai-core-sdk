@@ -41,6 +41,15 @@ $ python -m example.file
 Progress UploadTask_train:  55%|█████████████████████████████████████████
 ```
 
+## Example Code
+* Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
+* Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
+
+
+## Development Guide and Flow
+* If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
+
+
 ## Tutorial for Jupyter Notebook
 If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.
 If you need to handle running tasks well, refer to our [jupyter_jobs_handle_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_jobs_handle_example.ipynb).
@@ -57,6 +66,8 @@ For guidance on setting up a development environment and how to make a contribut
 ## Links
 For more details on design, guidance on setting up a development environment, and SDK usage.
 
+* Introduction about Decanter AI: https://mobagel.com/solution
+* Introduction about Decanter AI SDK: https://mobagel.github.io/decanter-ai-core-sdk/
 * Code: https://github.com/MoBagel/decanter-ai-core-sdk
 * Installation: https://mobagel.github.io/decanter-ai-core-sdk/user/install.html
 * API interface: https://mobagel.github.io/decanter-ai-core-sdk/api.html
