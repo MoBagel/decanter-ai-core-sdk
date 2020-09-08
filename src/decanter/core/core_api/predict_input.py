@@ -3,6 +3,7 @@
 # pylint: disable=too-few-public-methods
 """Settings for the PredictResult and PredictTSResult"""
 import json
+
 import logging
 from decanter.core.core_api import CoreBody
 
@@ -29,7 +30,7 @@ class PredictInput:
     """
     def __init__(
             self, data, experiment, select_model='best', select_opt=None, callback=None, 
-                keep_columns=None, threshold=None, version=None):
+            keep_columns=None, threshold=None, version=None):
         """
         Init Predict Input
 
@@ -38,15 +39,15 @@ class PredictInput:
             experiment (:class:`~decanter.core.jobs.experiment.Experiment`):
                 Experiment from training.
             select_model (:obj: `str`, optional): Methods of screening models
-                `best`: based on best CV
-                `model_id`: based on given Model ID
-                `recommendation`: recommended model of the given metric
+                `best`: predict with the best model scored on cv average
+                `model_id`: predict with the model designated by model_id
+                `recommendation`: predict with the recommended model
                 Defaults to 'best'.
             select_opt (:obj: `str`, optional): Based on the options required by 
                 the select_model.
                 value with select_model case:
-                    `best`          : None
-                    `model_id`      : given the model ID, the ObjectId
+                    `best`: None
+                    `model_id`: given the model ID (model ID will be in the format of ObjectID)
                     `recommendation`: metric, ex: auc ...
             callback (:obj:`str`, optional): A uri to be notified of Decanter Core
                 activity state changes.
@@ -76,15 +77,15 @@ class PredictInput:
             if self.select_opt in self.experiment.models:
                 select_model_id = self.select_opt
             else: 
-                logger.error('[%s] Invalid input model ID', self.__class__.__name__, self.select_opt)
-                raise ValueError('Invalid input model ID: %s'%self.select_opt)
+                logger.error('[%s] Invalid input model ID: %s', self.__class__.__name__, self.select_opt)
+                raise ValueError('Invalid input model ID: %s' %self.select_opt)
         elif self.select_model == 'recommendation':
             for rec in self.experiment.recommendations:
                 if self.select_opt == rec['evaluator']:
                    select_model_id = rec['model_id']
             if 'select_model_id' not in locals().keys():
-                logger.error('[%s] Invalid input metric', self.__class__.__name__, self.select_opt)    
-                raise ValueError('Invalid input metric: %s'%self.select_opt)
+                logger.error('[%s] Invalid input metric: %s', self.__class__.__name__, self.select_opt)    
+                raise ValueError('Invalid input metric: %s' %self.select_opt)
         setattr(self.pred_body, 'data_id', self.data.id)
         setattr(self.pred_body, 'model_id', select_model_id)
 
@@ -107,8 +108,8 @@ class PredictTSInput(PredictInput):
     """
     def __init__(
             self, data, experiment, callback=None,
-            keep_columns=None, threshold=None, version=None):
+            keep_columns=None, threshold_max_by=None, version=None):
         super().__init__(data=data, experiment=experiment)
         self.pred_body = CoreBody.PredictBodyTSModel.create(
             data_id='tmp_data_id', model_id='tmp_model_id', callback=callback,
-            keep_columns=keep_columns, threshold=threshold, version=version)
+            keep_columns=keep_columns, threshold_max_by=threshold_max_by, version=version)
