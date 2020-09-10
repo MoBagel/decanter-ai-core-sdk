@@ -15,7 +15,7 @@ import decanter.core.core_api.body_obj as CoreBody
 logger = logging.getLogger(__name__)
 
 
-class CoreClient(Context):
+class CoreClient(): 
     """Handle client side actions.
 
     Support actions sunch as setup data, upload data, train,
@@ -31,11 +31,6 @@ class CoreClient(Context):
     """
     def __init__(self):
         pass
-
-    @staticmethod
-    def create(
-            username, password, host):
-            Context.create(username=username, password=password, host=host) 
 
     @staticmethod
     def setup(
