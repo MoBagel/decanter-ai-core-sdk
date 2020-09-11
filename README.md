@@ -9,11 +9,16 @@ It supports actions such as data uploading, model training, and prediction to ru
 
 To know more about Decanter AI and how you can be benefited with AutoML, visit [MoBagel website](https://mobagel.com/product/) and contact us to try it out!
 
+## System Requirement
+* python3.7
+
+
 ## Install
 Install and update using pip:
 ```bash
 pip install decanter-ai-core-sdk
 ```
+
 
 ## Basic Example: Upload Data
 ```python
@@ -41,6 +46,15 @@ $ python -m example.file
 Progress UploadTask_train:  55%|█████████████████████████████████████████
 ```
 
+## Example Code
+* Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
+* Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
+
+
+## Development Guide and Flow
+* If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
+
+
 ## Tutorial for Jupyter Notebook
 If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.
 If you need to handle running tasks well, refer to our [jupyter_jobs_handle_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_jobs_handle_example.ipynb).
@@ -57,6 +71,8 @@ For guidance on setting up a development environment and how to make a contribut
 ## Links
 For more details on design, guidance on setting up a development environment, and SDK usage.
 
+* Introduction about Decanter AI: https://mobagel.com/solution
+* Introduction about Decanter AI SDK: https://mobagel.github.io/decanter-ai-core-sdk/
 * Code: https://github.com/MoBagel/decanter-ai-core-sdk
 * Installation: https://mobagel.github.io/decanter-ai-core-sdk/user/install.html
 * API interface: https://mobagel.github.io/decanter-ai-core-sdk/api.html
