@@ -49,6 +49,12 @@ Progress UploadTask_train:  55%|████████████████
 ## Example Code
 * Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
 * Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
+Note: In Jupyter, it will initially exist a running event loop.
+```python
+import asyncio
+loop = asyncio.get_running_loop()
+loop.is_running()
+```
 
 
 ## Development Guide and Flow
