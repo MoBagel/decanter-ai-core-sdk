@@ -143,16 +143,9 @@ class ModelSpec(CoreBodyObj):
 class TSGroupBy(CoreBodyObj):
     """Time series group by."""
     @classmethod
-    @corex_obj(required=None)
+    @corex_obj(required={'time_unit', 'numerical_groupby_method', 'categorical_groupby_method'})
     def create(cls, **kwargs):
         """Return TSGroupBy object with passed kwargs as attributes"""
-        at_least = {
-            'time_unit',
-            'numerical_groupby_method',
-            'categorical_groupby_method',
-            }
-        if all(kwargs[x] is None for x in at_least):
-            return None
         return cls(**kwargs)
 
 
@@ -173,7 +166,7 @@ class BuildSpec(CoreBodyObj):
         return cls(**kwargs)
 
 class TrainAutoTSBody(CoreBodyObj):
-    """Body for auto ts train api."""
+    """Body for auto time series train api."""
     @classmethod
     @corex_obj(required={'build_spec', 'input_spec'})
     def create(cls, **kwargs):
@@ -191,7 +184,7 @@ class PredictBody(CoreBodyObj):
 
 
 class PredictBodyTSModel(CoreBodyObj):
-    """Body for predict time series forcast model api."""
+    """Body for predict time series forecast model api."""
     @classmethod
     @corex_obj(required={'data_id', 'model_id'})
     def create(cls, **kwargs):

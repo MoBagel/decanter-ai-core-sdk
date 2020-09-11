@@ -123,15 +123,15 @@ class TrainTSInput:
         elif nullable != None:
             if len(id) == len(data_type) and len(data_type) == len(nullable) :
                 columns = map(
-                        lambda tuple3:CoreBody.Column.create(id=tuple3[0], data_type=tuple3[1], nullable=tuple3[2]),
-                        [(id[i], data_type[i], nullable[i]) for i in range(len(id))]
+                        lambda id, data_type, nullable:CoreBody.Column.create(id=id, data_type=data_type, nullable=nullable),
+                        [{'id': id[i], 'data_type': data_type[i], 'nullable': nullable[i]} for i in range(len(id))]
                     )
             else:
                 raise ValueError('id, data_type and nullable list length require identically.')
         elif len(id) == len(data_type):
             columns = map(
-                    lambda tuple2:CoreBody.Column.create(id=tuple2[0], data_type=tuple2[1]),
-                    [(id[i], data_type[i]) for i in range(len(id))]
+                    lambda id, data_type:CoreBody.Column.create(id=id, data_type=data_type),
+                    [{'id': id[i], 'data_type': data_type[i]} for i in range(len(id))]
                 )
         else:
             raise ValueError('id and data_type list length require identically.')
