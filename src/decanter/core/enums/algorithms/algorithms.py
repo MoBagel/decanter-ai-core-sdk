@@ -1,10 +1,14 @@
 """
-The enumerate Algos are the machined learning algorithms
-currently supported by the Decanter AI Core SDK
+Function for user access the Algorithms
+of the Decanter AI Core SDK.
 """
 from enum import Enum
 
 class Algos(Enum):
+	"""
+    Evaluator are the algorithms currently 
+    supported by the Decanter AI Core SDK
+    """
     DRF = 'DRF'
     GLM = 'GLM'
     GBM = 'GBM'

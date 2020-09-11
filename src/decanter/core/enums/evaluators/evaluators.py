@@ -1,10 +1,14 @@
 """
-the enumerate Evaluator are the metrics
-currently supported by the Decanter AI Core SDK
+Function for user access the Metrics 
+of the Decanter AI Core SDK.
 """
 from enum import Enum
 
 class Evaluator(Enum):
+    """
+    Evaluator are the metrics currently 
+    supported by the Decanter AI Core SDK
+    """
     auto = 'auto'
     mse = 'mse'
     rmse = 'rmse'
