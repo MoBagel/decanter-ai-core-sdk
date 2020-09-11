@@ -15,14 +15,13 @@ def main():
     # Enable default logger for logging message
     core.enable_default_logger()
 
-    # Create connection to decanter server, and set up basic settings.
+    # The Main object handles the calling of Decanter's API.
+    client = core.CoreClient()
+
+    # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    context = core.Context.create(
-        username='{usr}', password='{pwd}', host='{decantercoreserver}')
-
-    # The Main object handles the calling of Decanter Core's API.
-    client = core.CoreClient()
+    client.create(username='{usr}', password='{pwd}', host='{decantercoreserver}')
 
     train_file_path = '{file_path}'
     test_file_path = '{file_path}'
@@ -59,7 +58,7 @@ def main():
     # Logger message:
     #     Job proccessing: Create a progress bar showing its current process.
     #     Job finished: "[Job] 'name' done status: 'final status' id: 'id'"
-    context.run()
+    client.run()
 
     # Print out the text result of prediction.
     print(pred_ts_res.show())
@@ -70,7 +69,7 @@ def main():
     # Dwonload predict results in csv to local.
     pred_ts_res.download_csv(path='./tmp/pred_res.csv')
 
-    context.close()
+    client.close()
 
 
 if __name__ == '__main__':

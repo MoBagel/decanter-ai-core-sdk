@@ -33,8 +33,18 @@ class CoreClient(Context):
         pass
 
     @staticmethod
-    def create(
-            username, password, host):
+    def create(username, password, host):
+    """Create context instance and init neccessary variable and objects.
+
+        Setting the user, password, and host for the funture connection when
+        calling APIs, and create an event loop if it isn't exist. Check if the
+        connection is healthy after args be set.
+
+        Args:
+            username (str): User name for login Decanter Core server
+            password (str): Password name for login Decanter Core server
+            host (str): Decanter Core server URL.
+        """
         Context.create(username=username, password=password, host=host)
 
     @staticmethod
