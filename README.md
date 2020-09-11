@@ -49,7 +49,8 @@ Progress UploadTask_train:  55%|████████████████
 ## Example Code
 * Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
 * Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
-Note: In Jupyter, it will initially exist a running event loop.
+<br/> Note: 
+<br/> Since Jupyter already have an event loop, SDK will just use the current event loop. See more in [here](https://www.notion.so/API-615d2fba4e7f45c4b5fe63cc192e481f#bb4f0a4b2847450abc4f80b025469170). In Jupyter, it will initially exist a (asyncio) running event loop. <br/> More details about asyncio in [learn asyncio](https://docs.python.org/3/library/asyncio.html)
 ```python
 import asyncio
 loop = asyncio.get_running_loop()
