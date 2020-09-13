@@ -5,7 +5,7 @@ of the Decanter AI Core SDK.
 from enum import Enum
 
 class Algos(Enum):
-	"""
+    """
     Evaluator are the algorithms currently 
     supported by the Decanter AI Core SDK
     """
