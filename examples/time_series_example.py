@@ -16,12 +16,10 @@ def main():
     core.enable_default_logger()
 
     # The Main object handles the calling of Decanter's API.
-    client = core.CoreClient()
-
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    client.create(username='{usr}', password='{pwd}', host='{decantercoreserver}')
+    client = core.CoreClient(username='{usr}', password='{pwd}', host='{decantercoreserver}')
 
     train_file_path = '{file_path}'
     test_file_path = '{file_path}'

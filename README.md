@@ -20,16 +20,15 @@ pip install decanter-ai-core-sdk
 from decanter import core
 
 core.enable_default_logger()
-context = core.Context.create(
+client = core.CoreClient(
         username='{usr}', password='{pwd}', host='{decanter-core-server}')
-client = core.CoreClient()
 
 train_file = open(train_file_path, 'r')
 train_data = client.upload(file=train_file, name="train")
 
 # in jupyter notebook just run the block
 # no need to call context.run()
-context.run()
+client.run()
 
 train_data.show()
 ```
