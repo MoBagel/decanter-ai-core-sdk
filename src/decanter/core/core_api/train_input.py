@@ -109,33 +109,16 @@ class TrainTSInput:
             Request body for sending time series training api.
     """
     def __init__(
-        self, data, target, datetime_column, forecast_horizon, gap, id=None, data_type=None,
-        callback=None, version='v2', max_iteration=None, generation_size=None, mutation_rate=None,
-        crossover_rate=None, tolerance=None, validation_percentage=None, holdout_percentage=None,
-        max_model=None, seed=None, evaluator=None, max_run_time=None, nfold=None,time_unit=None,
-        numerical_groupby_method=None, categorical_groupby_method=None,endogenous_features=None,
-        exogenous_features=None, nullable=None, time_groups=None, max_window_for_feature_derivation=None):
+            self, data, target, datetime_column, forecast_horizon, gap, feature_types=None,
+            callback=None, version='v2', max_iteration=None, generation_size=None,
+            mutation_rate=None, crossover_rate=None, tolerance=None, validation_percentage=None,
+            holdout_percentage=None, max_model=None, seed=None, evaluator=None,
+            max_run_time=None, nfold=None, time_unit=None, numerical_groupby_method=None,
+            categorical_groupby_method=None, endogenous_features=None, exogenous_features=None,
+            time_groups=None, max_window_for_feature_derivation=None):
 
         self.data = data
 
-        if id is None:
-            columns = None
-        elif nullable != None:
-            if len(id) == len(data_type) and len(data_type) == len(nullable) :
-                columns = map(
-                        lambda id, data_type, nullable:CoreBody.Column.create(id=id, data_type=data_type, nullable=nullable),
-                        [{'id': id[i], 'data_type': data_type[i], 'nullable': nullable[i]} for i in range(len(id))]
-                    )
-            else:
-                raise ValueError('id, data_type and nullable list length require identically.')
-        elif len(id) == len(data_type):
-            columns = map(
-                    lambda id, data_type:CoreBody.Column.create(id=id, data_type=data_type),
-                    [{'id': id[i], 'data_type': data_type[i]} for i in range(len(id))]
-                )
-        else:
-            raise ValueError('id and data_type list length require identically.')
-        
         geneticAlgorithm = CoreBody.GeneticAlgorithmParams.create(
             max_iteration=max_iteration,
             generation_size=generation_size,
@@ -157,7 +140,7 @@ class TrainTSInput:
             time_unit=time_unit,
             numerical_groupby_method=numerical_groupby_method,
             categorical_groupby_method=categorical_groupby_method
-        )  
+        )
         input_spec = CoreBody.InputSpec.create(
             train_data_id='tmp_data_id',
             target=target,
@@ -166,13 +149,13 @@ class TrainTSInput:
             datetime_column=datetime_column,
             forecast_horizon=forecast_horizon,
             gap=gap,
-            feature_types=columns,
+            feature_types=feature_types,
             time_groups=time_groups,
             max_window_for_feature_derivation=max_window_for_feature_derivation,
             group_by=group_by
         )
 
-        self.train_auto_ts_body=CoreBody.TrainAutoTSBody.create(
+        self.train_auto_ts_body = CoreBody.TrainAutoTSBody.create(
             callback=callback,
             version=version,
             build_spec=build_spec,
