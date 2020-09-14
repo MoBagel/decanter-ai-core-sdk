@@ -7,7 +7,7 @@
 import json
 
 from decanter.core.core_api import CoreBody
-
+from decanter.core.enums.algorithms import Algos as Alg
 
 class TrainInput:
     """Train Input for Experiment Job.
@@ -24,7 +24,7 @@ class TrainInput:
         .. code-block:: python
 
             train_input = TrainInput(data=train_data, target='Survived',
-            algos=["XGBoost"], max_model=2, tolerance=0.9)
+            algos=Alg.XGBoost, max_model=2, tolerance=0.9)
 
     """
     def __init__(

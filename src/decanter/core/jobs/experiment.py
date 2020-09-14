@@ -12,6 +12,7 @@ from decanter.core.extra.decorators import update
 from decanter.core.extra.utils import check_response, gen_id
 from decanter.core.jobs.job import Job
 from decanter.core.jobs.task import TrainTask, TrainTSTask
+from decanter.core.enums.evaluators import Evaluator as Eva
 
 
 logger = logging.getLogger(__name__)
@@ -47,7 +48,7 @@ class Experiment(Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress.
     """
-    def __init__(self, train_input, select_model_by='mse', name=None):
+    def __init__(self, train_input, select_model_by=Eva.mse, name=None):
         super().__init__(
             jobs=[train_input.data],
             task=TrainTask(train_input, name=name),

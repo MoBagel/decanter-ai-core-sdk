@@ -5,6 +5,8 @@ import os
 
 from decanter import core
 from decanter.core.core_api import TrainTSInput, PredictTSInput
+from decanter.core.enums.algorithms import Algos as Alg
+from decanter.core.enums.evaluators import Evaluator as Eva
 # from decanter.core.jobs import DataUpload, Experiment
 
 
@@ -40,13 +42,13 @@ def main():
     train_input = TrainTSInput(
         data=train_data, target='amount', forecast_horizon=7, gap=1,
         datetime_column='DATE', time_group='STOCKCODE', max_model=1,
-        tolerance=0.9, evaluator='mse', max_window_for_feature_derivation=7,
+        tolerance=0.9, evaluator=Eva.mse, max_window_for_feature_derivation=7,
         endogenous_features=['amount'], time_unit='day',
         regression_method='sum', classification_method='count')
 
     # Start train time series models.
     exp_ts = client.train_ts(
-        train_input=train_input, select_model_by='mse', name='ExpTS')
+        train_input=train_input, select_model_by=Eva.mse, name='ExpTS')
 
     # Settings for predict time series model using PredictTSInput.
     predict_ts_input = PredictTSInput(data=test_data, experiment=exp_ts)
