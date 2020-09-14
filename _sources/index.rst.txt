@@ -49,3 +49,4 @@ Design notes, legal information and changelog are here for the interested.
    notes/design
    notes/changelog
    notes/contributing
+   notes/supported_algorithms
