@@ -17,7 +17,7 @@ class TrainInput:
     Attributes:
         data (:class:`~decanter.core.jobs.data_upload.DataUpload`):
             Train data uploaded on Decanter Core server
-        train_body (:class:`~decanter.core.extra.body_obj.TrainBody`):
+        train_body (:class:`~decanter.core.core_api.body_obj.TrainBody`):
             Request body for sending train api.
 
     Example:
@@ -100,90 +100,76 @@ class TrainInput:
 class TrainTSInput:
     """Train Input for ExperimentTS Job.
 
-    Settings for time series training.
+    Settings for auto time series forecast training.
 
     Attributes:
         data (:class:`~decanter.core.jobs.data_upload.DataUpload`): Train data uploaded on
             Decanter Core server
-        train_body (:class:`~decanter.core.extra.body_obj.TrainTrainAutoTSBodyBody`):
+        train_body (:class:`~decanter.core.core_api.body_obj.TrainAutoTSBody`):
             Request body for sending time series training api.
     """
     def __init__(
-            self, data, target, datetime_column, endogenous_features,
-            forecast_horizon, gap, time_unit, regression_method,
-            classification_method, callback=None, max_iteration=None,
-            max_window_for_feature_derivation=None, generation_size=None,
-            mutation_rate=None, crossover_rate=None, tolerance=None,
-            validation_percentage=None, max_model=None, seed=None,
-            evaluator=None, max_run_time=None, apu=None, algos=None,
-            nfold=None, balance_class=None, max_after_balance=None,
-            sampling_factors=None, test_base_id=None, holdout_percentage=None,
-            time_group=None, feature_types=None):
+            self, data, target, datetime_column, forecast_horizon, gap, feature_types=None,
+            callback=None, version='v2', max_iteration=None, generation_size=None,
+            mutation_rate=None, crossover_rate=None, tolerance=None, validation_percentage=None,
+            holdout_percentage=None, max_model=None, seed=None, evaluator=None,
+            max_run_time=None, nfold=None, time_unit=None, numerical_groupby_method=None,
+            categorical_groupby_method=None, endogenous_features=None, exogenous_features=None,
+            time_groups=None, max_window_for_feature_derivation=None):
 
         self.data = data
-        model_build_control = CoreBody.ModelBuildControl.create(
-            tolerance=tolerance,
-            validation_percentage=validation_percentage,
-            max_model=max_model)
 
-        genetic_algorithm = CoreBody.GeneticAlgorithmParams.create(
+        geneticAlgorithm = CoreBody.GeneticAlgorithmParams.create(
             max_iteration=max_iteration,
-            max_window_for_feature_derivation=max_window_for_feature_derivation,
             generation_size=generation_size,
             mutation_rate=mutation_rate,
-            crossover_rate=crossover_rate)
-
-        build_control = CoreBody.BuildControl.create(
-            model_build_control=model_build_control,
+            crossover_rate=crossover_rate
+        )
+        build_spec = CoreBody.BuildSpec.create(
+            tolerance=tolerance,
+            validation_percentage=validation_percentage,
+            holdout_percentage=holdout_percentage,
+            max_model=max_model,
             seed=seed,
             evaluator=evaluator,
             max_run_time=max_run_time,
-            apu=apu,
-            genetic_algorithm=genetic_algorithm)
-
-        model_spec = CoreBody.ModelSpec.create(
-            endogenous_features=endogenous_features,
-            algos=algos,
-            nfold=nfold,
-            balance_class=balance_class,
-            max_after_balance=max_after_balance,
-            sampling_factors=sampling_factors)
-
-        feature_types = CoreBody.column_array(feature_types)
-
+            genetic_algorithm=geneticAlgorithm,
+            nfold=nfold
+        )
         group_by = CoreBody.TSGroupBy.create(
             time_unit=time_unit,
-            regression_method=regression_method,
-            classification_method=classification_method)
-
+            numerical_groupby_method=numerical_groupby_method,
+            categorical_groupby_method=categorical_groupby_method
+        )
         input_spec = CoreBody.InputSpec.create(
             train_data_id='tmp_data_id',
             target=target,
+            endogenous_features=endogenous_features,
+            exogenous_features=exogenous_features,
             datetime_column=datetime_column,
             forecast_horizon=forecast_horizon,
             gap=gap,
-            test_base_id=test_base_id,
-            holdout_percentage=holdout_percentage,
             feature_types=feature_types,
-            time_group=time_group,
-            group_by=group_by)
+            time_groups=time_groups,
+            max_window_for_feature_derivation=max_window_for_feature_derivation,
+            group_by=group_by
+        )
 
         self.train_auto_ts_body = CoreBody.TrainAutoTSBody.create(
             callback=callback,
-            build_control=build_control,
-            model_spec=model_spec,
-            input_spec=input_spec)
+            version=version,
+            build_spec=build_spec,
+            input_spec=input_spec
+        )
 
     def get_train_params(self):
         """Using train_auto_ts_body to create the JSON request body
-        for time series training.
+        for time series forecast training.
 
         Returns:
             :obj:`dict`
         """
-        setattr(
-            self.train_auto_ts_body.input_spec, 'train_data_id', self.data.id)
-        params = json.dumps(
-            self.train_auto_ts_body.jsonable(), cls=CoreBody.ComplexEncoder)
+        setattr(self.train_auto_ts_body.input_spec, 'train_data_id', self.data.id)
+        params = json.dumps(self.train_auto_ts_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
         return params
