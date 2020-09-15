@@ -7,7 +7,7 @@ import logging
 import pandas as pd
 
 from decanter.core import Context
-from decanter.core.jobs import DataUpload,\
+from decanter.core.jobs import DataUpload, DataSetup,\
                        Experiment, ExperimentTS,\
                        PredictResult, PredictTSResult
 import decanter.core.core_api.body_obj as CoreBody
@@ -16,7 +16,7 @@ import decanter.core.jobs.task as jobsTask
 logger = logging.getLogger(__name__)
 
 
-class CoreClient:
+class CoreClient(Context):
     """Handle client side actions.
 
     Support actions sunch as setup data, upload data, train,
@@ -34,8 +34,13 @@ class CoreClient:
         pass
 
     @staticmethod
+    def create(
+            username, password, host):
+            Context.create(username=username, password=password, host=host)
+
+    @staticmethod
     def setup(
-            data_source, data_columns, data_id=None, callback=None,
+            train_data, data_source, data_columns, data_id=None, callback=None,
             eda=None, preprocessing=None, version=None, name=None):
         """Setup data reference.
 
@@ -81,7 +86,7 @@ class CoreClient:
         params = json.dumps(
             setup_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
-        data = DataUpload(setup_params=params, name=name)
+        data = DataSetup(train_data=train_data, setup_params=params, name=name)
 
         try:
             if Context.LOOP is None:
