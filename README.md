@@ -40,7 +40,6 @@ $ python -m example.file
 Progress UploadTask_train:  55%|█████████████████████████████████████████
 ```
 
-<<<<<<< HEAD
 ## Auto Time Series Example: Upload Data, Train Time Series Forecast Experiment and Predict
 train data path: `examples/data/tsf/iris_train.csv`
 test data path: `examples/data/tsf/iris_train_test.csv`
@@ -48,7 +47,6 @@ test data path: `examples/data/tsf/iris_train_test.csv`
 ```bash
 $ python example/auto_time_series_example.py
 ```
-=======
 ## Example Code
 * Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
 * Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
@@ -57,7 +55,6 @@ $ python example/auto_time_series_example.py
 ## Development Guide and Flow
 * If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
 
->>>>>>> feature/predict-with-model
 
 ## Tutorial for Jupyter Notebook
 If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.
