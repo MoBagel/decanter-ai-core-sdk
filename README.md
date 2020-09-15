@@ -25,9 +25,8 @@ pip install decanter-ai-core-sdk
 from decanter import core
 
 core.enable_default_logger()
-context = core.Context.create(
+client = core.CoreClient(
         username='{usr}', password='{pwd}', host='{decanter-core-server}')
-client = core.CoreClient()
 
 train_file = open(train_file_path, 'r')
 train_data = client.upload(file=train_file, name="train")
@@ -46,6 +45,7 @@ $ python -m example.file
 Progress UploadTask_train:  55%|█████████████████████████████████████████
 ```
 
+<<<<<<< HEAD
 ## Example Code
 * Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
 * Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
@@ -61,6 +61,15 @@ loop.is_running()
 ## Development Guide and Flow
 * If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
 
+=======
+## Auto Time Series Example: Upload Data, Train Time Series Forecast Experiment and Predict
+train data path: `examples/data/tsf/iris_train.csv`
+test data path: `examples/data/tsf/iris_train_test.csv`
+
+```bash
+$ python example/auto_time_series_example.py
+```
+>>>>>>> remotes/upstream/master
 
 ## Tutorial for Jupyter Notebook
 If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.

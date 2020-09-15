@@ -188,16 +188,17 @@ class CoreAPI:
         """
         return self.requests_(http='POST', url='/v2/tasks/train', json=kwargs)
 
-    def post_tasks_train_time_series(self, **kwargs):
-        """Train time series multi model from data reference.
+    def post_tasks_auto_ts_train(self, **kwargs):
+        """Train time series forecast multi model from data reference.
 
-        Endpoint: /v2/tasks/train_time_series
+        Endpoint: /v2/tasks/auto_ts/train
 
         Returns:
             class:`Response <Response>` object
         """
         return self.requests_(
-            http='POST', url='/v2/tasks/train_time_series', json=kwargs)
+            http='POST', url='/v2/tasks/auto_ts/train', json=kwargs)
+
 
     def post_tasks_predict(self, **kwargs):
         """Predict from model.
@@ -210,16 +211,16 @@ class CoreAPI:
         return self.requests_(
             http='POST', url='/v2/tasks/predict', json=kwargs)
 
-    def post_tasks_predict_tsmodel(self, **kwargs):
-        """Predict from TS model.
+    def post_tasks_auto_ts_predict(self, **kwargs):
+        """Predict from time series forecast model.
 
-        Endpoint: /v2/tasks/predict/tsmodel
+        Endpoint: /v2/tasks/auto_ts/predict
 
         Returns:
             class:`Response <Response>` object
         """
         return self.requests_(
-            http='POST', url='/v2/tasks/predict/tsmodel', json=kwargs)
+            http='POST', url='/v2/tasks/auto_ts/predict', json=kwargs)
 
     def get_experiments_by_id(self, exp_id):
         """Get experiment metadata.
@@ -234,13 +235,13 @@ class CoreAPI:
     def get_models_by_id(self, exp_id, model_id):
         """Get model metadata.
 
-        Endpoint: /v2/models/{model_id}
+        Endpoint: /v2/experiments/{exp_id}/models/{model_id}
 
         Returns:
             class:`Response <Response>` object
         """
         return self.requests_(
-            http='GET', url='/experiments/%s/models/%s' % (exp_id, model_id))
+            http='GET', url='/v2/experiments/%s/models/%s' % (exp_id, model_id))
 
     def get_models_download_by_id(self, model_id):
         """Get model mojo file.
@@ -253,16 +254,16 @@ class CoreAPI:
         return self.requests_(http='GET', url='/models/%s/download' % model_id)
 
     def get_multimodels_by_id(self, exp_id, model_id):
-        """Get multi model mojo file.
+        """Get multimodel meta data by model_id which trained in the experiment.
 
-        Endpoint: /experiments/{exp_id}/multimodels/{model_id}
+        Endpoint: /auto_ts/experiments/{exp_id}/models/{model_id}
 
         Returns:
             class:`Response <Response>` object
         """
         return self.requests_(
             http='GET',
-            url='/experiments/%s/multimodels/%s' % (exp_id, model_id))
+            url='/auto_ts/experiments/%s/models/%s' % (exp_id, model_id))
 
     def get_worker_count(self):
         """Get counts of each type of worker
