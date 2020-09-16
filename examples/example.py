@@ -70,11 +70,11 @@ def main():
     # Settings for training model using TrainInput.
     train_input = TrainInput(
         data=train_data, target='Survived',
-        algos=[Alg.XGBoost.value], max_model=2, tolerance=0.9)
+        algos=[Alg.XGBoost], max_model=2, tolerance=0.9)
 
     # Start Model Training, get Experiment result in return.
     exp = client.train(
-        train_input=train_input, select_model_by=Eva.mean_per_class_error.value,
+        train_input=train_input, select_model_by=Eva.mean_per_class_error,
         name='myexp')
 
     # Settings for predict model using PredictInput.

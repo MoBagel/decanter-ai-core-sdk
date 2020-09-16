@@ -11,11 +11,14 @@ from decanter.core.jobs import DataUpload,\
                        Experiment, ExperimentTS,\
                        PredictResult, PredictTSResult
 import decanter.core.core_api.body_obj as CoreBody
+from decanter.core.enums.algorithms import Algos as Alg
+from decanter.core.enums.evaluators import Evaluator as Eva
+from decanter.core.enums import check_is_enum
 
 logger = logging.getLogger(__name__)
 
 
-class CoreClient:
+class CoreClient(Context):
     """Handle client side actions.
 
     Support actions sunch as setup data, upload data, train,
@@ -31,6 +34,11 @@ class CoreClient:
     """
     def __init__(self):
         pass
+
+    @staticmethod
+    def create(
+            username, password, host):
+            Context.create(username=username, password=password, host=host)
 
     @staticmethod
     def setup(
@@ -139,7 +147,7 @@ class CoreClient:
         return data
 
     @staticmethod
-    def train(train_input, select_model_by='mse', name=None):
+    def train(train_input, select_model_by=Eva.mse, name=None):
         """Train model with data.
 
         Create a Experiment Job and scheduled the execution in CORO_TASKS list.
@@ -158,6 +166,7 @@ class CoreClient:
             AttributeError: If the function is called without
                 :class:`~decanter.core.context.Context` created.
         """
+        select_model_by = check_is_enum(Eva, select_model_by)
         logger.debug('[Core] Create Train Job')
         exp = Experiment(
             train_input=train_input,
@@ -174,7 +183,7 @@ class CoreClient:
         return exp
 
     @staticmethod
-    def train_ts(train_input, select_model_by='mse', name=None):
+    def train_ts(train_input, select_model_by=Eva.mse, name=None):
         """Train time series model with data.
 
         Create a Time Series Experiment Job and scheduled the execution
@@ -193,6 +202,7 @@ class CoreClient:
             AttributeError: If the function is called without
                 :class:`~decanter.core.context.Context` created.
         """
+        select_model_by = check_is_enum(Eva, select_model_by)
         logger.debug('[Core] Create Train Job')
         exp_ts = ExperimentTS(
             train_input=train_input,

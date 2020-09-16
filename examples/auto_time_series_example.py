@@ -45,7 +45,7 @@ def main():
         max_iteration=10, numerical_groupby_method='mean')
 
     # Start train time series models.
-    exp_ts = client.train_ts(train_input=train_input, select_model_by=Eva.r2.value, name='ExpTS')
+    exp_ts = client.train_ts(train_input=train_input, select_model_by=Eva.r2, name='ExpTS')
 
     # Settings for predict time series model using PredictTSInput.
     predict_ts_input = PredictTSInput(data=test_data, experiment=exp_ts)

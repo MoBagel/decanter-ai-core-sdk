@@ -14,7 +14,6 @@ from decanter.core.jobs.job import Job
 from decanter.core.jobs.task import TrainTask, TrainTSTask
 from decanter.core.enums.evaluators import Evaluator as Eva
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -169,7 +168,6 @@ class ExperimentTS(Experiment, Job):
             jobs=[train_input.data],
             task=TrainTSTask(train_input, name=name),
             name=gen_id(self.__class__.__name__, name))
-
         self.train_input = train_input
         self.best_model = MultiModel()
         self.select_model_by = select_model_by
