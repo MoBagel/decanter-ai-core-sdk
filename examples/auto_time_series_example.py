@@ -41,7 +41,7 @@ def main():
     # Settings for time series forecast training.
     train_input = TrainTSInput(
         data=train_data, target='regression', forecast_horizon=7, gap=0,
-        datetime_column='date', max_model=1, evaluator=Eva.r2.value, time_unit='day',
+        datetime_column='date', max_model=1, evaluator=Eva.r2, time_unit='day',
         max_iteration=10, numerical_groupby_method='mean')
 
     # Start train time series models.
