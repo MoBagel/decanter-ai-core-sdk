@@ -1,12 +1,12 @@
 """
-Function for user access the Algorithms
-of the Decanter AI Core SDK.
+Function for user access the Machine Learning
+Algorithms of the Decanter AI Core SDK.
 """
 from enum import Enum
 
 class Algos(Enum):
     """
-    Evaluator are the algorithms currently 
+    The class Algos is the machine learning algorithms currently 
     supported by the Decanter AI Core SDK
     """
     DRF = 'DRF'

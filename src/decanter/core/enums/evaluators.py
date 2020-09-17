@@ -1,12 +1,12 @@
 """
-Function for user access the Metrics 
+Function for user access the Evaluators Metrics 
 of the Decanter AI Core SDK.
 """
 from enum import Enum
 
 class Evaluator(Enum):
     """
-    Evaluator are the metrics currently 
+    The class Evaluator is the metrics currently 
     supported by the Decanter AI Core SDK
     """
     auto = 'auto'
