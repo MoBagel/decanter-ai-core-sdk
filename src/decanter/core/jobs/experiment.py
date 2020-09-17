@@ -11,6 +11,7 @@ from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import update
 from decanter.core.extra.utils import check_response, gen_id
 from decanter.core.jobs.job import Job
+from decanter.core.jobs.data_setup import DataSetup
 from decanter.core.jobs.task import TrainTask, TrainTSTask
 
 logger = logging.getLogger(__name__)
@@ -48,7 +49,9 @@ class Experiment(Job):
     """
     def __init__(self, train_input, select_model_by='mse', name=None):
         super().__init__(
-            jobs=[train_input.data],
+            jobs=[train_input.data, train_input.data.jobs[0]] 
+                    if isinstance(train_input.data, DataSetup)
+                    else [train_input.data],
             task=TrainTask(train_input, name=name),
             name=gen_id(self.__class__.__name__, name))
 

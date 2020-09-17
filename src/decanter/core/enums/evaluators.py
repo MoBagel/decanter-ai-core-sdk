@@ -1,15 +1,13 @@
 """
-An enumeration is a set of symbolic names (members)
-bound to unique, constant values. Within an enumeration,
-the members can be compared by identity, and the enumeration
-itself can be iterated over.
+Function for user access the Evaluators Metrics 
+of the Decanter AI Core SDK.
 """
 from enum import Enum
 
 class Evaluator(Enum):
     """
-    the class Evaluator are the metrics
-    currently supported by the Decanter AI Core SDK
+    The class Evaluator is the metrics currently 
+    supported by the Decanter AI Core SDK
     """
     auto = 'auto'
     mse = 'mse'
