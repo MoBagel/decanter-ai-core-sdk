@@ -112,6 +112,7 @@ class PredictTSInput(PredictInput):
             self, data, experiment, callback=None,
             keep_columns=None, threshold_max_by=None, version=None):
         super().__init__(data=data, experiment=experiment)
+
         self.pred_body = CoreBody.PredictBodyTSModel.create(
             data_id='tmp_data_id', model_id='tmp_model_id', callback=callback,
             keep_columns=keep_columns, threshold_max_by=threshold_max_by, version=version)
