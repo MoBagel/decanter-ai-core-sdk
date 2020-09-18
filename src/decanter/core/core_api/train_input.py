@@ -26,7 +26,7 @@ class TrainInput:
         .. code-block:: python
 
             train_input = TrainInput(data=train_data, target='Survived',
-            algo=Alg.XGBoost, max_model=2, tolerance=0.9)
+            algos=Algo.XGBoost, max_model=2, tolerance=0.9)
 
     """
     def __init__(

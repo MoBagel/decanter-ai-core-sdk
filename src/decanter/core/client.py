@@ -48,16 +48,6 @@ class CoreClient(Context):
         
 
     @staticmethod
-    def create(
-            username, password, host):
-            Context.create(username=username, password=password, host=host)
-
-    @staticmethod
-    def create(
-            username, password, host):
-            Context.create(username=username, password=password, host=host)
-
-    @staticmethod
     def setup(
             train_data, data_source, data_columns, data_id=None, callback=None,
             eda=None, preprocessing=None, version=None, name=None):

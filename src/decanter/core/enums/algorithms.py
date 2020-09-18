@@ -6,7 +6,7 @@ from enum import Enum
 
 class Algo(Enum):
     """
-    The class Algos is the machine learning algorithms currently 
+    The Algo enumeration is the machine learning algorithms currently 
     supported by the Decanter AI Core SDK
     """
     DRF = 'DRF'
