@@ -49,9 +49,7 @@ class Experiment(Job):
     """
     def __init__(self, train_input, select_model_by='mse', name=None):
         super().__init__(
-            jobs=[train_input.data, train_input.data.jobs[0]] 
-                    if isinstance(train_input.data, DataSetup)
-                    else [train_input.data],
+            jobs=[train_input.data],
             task=TrainTask(train_input, name=name),
             name=gen_id(self.__class__.__name__, name))
 
