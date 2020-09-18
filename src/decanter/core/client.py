@@ -7,15 +7,18 @@ import logging
 import pandas as pd
 
 from decanter.core import Context
-from decanter.core.jobs import DataUpload,\
+from decanter.core.jobs import DataUpload, DataSetup,\
                        Experiment, ExperimentTS,\
                        PredictResult, PredictTSResult
 import decanter.core.core_api.body_obj as CoreBody
+from decanter.core.enums.evaluators import Evaluator
+from decanter.core.enums import check_is_enum
+import decanter.core.jobs.task as jobsTask
 
 logger = logging.getLogger(__name__)
 
 
-class CoreClient:
+class CoreClient(Context):
     """Handle client side actions.
 
     Support actions sunch as setup data, upload data, train,
@@ -29,12 +32,24 @@ class CoreClient:
             client.upload(data={csv-file-type/dataframe})
 
     """
-    def __init__(self):
-        pass
+    def __init__(self, username, password, host):
+        """Create context instance and init neccessary variable and objects.
+
+            Setting the user, password, and host for the funture connection when
+            calling APIs, and create an event loop if it isn't exist. Check if the
+            connection is healthy after args be set.
+
+        Args:
+            username (str): User name for login Decanter Core server
+            password (str): Password name for login Decanter Core server
+            host (str): Decanter Core server URL.
+        """
+        Context.create(username=username, password=password, host=host)
+        
 
     @staticmethod
     def setup(
-            data_source, data_columns, data_id=None, callback=None,
+            train_data, data_source, data_columns, data_id=None, callback=None,
             eda=None, preprocessing=None, version=None, name=None):
         """Setup data reference.
 
@@ -80,7 +95,7 @@ class CoreClient:
         params = json.dumps(
             setup_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
-        data = DataUpload(setup_params=params, name=name)
+        data = DataSetup(train_data=train_data, setup_params=params, name=name)
 
         try:
             if Context.LOOP is None:
@@ -139,7 +154,7 @@ class CoreClient:
         return data
 
     @staticmethod
-    def train(train_input, select_model_by='mse', name=None):
+    def train(train_input, select_model_by=Evaluator.mse, name=None):
         """Train model with data.
 
         Create a Experiment Job and scheduled the execution in CORO_TASKS list.
@@ -158,10 +173,11 @@ class CoreClient:
             AttributeError: If the function is called without
                 :class:`~decanter.core.context.Context` created.
         """
+        select_model_by = check_is_enum(Evaluator, select_model_by)
         logger.debug('[Core] Create Train Job')
         exp = Experiment(
-            train_input=train_input,
-            select_model_by=select_model_by, name=name)
+                train_input=train_input,
+                select_model_by=select_model_by, name=name)
         try:
             if Context.LOOP is None:
                 raise AttributeError('[Core] event loop is \'NoneType\'')
@@ -174,7 +190,7 @@ class CoreClient:
         return exp
 
     @staticmethod
-    def train_ts(train_input, select_model_by='mse', name=None):
+    def train_ts(train_input, select_model_by=Evaluator.mse, name=None):
         """Train time series model with data.
 
         Create a Time Series Experiment Job and scheduled the execution
@@ -193,6 +209,7 @@ class CoreClient:
             AttributeError: If the function is called without
                 :class:`~decanter.core.context.Context` created.
         """
+        select_model_by = check_is_enum(Evaluator, select_model_by)
         logger.debug('[Core] Create Train Job')
         exp_ts = ExperimentTS(
             train_input=train_input,

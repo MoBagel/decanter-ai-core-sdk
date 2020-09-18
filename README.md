@@ -33,7 +33,7 @@ train_data = client.upload(file=train_file, name="train")
 
 # in jupyter notebook just run the block
 # no need to call context.run()
-context.run()
+client.run()
 
 train_data.show()
 ```
@@ -63,13 +63,22 @@ loop.is_running()
 
 =======
 ## Auto Time Series Example: Upload Data, Train Time Series Forecast Experiment and Predict
-train data path: `examples/data/tsf/iris_train.csv`
+train data path: `examples/data/tsf/iris_train.csv`  
 test data path: `examples/data/tsf/iris_train_test.csv`
 
 ```bash
 $ python example/auto_time_series_example.py
 ```
 >>>>>>> remotes/upstream/master
+
+## Example Code
+* Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
+* Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
+
+
+## Development Guide and Flow
+* If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
+
 
 ## Tutorial for Jupyter Notebook
 If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.

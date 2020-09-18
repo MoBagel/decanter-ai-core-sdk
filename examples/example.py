@@ -8,6 +8,8 @@ import pandas as pd
 
 from decanter import core
 from decanter.core.core_api import TrainInput, PredictInput
+from decanter.core.enums.algorithms import Algo
+from decanter.core.enums.evaluators import Evaluator
 # from decanter.core.jobs import DataUpload, Experiment
 
 
@@ -19,14 +21,11 @@ def main():
     # Enable default logger for logging message
     core.enable_default_logger()
 
+    # The Main object handles the calling of Decanter's API.
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    context = core.Context.create(
-        username='{usr}', password='{pwd}', host='{decantercoreserver}')
-
-    # The Main object handles the calling of Decanter's API.
-    client = core.CoreClient()
+    client = core.CoreClient(username='{usr}', password='{pwd}', host='{decantercoreserver}')
 
     train_file_path = '{file_path}'
     test_file_path = '{file_path}'
@@ -46,7 +45,7 @@ def main():
     # Logger message:
     #     Job proccessing: Create a progress bar showing its current process.
     #     Job finished: "[Job] 'name' done status: 'final status' id: 'id'"
-    context.run()
+    client.run()
 
     # Set up data to change data type.
     train_data = client.setup(
@@ -68,11 +67,11 @@ def main():
     # Settings for training model using TrainInput.
     train_input = TrainInput(
         data=train_data, target='Survived',
-        algos=['XGBoost'], max_model=2, tolerance=0.9)
+        algos=[Algo.XGBoost], max_model=2, tolerance=0.9)
 
     # Start Model Training, get Experiment result in return.
     exp = client.train(
-        train_input=train_input, select_model_by='mean_per_class_error',
+        train_input=train_input, select_model_by=Evaluator.mean_per_class_error,
         name='myexp')
 
     # Settings for predict model using PredictInput.
@@ -83,7 +82,7 @@ def main():
 
     # Run all the actions above and make sure all is done before continue
     # to next step.
-    context.run()
+    client.run()
 
     # Print out the text result of prediction.
     print(pred_res.show())
@@ -98,7 +97,7 @@ def main():
     pred_res.download_csv(path='./tmp/pred_res.csv')
 
     # Close context, close event loop and reset connections.
-    context.close()
+    client.close()
 
 
 if __name__ == '__main__':
