@@ -114,7 +114,6 @@ class GeneticAlgorithmParams(CoreBodyObj):
         """
         at_least = {
             'max_iteration',
-            'max_window_for_feature_derivation',
             'generation_size',
             'mutation_rate',
             'crossover_rate'}
@@ -144,8 +143,7 @@ class ModelSpec(CoreBodyObj):
 class TSGroupBy(CoreBodyObj):
     """Time series group by."""
     @classmethod
-    @corex_obj(
-        required={'time_unit', 'regression_method', 'classification_method'})
+    @corex_obj(required=None)
     def create(cls, **kwargs):
         """Return TSGroupBy object with passed kwargs as attributes"""
         return cls(**kwargs)
@@ -154,19 +152,23 @@ class TSGroupBy(CoreBodyObj):
 class InputSpec(CoreBodyObj):
     """	The input specification"""
     @classmethod
-    @corex_obj(
-        required={
-            'train_data_id', 'target', 'datetime_column',
-            'forecast_horizon', 'group_by'})
+    @corex_obj(required={'train_data_id', 'target', 'datetime_column', 'forecast_horizon', 'gap'})
     def create(cls, **kwargs):
         """Return InputSpec object with passed kwargs as attributes"""
         return cls(**kwargs)
 
+class BuildSpec(CoreBodyObj):
+    """Attribute for TrainAutoTSBody."""
+    @classmethod
+    @corex_obj(required={'genetic_algorithm'})
+    def create(cls, **kwargs):
+        """Return BuildSpec object with passed kwargs as attributes"""
+        return cls(**kwargs)
 
 class TrainAutoTSBody(CoreBodyObj):
-    """Body for train times series api."""
+    """Body for auto time series train api."""
     @classmethod
-    @corex_obj(required={'build_control', 'model_spec', 'input_spec'})
+    @corex_obj(required={'build_spec', 'input_spec'})
     def create(cls, **kwargs):
         """Return TrainAutoTSBody object with passed kwargs as attributes"""
         return cls(**kwargs)
@@ -182,13 +184,12 @@ class PredictBody(CoreBodyObj):
 
 
 class PredictBodyTSModel(CoreBodyObj):
-    """Body for predict time series model api."""
+    """Body for predict time series forecast model api."""
     @classmethod
     @corex_obj(required={'data_id', 'model_id'})
     def create(cls, **kwargs):
         """Return PredictBodyTSModel object with passed kwargs as attributes"""
         return cls(**kwargs)
-
 
 class SetupBody(CoreBodyObj):
     """Body for setup api."""
@@ -197,7 +198,6 @@ class SetupBody(CoreBodyObj):
     def create(cls, **kwargs):
         """Return SetupBody object with passed kwargs as attributes"""
         return cls(**kwargs)
-
 
 def column_array(cols):
     """Turn Josn columns to list of Column objects."""

@@ -230,29 +230,26 @@ class TrainTask(CoreTask):
     def run(self):
         """Execute model training by sending the triain api."""
         train_params = self.train_input.get_train_params()
-        super().run_core_task(
-            api_func=self.core_service.post_tasks_train,
-            **train_params)
+        super().run_core_task(api_func=self.core_service.post_tasks_train, **train_params)
 
 
 class TrainTSTask(CoreTask):
-    """Train time series models on Decanter Core.
+    """Train time series forecast models on Decanter Core.
 
     Attributes:
         train_input (:class:`~decanter.core.core_api.train_input.TrainTSInput`):
-            Settings for training time series models.
+            Settings for training time series forecast models.
     """
     def __init__(self, train_input, name=None):
         super().__init__(name=gen_id('TrainTSTask', name))
         self.train_input = train_input
 
     def run(self):
-        """Execute time seires model training by sending the train
-        time series api."""
+        """Execute time seires forecast model training by sending the auto
+        time series forecast train api."""
         train_params = self.train_input.get_train_params()
         super().run_core_task(
-            api_func=self.core_service.post_tasks_train_time_series,
-            **train_params)
+            api_func=self.core_service.post_tasks_auto_ts_train, **train_params)
 
 
 class PredictTask(CoreTask):
@@ -291,7 +288,7 @@ class PredictTSTask(CoreTask):
         series predict api."""
         pred_params = self.predict_input.getPredictParams()
         super().run_core_task(
-            api_func=self.core_service.post_tasks_predict_tsmodel,
+            api_func=self.core_service.post_tasks_auto_ts_predict,
             **pred_params)
 
 

@@ -33,17 +33,14 @@ def main():
     # train_data = DataUpload.create(data_id = "{data_id}", name="train_data")
     # test_data = DataUpload.create(data_id = "{data_id}", name="test_data")
 
-    # Settings for time series training.
+    # Settings for time series forecast training.
     train_input = TrainTSInput(
-        data=train_data, target='amount', forecast_horizon=7, gap=1,
-        datetime_column='DATE', time_group='STOCKCODE', max_model=1,
-        tolerance=0.9, evaluator='mse', max_window_for_feature_derivation=7,
-        endogenous_features=['amount'], time_unit='day',
-        regression_method='sum', classification_method='count')
+        data=train_data, target='regression', forecast_horizon=7, gap=0,
+        datetime_column='date', max_model=1, evaluator='r2', time_unit='day',
+        max_iteration=10, numerical_groupby_method='mean')
 
     # Start train time series models.
-    exp_ts = client.train_ts(
-        train_input=train_input, select_model_by='mse', name='ExpTS')
+    exp_ts = client.train_ts(train_input=train_input, select_model_by='r2', name='ExpTS')
 
     # Settings for predict time series model using PredictTSInput.
     predict_ts_input = PredictTSInput(data=test_data, experiment=exp_ts)
