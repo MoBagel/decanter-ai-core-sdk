@@ -148,7 +148,7 @@ Jupyter Notebook).</p>
 <dl class="py method">
 <dt id="decanter.core.context.Context.create">
 <em class="property">classmethod </em><code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">host</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.context.Context.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create conext instance and init neccessary variable and objects.</p>
+<dd><p>Create context instance and init neccessary variable and objects.</p>
 <p>Setting the user, password, and host for the funture connection when
 calling APIs, and create an event loop if it isn’t exist. Check if the
 connection is healthy after args be set.</p>
@@ -261,7 +261,7 @@ have been finished.</p>
 <p>Function for user handle the use of Decanter Core API.</p>
 <dl class="py class">
 <dt id="decanter.core.client.CoreClient">
-<em class="property">class </em><code class="sig-prename descclassname">decanter.core.client.</code><code class="sig-name descname">CoreClient</code><a class="headerlink" href="#decanter.core.client.CoreClient" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">decanter.core.client.</code><code class="sig-name descname">CoreClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">host</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle client side actions.</p>
 <p>Support actions sunch as setup data, upload data, train,
 predict, time series train and predict…ect.</p>
@@ -271,27 +271,6 @@ predict, time series train and predict…ect.</p>
 <span class="n">client</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="n">csv</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="nb">type</span><span class="o">/</span><span class="n">dataframe</span><span class="p">})</span>
 </pre></div>
 </div>
-<dl class="py method">
-<dt id="decanter.core.client.CoreClient.create">
-<em class="property">static </em><code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">host</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create conext instance and init neccessary variable and objects.</p>
-<p>Setting the user, password, and host for the funture connection when
-calling APIs, and create an event loop if it isn’t exist. Check if the
-connection is healthy after args be set.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>username</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – User name for login Decanter Core server</p></li>
-<li><p><strong>password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Password name for login Decanter Core server</p></li>
-<li><p><strong>host</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Decanter Core server URL.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Context&gt;</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt id="decanter.core.client.CoreClient.predict">
 <em class="property">static </em><code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">predict_input</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.predict" title="Permalink to this definition">¶</a></dt>
