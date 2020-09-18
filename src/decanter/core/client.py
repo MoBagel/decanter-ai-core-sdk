@@ -42,11 +42,7 @@ class CoreClient(Context):
             host (str): Decanter Core server URL.
         """
         Context.create(username=username, password=password, host=host)
-
-    @staticmethod
-    def create(
-            username, password, host):
-            Context.create(username=username, password=password, host=host)
+        
 
     @staticmethod
     def setup(
