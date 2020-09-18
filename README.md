@@ -45,44 +45,33 @@ $ python -m example.file
 Progress UploadTask_train:  55%|█████████████████████████████████████████
 ```
 
-<<<<<<< HEAD
+## Example Dataset Path 
+* `examples/data/data` - store the general structure dataset
+* `examples/data/ts_data` - store the time series dataset
+
+
 ## Example Code
-* Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
-* Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
-<br/> Note: 
-<br/> Since Jupyter already have an event loop, SDK will just use the current event loop. See more in [here](https://www.notion.so/API-615d2fba4e7f45c4b5fe63cc192e481f#bb4f0a4b2847450abc4f80b025469170). In Jupyter, it will initially exist a (asyncio) running event loop. <br/> More details about asyncio in [learn asyncio](https://docs.python.org/3/library/asyncio.html)
+* General Structure Data
+	* Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
+	* Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
+* Time Series Data
+	* Python Script: [auto_time_series_example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/auto_time_series_example.py)
+Note:  
+Since Jupyter already have an event loop, SDK will just use the current event loop. See more in [here](https://www.notion.so/API-615d2fba4e7f45c4b5fe63cc192e481f#bb4f0a4b2847450abc4f80b025469170). In Jupyter, it will initially exist a (asyncio) running event loop.  
+More details about asyncio in [learn asyncio](https://docs.python.org/3/library/asyncio.html)
 ```python
 import asyncio
 loop = asyncio.get_running_loop()
 loop.is_running()
 ```
 
-
-## Development Guide and Flow
-* If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
-
-=======
-## Auto Time Series Example: Upload Data, Train Time Series Forecast Experiment and Predict
-train data path: `examples/data/tsf/iris_train.csv`  
-test data path: `examples/data/tsf/iris_train_test.csv`
-
-```bash
-$ python example/auto_time_series_example.py
-```
->>>>>>> remotes/upstream/master
-
-## Example Code
-* Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
-* Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
-
-
-## Development Guide and Flow
-* If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
-
-
 ## Tutorial for Jupyter Notebook
 If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.
 If you need to handle running tasks well, refer to our [jupyter_jobs_handle_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_jobs_handle_example.ipynb).
+
+
+## Development Guide and Flow
+* If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
 
 
 ## Documentation
