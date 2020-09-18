@@ -6,8 +6,7 @@ import json
 
 import logging
 from decanter.core.core_api import CoreBody
-from decanter.core.enums.algorithms import Algos as Alg
-from decanter.core.enums.evaluators import Evaluator as Eva
+from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
 
 logger = logging.getLogger(__name__)
@@ -84,7 +83,7 @@ class PredictInput:
                                 self.__class__.__name__, self.select_opt)
                 raise ValueError('Invalid input model ID: %s' %self.select_opt)
         elif self.select_model == 'recommendation':
-            self.select_opt = check_is_enum(Eva, self.select_opt)
+            self.select_opt = check_is_enum(Evaluator, self.select_opt)
             for rec in self.experiment.recommendations:
                 if self.select_opt == rec['evaluator']:
                    select_model_id = rec['model_id']

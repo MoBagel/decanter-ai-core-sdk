@@ -5,8 +5,8 @@ import os
 
 from decanter import core
 from decanter.core.core_api import TrainTSInput, PredictTSInput
-from decanter.core.enums.algorithms import Algos as Alg
-from decanter.core.enums.evaluators import Evaluator as Eva
+from decanter.core.enums.algorithms import Algo
+from decanter.core.enums.evaluators import Evaluator
 # from decanter.core.jobs import DataUpload, Experiment
 
 
@@ -17,14 +17,11 @@ def main():
     # Enable default logger for logging message
     core.enable_default_logger()
 
-    # Create connection to decanter server, and set up basic settings.
+    # The Main object handles the calling of Decanter's API.
+    # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    context = core.Context.create(
-        username='{usr}', password='{pwd}', host='{decantercoreserver}')
-
-    # The Main object handles the calling of Decanter Core's API.
-    client = core.CoreClient()
+    client = core.CoreClient(username='{usr}', password='{pwd}', host='{decantercoreserver}')
 
     train_file_path = '{file_path}'
     test_file_path = '{file_path}'
@@ -41,11 +38,11 @@ def main():
     # Settings for time series forecast training.
     train_input = TrainTSInput(
         data=train_data, target='regression', forecast_horizon=7, gap=0,
-        datetime_column='date', max_model=1, evaluator=Eva.r2, time_unit='day',
+        datetime_column='date', max_model=1, evaluator=Evaluator.r2, time_unit='day',
         max_iteration=10, numerical_groupby_method='mean')
 
     # Start train time series models.
-    exp_ts = client.train_ts(train_input=train_input, select_model_by=Eva.r2, name='ExpTS')
+    exp_ts = client.train_ts(train_input=train_input, select_model_by=Evaluator.r2, name='ExpTS')
 
     # Settings for predict time series model using PredictTSInput.
     predict_ts_input = PredictTSInput(data=test_data, experiment=exp_ts)
@@ -58,7 +55,7 @@ def main():
     # Logger message:
     #     Job proccessing: Create a progress bar showing its current process.
     #     Job finished: "[Job] 'name' done status: 'final status' id: 'id'"
-    context.run()
+    client.run()
 
     # Print out the text result of prediction.
     print(pred_ts_res.show())
@@ -69,7 +66,7 @@ def main():
     # Dwonload predict results in csv to local.
     pred_ts_res.download_csv(path='./tmp/pred_res.csv')
 
-    context.close()
+    client.close()
 
 
 if __name__ == '__main__':

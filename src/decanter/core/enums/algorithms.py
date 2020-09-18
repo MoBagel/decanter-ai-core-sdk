@@ -4,7 +4,7 @@ Algorithms of the Decanter AI Core SDK.
 """
 from enum import Enum
 
-class Algos(Enum):
+class Algo(Enum):
     """
     The class Algos is the machine learning algorithms currently 
     supported by the Decanter AI Core SDK

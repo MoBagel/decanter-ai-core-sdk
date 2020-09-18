@@ -1,6 +1,6 @@
 """Init jobs package"""
 from .evaluators import Evaluator
-from .algorithms import Algos
+from .algorithms import Algo
 
 def check_is_enum(Enum, enum):
 	if isinstance(enum, str):

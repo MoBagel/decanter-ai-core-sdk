@@ -20,16 +20,15 @@ pip install decanter-ai-core-sdk
 from decanter import core
 
 core.enable_default_logger()
-context = core.Context.create(
+client = core.CoreClient(
         username='{usr}', password='{pwd}', host='{decanter-core-server}')
-client = core.CoreClient()
 
 train_file = open(train_file_path, 'r')
 train_data = client.upload(file=train_file, name="train")
 
 # in jupyter notebook just run the block
 # no need to call context.run()
-context.run()
+client.run()
 
 train_data.show()
 ```
@@ -42,7 +41,7 @@ Progress UploadTask_train:  55%|████████████████
 ```
 
 ## Auto Time Series Example: Upload Data, Train Time Series Forecast Experiment and Predict
-train data path: `examples/data/tsf/iris_train.csv`
+train data path: `examples/data/tsf/iris_train.csv`  
 test data path: `examples/data/tsf/iris_train_test.csv`
 
 ```bash

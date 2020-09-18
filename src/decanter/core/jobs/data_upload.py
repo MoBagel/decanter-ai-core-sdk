@@ -15,7 +15,7 @@ from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import update
 from decanter.core.extra.utils import check_response, gen_id
 from decanter.core.jobs.job import Job
-from decanter.core.jobs.task import UploadTask, SetupTask
+from decanter.core.jobs.task import UploadTask
 
 
 logger = logging.getLogger(__name__)
@@ -41,18 +41,15 @@ class DataUpload(Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress, will give default name if None.
     """
-    def __init__(self, file=None, setup_params=None, name=None):
+    def __init__(self, file=None, name=None):
         """DataUpload Init.
 
         Args:
             file (file-object): DataUpload file to upload.
-            setup_params (:obj:`dict`, optional): Settings for setup data.
             name (:obj:`str`, optional): Name to track Job progress
         """
         super().__init__(jobs=None,
-                         task=(UploadTask(file, name)
-                               if file is not None
-                               else SetupTask(setup_params, name)),
+                         task=UploadTask(file, name),
                          name=gen_id(self.__class__.__name__, name))
 
         self.accessor = None
