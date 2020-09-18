@@ -11,6 +11,7 @@ from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import update
 from decanter.core.extra.utils import check_response, gen_id
 from decanter.core.jobs.job import Job
+from decanter.core.jobs.data_setup import DataSetup
 from decanter.core.jobs.task import TrainTask, TrainTSTask
 
 logger = logging.getLogger(__name__)

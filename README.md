@@ -41,7 +41,7 @@ Progress UploadTask_train:  55%|████████████████
 ```
 
 ## Auto Time Series Example: Upload Data, Train Time Series Forecast Experiment and Predict
-train data path: `examples/data/tsf/iris_train.csv`
+train data path: `examples/data/tsf/iris_train.csv`  
 test data path: `examples/data/tsf/iris_train_test.csv`
 
 ```bash

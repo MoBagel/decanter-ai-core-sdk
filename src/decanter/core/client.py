@@ -7,10 +7,11 @@ import logging
 import pandas as pd
 
 from decanter.core import Context
-from decanter.core.jobs import DataUpload,\
+from decanter.core.jobs import DataUpload, DataSetup,\
                        Experiment, ExperimentTS,\
                        PredictResult, PredictTSResult
 import decanter.core.core_api.body_obj as CoreBody
+import decanter.core.jobs.task as jobsTask
 
 logger = logging.getLogger(__name__)
 
@@ -45,8 +46,13 @@ class CoreClient(Context):
         
 
     @staticmethod
+    def create(
+            username, password, host):
+            Context.create(username=username, password=password, host=host)
+
+    @staticmethod
     def setup(
-            data_source, data_columns, data_id=None, callback=None,
+            train_data, data_source, data_columns, data_id=None, callback=None,
             eda=None, preprocessing=None, version=None, name=None):
         """Setup data reference.
 
@@ -92,7 +98,7 @@ class CoreClient(Context):
         params = json.dumps(
             setup_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
-        data = DataUpload(setup_params=params, name=name)
+        data = DataSetup(train_data=train_data, setup_params=params, name=name)
 
         try:
             if Context.LOOP is None:
@@ -170,10 +176,11 @@ class CoreClient(Context):
             AttributeError: If the function is called without
                 :class:`~decanter.core.context.Context` created.
         """
+        context_task = train_input.__dict__['data'].task
         logger.debug('[Core] Create Train Job')
         exp = Experiment(
-            train_input=train_input,
-            select_model_by=select_model_by, name=name)
+                train_input=train_input,
+                select_model_by=select_model_by, name=name)
         try:
             if Context.LOOP is None:
                 raise AttributeError('[Core] event loop is \'NoneType\'')
