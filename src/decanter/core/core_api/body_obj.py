@@ -143,7 +143,7 @@ class ModelSpec(CoreBodyObj):
 class TSGroupBy(CoreBodyObj):
     """Time series group by."""
     @classmethod
-    @corex_obj(required={'time_unit', 'numerical_groupby_method', 'categorical_groupby_method'})
+    @corex_obj(required=None)
     def create(cls, **kwargs):
         """Return TSGroupBy object with passed kwargs as attributes"""
         return cls(**kwargs)
