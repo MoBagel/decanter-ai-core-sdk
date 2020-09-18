@@ -7,7 +7,9 @@
 import json
 
 from decanter.core.core_api import CoreBody
-
+from decanter.core.enums.algorithms import Algo
+from decanter.core.enums.evaluators import Evaluator
+from decanter.core.enums import check_is_enum
 
 class TrainInput:
     """Train Input for Experiment Job.
@@ -24,7 +26,7 @@ class TrainInput:
         .. code-block:: python
 
             train_input = TrainInput(data=train_data, target='Survived',
-            algos=["XGBoost"], max_model=2, tolerance=0.9)
+            algos=Algo.XGBoost, max_model=2, tolerance=0.9)
 
     """
     def __init__(
@@ -38,6 +40,8 @@ class TrainInput:
             validation_percentage=None, holdout_percentage=None, apu=None,
             preprocessing=None, version=None):
 
+        evaluator = check_is_enum(Evaluator, evaluator)
+        algos =  [check_is_enum(Algo, algo) for algo in algos]
         self.data = data
         if ts_split_train is None:
             train = None
@@ -117,6 +121,7 @@ class TrainTSInput:
             categorical_groupby_method=None, endogenous_features=None, exogenous_features=None,
             time_groups=None, max_window_for_feature_derivation=None):
 
+        evaluator = check_is_enum(Evaluator, evaluator)
         self.data = data
 
         geneticAlgorithm = CoreBody.GeneticAlgorithmParams.create(

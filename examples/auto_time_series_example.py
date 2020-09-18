@@ -5,6 +5,8 @@ import os
 
 from decanter import core
 from decanter.core.core_api import TrainTSInput, PredictTSInput
+from decanter.core.enums.algorithms import Algo
+from decanter.core.enums.evaluators import Evaluator
 # from decanter.core.jobs import DataUpload, Experiment
 
 
@@ -36,11 +38,11 @@ def main():
     # Settings for time series forecast training.
     train_input = TrainTSInput(
         data=train_data, target='regression', forecast_horizon=7, gap=0,
-        datetime_column='date', max_model=1, evaluator='r2', time_unit='day',
+        datetime_column='date', max_model=1, evaluator=Evaluator.r2, time_unit='day',
         max_iteration=10, numerical_groupby_method='mean')
 
     # Start train time series models.
-    exp_ts = client.train_ts(train_input=train_input, select_model_by='r2', name='ExpTS')
+    exp_ts = client.train_ts(train_input=train_input, select_model_by=Evaluator.r2, name='ExpTS')
 
     # Settings for predict time series model using PredictTSInput.
     predict_ts_input = PredictTSInput(data=test_data, experiment=exp_ts)

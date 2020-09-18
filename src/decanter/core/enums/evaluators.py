@@ -6,7 +6,7 @@ from enum import Enum
 
 class Evaluator(Enum):
     """
-    The class Evaluator is the metrics currently 
+    The Evaluator enumeration is the metrics currently 
     supported by the Decanter AI Core SDK
     """
     auto = 'auto'

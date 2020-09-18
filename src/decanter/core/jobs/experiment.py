@@ -11,8 +11,8 @@ from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import update
 from decanter.core.extra.utils import check_response, gen_id
 from decanter.core.jobs.job import Job
-from decanter.core.jobs.data_setup import DataSetup
 from decanter.core.jobs.task import TrainTask, TrainTSTask
+from decanter.core.enums.evaluators import Evaluator
 
 logger = logging.getLogger(__name__)
 
@@ -47,12 +47,13 @@ class Experiment(Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress.
     """
-    def __init__(self, train_input, select_model_by='mse', name=None):
+    def __init__(self, train_input, select_model_by=Evaluator.mse, name=None):
         super().__init__(
             jobs=[train_input.data],
             task=TrainTask(train_input, name=name),
             name=gen_id(self.__class__.__name__, name))
 
+        select_model_by = check_is_enum(Evaluator, select_model_by)
         self.train_input = train_input
         self.best_model = Model()
         self.select_model_by = select_model_by
@@ -104,7 +105,7 @@ class Experiment(Job):
         logger.debug('[%s] \'%s\' get best model', class_, self.name)
         model_list = self.attributes
         attr = self.select_model_by
-        minlevel = {'mse', 'mae', 'mean_per_class_error'}
+        minlevel = {Evaluator.mse, Evaluator.mae, Evaluator.mean_per_class_error}
         best_model_id = None
         try:
             if self.select_model_by in minlevel:
@@ -162,12 +163,14 @@ class ExperimentTS(Experiment, Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress.
     """
-    def __init__(self, train_input, select_model_by='mse', name=None):
+    def __init__(self, train_input, select_model_by=Evaluator.mse, name=None):
         Job.__init__(
             self,
             jobs=[train_input.data],
             task=TrainTSTask(train_input, name=name),
             name=gen_id(self.__class__.__name__, name))
+
+        select_model_by = check_is_enum(Evaluator, select_model_by)
         self.train_input = train_input
         self.best_model = MultiModel()
         self.select_model_by = select_model_by

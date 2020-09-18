@@ -15,7 +15,7 @@ from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import update
 from decanter.core.extra.utils import check_response, gen_id
 from decanter.core.jobs.job import Job
-from decanter.core.jobs.task import UploadTask, SetupTask
+from decanter.core.jobs.task import UploadTask
 
 
 logger = logging.getLogger(__name__)

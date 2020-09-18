@@ -8,6 +8,8 @@ import pandas as pd
 
 from decanter import core
 from decanter.core.core_api import TrainInput, PredictInput
+from decanter.core.enums.algorithms import Algo
+from decanter.core.enums.evaluators import Evaluator
 # from decanter.core.jobs import DataUpload, Experiment
 
 
@@ -65,11 +67,11 @@ def main():
     # Settings for training model using TrainInput.
     train_input = TrainInput(
         data=train_data, target='Survived',
-        algos=['XGBoost'], max_model=2, tolerance=0.9)
+        algos=[Algo.XGBoost], max_model=2, tolerance=0.9)
 
     # Start Model Training, get Experiment result in return.
     exp = client.train(
-        train_input=train_input, select_model_by='mean_per_class_error',
+        train_input=train_input, select_model_by=Evaluator.mean_per_class_error,
         name='myexp')
 
     # Settings for predict model using PredictInput.
