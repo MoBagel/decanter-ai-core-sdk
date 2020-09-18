@@ -48,7 +48,7 @@ class Context:
 
     @classmethod
     def create(cls, username, password, host):
-        """Create conext instance and init neccessary variable and objects.
+        """Create context instance and init neccessary variable and objects.
 
         Setting the user, password, and host for the funture connection when
         calling APIs, and create an event loop if it isn't exist. Check if the
