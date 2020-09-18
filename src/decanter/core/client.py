@@ -177,22 +177,20 @@ class CoreClient(Context):
                 :class:`~decanter.core.context.Context` created.
         """
         context_task = train_input.__dict__['data'].task
-        if (type(context_task) == jobsTask.UploadTask) or \
-            (type(context_task) == jobsTask.SetupTask and context_task.status == 'done'):
-            logger.debug('[Core] Create Train Job')
-            exp = Experiment(
+        logger.debug('[Core] Create Train Job')
+        exp = Experiment(
                 train_input=train_input,
                 select_model_by=select_model_by, name=name)
-            try:
-                if Context.LOOP is None:
-                    raise AttributeError('[Core] event loop is \'NoneType\'')
-                task = Context.LOOP.create_task(exp.wait())
-                Context.CORO_TASKS.append(task)
-                Context.JOBS.append(exp)
-            except AttributeError:
-                logger.error('[Core] Context not created')
-                raise
-            return exp
+        try:
+            if Context.LOOP is None:
+                raise AttributeError('[Core] event loop is \'NoneType\'')
+            task = Context.LOOP.create_task(exp.wait())
+            Context.CORO_TASKS.append(task)
+            Context.JOBS.append(exp)
+        except AttributeError:
+            logger.error('[Core] Context not created')
+            raise
+        return exp
 
     @staticmethod
     def train_ts(train_input, select_model_by='mse', name=None):
