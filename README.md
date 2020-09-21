@@ -58,11 +58,7 @@ Progress UploadTask_train:  55%|████████████████
 	* Python Script: [auto_time_series_example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/auto_time_series_example.py)  
 
 ### Note:  
-<<<<<<< HEAD
 Since Jupyter already have an event loop (asyncio), SDK will just use the current event loop. See more in [here](https://www.notion.so/API-615d2fba4e7f45c4b5fe63cc192e481f#bb4f0a4b2847450abc4f80b025469170).  
-=======
-Since Jupyter already have an event loop (asyncio), SDK will just use the current event loop, see more in [here](https://www.notion.so/API-615d2fba4e7f45c4b5fe63cc192e481f#bb4f0a4b2847450abc4f80b025469170).  
->>>>>>> 436d221c622f961ae9745a8df596dbd63114aa5e
 More details about asyncio in [learn asyncio](https://docs.python.org/3/library/asyncio.html)
 ```python
 import asyncio
