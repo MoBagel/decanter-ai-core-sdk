@@ -71,7 +71,7 @@ If you need to handle running tasks well, refer to our [jupyter_jobs_handle_exam
 
 
 ## Development Guide and Flow
-* If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
+* If you are curious about why Decanter AI Core SDK does certain things the way it does and not differently, visit our [Development Guide](https://mobagel.github.io/decanter-ai-core-sdk/notes/design.html)
 
 
 ## Documentation
@@ -85,8 +85,8 @@ For guidance on setting up a development environment and how to make a contribut
 ## Links
 For more details on design, guidance on setting up a development environment, and SDK usage.
 
-* Introduction about Decanter AI: https://mobagel.com/solution
-* Introduction about Decanter AI SDK: https://mobagel.github.io/decanter-ai-core-sdk/
+* Decanter AI Introduction: https://mobagel.com/product/
+* Decanter AI SDK Introduction: https://mobagel.github.io/decanter-ai-core-sdk/
 * Code: https://github.com/MoBagel/decanter-ai-core-sdk
 * Installation: https://mobagel.github.io/decanter-ai-core-sdk/user/install.html
 * API interface: https://mobagel.github.io/decanter-ai-core-sdk/api.html
