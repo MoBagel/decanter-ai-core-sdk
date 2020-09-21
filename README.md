@@ -46,12 +46,12 @@ Progress UploadTask_train:  55%|████████████████
 ```
 
 ## Example Dataset Path 
-* `examples/data/data` - store the general structure dataset
+* `examples/data/` - store the general dataset
 * `examples/data/ts_data` - store the time series dataset
 
 
 ## Example Code
-* General Structure Data
+* General Data
 	* Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
 	* Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
 * Time Series Data
