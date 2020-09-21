@@ -13,6 +13,7 @@ from decanter.core.extra.utils import check_response, gen_id
 from decanter.core.jobs.job import Job
 from decanter.core.jobs.task import TrainTask, TrainTSTask
 from decanter.core.enums.evaluators import Evaluator
+from decanter.core.enums import check_is_enum
 
 logger = logging.getLogger(__name__)
 
