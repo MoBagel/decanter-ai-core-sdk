@@ -53,6 +53,8 @@ Example Code
 	from decanter import core
 	from decanter.core.core_api import TrainInput, PredictInput
 	from decanter.core.extra.utils import check_response, gen_id
+	from decanter.core.enums.algorithms import Algo
+	from decanter.core.enums.evaluators import Evaluator
 
 ``Create Context will set the connection to decanter core server, and create an event loop. Since Jupyter already have an event loop, SDK will just use the current event loop. In Jupyter, it will initially exist a running event loop.``:
 
@@ -61,22 +63,17 @@ Example Code
 	loop = asyncio.get_running_loop()
 	loop.is_running()
 
-``Create context to set the usr, pwd, host.``:
+
+``CoreClient handles the actions of calling api and getting the results,``:
+``When initializing, need to set the usr, pwd, host to create Context.``:
 
 .. code-block:: python
 
 	# enable default logger
 	core.enable_default_logger()
 	# set the username, password, host
-	context = core.Context.create(
+	client = core.CoreClient(
 	        username='{usr}', password='{pwd}', host='{decantercoreserver}')
-
-
-``CoreClient handles the actions of calling api and getting the results.``:
-
-.. code-block:: python
-
-	client = core.CoreClient
 
 
 ``Open train & test file``:
@@ -99,8 +96,8 @@ Example Code
 
 .. code-block:: python
 
-	train_input = TrainInput(data=train_data, target='Survived', algos=["XGBoost"], max_model=2, tolerance=0.9)
-	exp = client.train(train_input=train_input, select_model_by='mean_per_class_error', name='myexp')
+	train_input = TrainInput(data=train_data, target='Survived', algos=[Algo.XGBoost], max_model=2, tolerance=0.9)
+	exp = client.train(train_input=train_input, select_model_by=Evaluator.mean_per_class_error, name='myexp')
 
 ``Set predict parameters and predict result``:
 
