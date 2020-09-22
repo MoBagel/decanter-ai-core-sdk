@@ -25,7 +25,7 @@ setuptools.setup(
     name='decanter-ai-core-sdk',
     author='Mobagel',
     author_email='us@mobagel.com',
-    version='0.0.3',
+    version='1.0.1',
     license='MIT',
     description='Decanter AI Core SDK for the easy use of Decanter Core API.',
     long_description=long_description,
