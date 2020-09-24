@@ -25,7 +25,7 @@ def main():
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    client = core.CoreClient(username='{usr}', password='{pwd}', host='{decantercoreserver}')
+    client = core.CoreClient(username='{usr}', password='{pwd}', host='{host:port}')
 
     train_file_path = '{file_path}'
     test_file_path = '{file_path}'
