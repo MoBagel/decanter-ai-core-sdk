@@ -110,6 +110,11 @@ class PredictTSInput(PredictInput):
             Time series experiment from training.
         pred_body (:class:`~decanter.core.extra.body_obj.PredictTSBody`):
             Request body for sending predict api
+
+    Examples:
+        .. code-block:: python
+
+            predict_input = PredictTSInput(data=test_data, experiment=exp_ts)
     """
     def __init__(
             self, data, experiment, callback=None,

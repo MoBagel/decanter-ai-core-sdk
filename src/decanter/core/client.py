@@ -63,7 +63,8 @@ class CoreClient(Context):
                     'opt':(optional)}.
             data_columns (list(dict)): Columns to be used for setup data, list
                 of {'id', 'data_type', 'nullable'}.
-            data_id (str): ObjectId in 24 hex digit format.
+            data_id (str): ObjectId in 24 hex digit format. The data id which 
+                would be set up
             callback (:obj:`str`, optional): Uri to be notified of decanter
                 core activity state changes.
             eda (:obj:`boolen`, optional): Will perform eda on this dataset

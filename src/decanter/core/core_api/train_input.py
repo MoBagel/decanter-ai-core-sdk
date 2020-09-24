@@ -111,6 +111,20 @@ class TrainTSInput:
             Decanter Core server
         train_body (:class:`~decanter.core.core_api.body_obj.TrainAutoTSBody`):
             Request body for sending time series training api.
+
+    Example:
+        .. code-block:: python
+
+            train_input = TrainTSInput(data=train_data,
+                target='Open',
+                forecast_horizon=13,
+                gap=0,
+                datetime_column='Date',
+                max_model=3,
+                evaluator=Evaluator.r2,
+                time_unit='day',
+                max_iteration=10,
+                numerical_groupby_method='mean')
     """
     def __init__(
             self, data, target, datetime_column, forecast_horizon, gap, feature_types=None,
