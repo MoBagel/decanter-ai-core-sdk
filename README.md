@@ -26,7 +26,7 @@ from decanter import core
 
 core.enable_default_logger()
 client = core.CoreClient(
-        username='{usr}', password='{pwd}', host='{decanter-core-server}')
+        username='{usr}', password='{pwd}', host='{decantercoreserver}')
 
 train_file = open(train_file_path, 'r')
 train_data = client.upload(file=train_file, name="train")

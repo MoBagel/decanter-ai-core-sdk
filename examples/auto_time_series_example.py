@@ -35,10 +35,25 @@ def main():
     # train_data = DataUpload.create(data_id = "{data_id}", name="train_data")
     # test_data = DataUpload.create(data_id = "{data_id}", name="test_data")
 
+    # Setup data to Decanter server. Will Get the DataSetup result.
+    train_data = client.setup(
+        train_data = train_data,
+        data_source={
+            'uri': test_data.accessor['uri'],
+            'format': 'csv'
+            },
+        data_id=test_data.id,
+        data_columns=[ 
+            {
+                'id': '{variable}',
+                'data_type': '{data_type}'
+            }],
+        name='mysetup')
+
     # Settings for time series forecast training.
     train_input = TrainTSInput(
-        data=train_data, target='regression', forecast_horizon=7, gap=0,
-        datetime_column='date', max_model=1, evaluator=Evaluator.r2, time_unit='day',
+        data=train_data, target='{target}', forecast_horizon=7, gap=0,
+        datetime_column='{datetime}', max_model=1, evaluator=Evaluator.r2, time_unit='day',
         max_iteration=10, numerical_groupby_method='mean')
 
     # Start train time series models.

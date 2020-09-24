@@ -1,6 +1,6 @@
-.. _supported_algorithm:
+.. _implementation_instructions:
 
-Supported Algorithms
+Implementation Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Algorithms

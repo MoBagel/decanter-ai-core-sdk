@@ -49,6 +49,7 @@ def main():
 
     # Set up data to change data type.
     train_data = client.setup(
+        train_data = train_data,
         data_source={
             'uri': test_data.accessor['uri'],
             'format': 'csv'
@@ -58,7 +59,8 @@ def main():
             {
                 'id': 'Survived',
                 'data_type': 'categorical'
-            }, {
+            }, 
+            {
                 'id': 'Age',
                 'data_type': 'numerical'
             }],

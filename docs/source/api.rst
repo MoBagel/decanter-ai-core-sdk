@@ -77,12 +77,14 @@ Train Input
    :undoc-members:
    :show-inheritance:
 
+
 Predict Input
 ~~~~~~~~~~~~~~
 .. automodule:: decanter.core.core_api.predict_input
    :members:
    :undoc-members:
    :show-inheritance:
+
 
 Model
 ~~~~~~
@@ -92,5 +94,22 @@ Model
    :show-inheritance:
 
 
+Enumerate
+------------------------
+Return the machine learning algorithm and evaluator supported by the current Decanter in the form of enumerate object.
 
 
+Algorithms
+~~~~~~~~~~~~
+.. automodule:: decanter.core.enums.algorithms
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Evaluators
+~~~~~~~~~~~~
+.. automodule:: decanter.core.enums.evaluators
+   :members:
+   :undoc-members:
+   :show-inheritance:

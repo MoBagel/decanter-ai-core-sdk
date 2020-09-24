@@ -21,12 +21,12 @@ Clone the repository from GitLab:
 Python Script
 --------------
 
-Set the username, password, and host at function ``core.Context.create()``
+Set the username, password, and host at function ``core.CoreClient()``
 in file ``examples/example.py``
 
 .. code-block:: python
 
-    core.Context.create(
+    core.CoreClient(
         username='{usr}', password='{pwd}', host='{decantercoreserver}')
 
 
