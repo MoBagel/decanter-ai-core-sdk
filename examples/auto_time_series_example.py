@@ -21,10 +21,10 @@ def main():
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    client = core.CoreClient(username='{usr}', password='{pwd}', host='{host:port}')
+    client = core.CoreClient(username='gp', password='gp-admin', host='http://localhost:3000')
 
-    train_file_path = '{file_path}'
-    test_file_path = '{file_path}'
+    train_file_path = '/data/tsdata/iris_train.csv'
+    test_file_path = '/data/tsdata/iris_test.csv'
     train_file = open(train_file_path, 'r')
     test_file = open(test_file_path, 'r')
 
@@ -43,17 +43,21 @@ def main():
             'format': 'csv'
             },
         data_id=test_data.id,
-        data_columns=[ 
+        data_columns=[
             {
-                'id': '{variable}',
-                'data_type': '{data_type}'
+                'id': 'date',
+                'data_type': 'datetime'
+            },
+            {
+                'id': 'twoclass',
+                'data_type': 'categorical'
             }],
         name='mysetup')
 
     # Settings for time series forecast training.
     train_input = TrainTSInput(
-        data=train_data, target='{target}', forecast_horizon=7, gap=0,
-        datetime_column='{datetime}', max_model=1, evaluator=Evaluator.r2, time_unit='day',
+        data=train_data, target='regression', forecast_horizon=7, gap=0,
+        datetime_column='date', max_model=1, evaluator=Evaluator.r2, time_unit='day',
         max_iteration=10, numerical_groupby_method='mean')
 
     # Start train time series models.

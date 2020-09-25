@@ -27,7 +27,7 @@ in file ``examples/example.py``
 .. code-block:: python
 
     core.CoreClient(
-        username='{usr}', password='{pwd}', host='{decantercoreserver}')
+        username='{usr}', password='{pwd}', host='{host:port}')
 
 
 Run the command below: sh

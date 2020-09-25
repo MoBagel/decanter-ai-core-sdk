@@ -94,7 +94,7 @@ Model
    :show-inheritance:
 
 
-Enumerate
+Enum
 ------------------------
 Return the machine learning algorithm and evaluator supported by the current Decanter in the form of enumerate object.
 
@@ -103,13 +103,9 @@ Algorithms
 ~~~~~~~~~~~~
 .. automodule:: decanter.core.enums.algorithms
    :members:
-   :undoc-members:
-   :show-inheritance:
-
 
 Evaluators
 ~~~~~~~~~~~~
 .. automodule:: decanter.core.enums.evaluators
    :members:
-   :undoc-members:
-   :show-inheritance:
+

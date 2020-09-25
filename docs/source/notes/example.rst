@@ -1,44 +1,9 @@
-.. _implementation_instructions:
+.. _example:
 
-Implementation Instructions
+Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Algorithms
-**********
-the following are the machined learning algorithms currently supported by the Decanter AI Core SDK
-
-- (DRF) Distributed Random Forest
-- (GLM) Generalized Linear Model
-- (GBM) Gradient Boosting Machine
-- (DeepLearning) Deep Learning
-- (StackedEnsemble) Stacked Ensemble
-- (XGBoost) eXtreme Gradient Boosting
-
-
-Evaluators
-**********
-A way to quantify performance of machine learning model, the following are the metrics currently supported by the Decanter AI Core SDK
-
-- Regression
-	- auto (deviance)
-	- deviance
-	- mse
-	- mae
-	- rmsle
-	- r2
-- Binary Classification
-	- auto (logloss)
-	- logloss
-	- lift_top_group
-	- auc
-	- misclassification
-- Multinomial Classification
-	- auto (logloss)
-	- logloss
-	- misclassification
-
-
-Example Code
+Upload, Train, Predict
 *************
 
 ``Import Packages``:
@@ -73,15 +38,15 @@ Example Code
 	core.enable_default_logger()
 	# set the username, password, host
 	client = core.CoreClient(
-	        username='{usr}', password='{pwd}', host='{decantercoreserver}')
+	        username='gp', password='gp-admin', host='http://localhost:3000')
 
 
 ``Open train & test file``:
 
 .. code-block:: python
 
-	train_file_path = os.path.join('{train_file_path}')
-	test_file_path = os.path.join('{test_file_path}')
+	train_file_path = '/data/train.csv'
+	test_file_path = '/data/test.csv'
 	train_file = open(train_file_path , 'r')
 	test_file = open(test_file_path , 'r')
 
@@ -91,6 +56,24 @@ Example Code
 
 	train_data = client.upload(file=train_file, name="train_data")
 	test_data = client.upload(file=test_file, name="test_data")
+
+``Setup data to CoreX``:
+
+.. code-block:: python
+
+	train_data = client.setup(
+        train_data = train_data,
+        data_source={
+            'uri': test_data.accessor['uri'],
+            'format': 'csv'
+            },
+        data_id=test_data.id,
+        data_columns=[
+            {
+                'id': 'Pclass',
+                'data_type': 'categorical'
+            }],
+        name='mysetup')
 
 ``Set train parameters train model``:
 
@@ -113,7 +96,7 @@ Example Code
 	pred_res.show_df()
 
 
-Saving Model
+How to Save Model
 *************
 
 ``Getting Mojo model zip file from decanter.core server and download to local.``
@@ -128,8 +111,11 @@ Saving Model
     	model_id (str): ObjectId in 24 hex digits.
     	model_path (str): Path to store zip mojo file.
     """
+    if not os.path.exists('tmp'):
+        os.makedirs('tmp')
+
     model_id = {model_id}
-    model_path = {save_path}
+    model_path = './tmp/model.zip'
     model.download_by_id(model_id, model_path)
 
 
