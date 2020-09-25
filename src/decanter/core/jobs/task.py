@@ -300,14 +300,15 @@ class SetupTask(CoreTask):
         params (dict):
             Settings for set up data.
     """
-    def __init__(self, params, name='Setup'):
+    def __init__(self, setup_input, name='Setup'):
         super().__init__(name=name)
-        self.params = params
+        self.setup_input = setup_input
 
     def run(self):
         """
         Execute setup data by sending the setup api.
         """
+        setup_params = self.setup_input.get_setup_params()
         super().run_core_task(
             api_func=self.core_service.post_tasks_setup,
-            **self.params)
+            **setup_params)

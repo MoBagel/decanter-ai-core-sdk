@@ -48,9 +48,7 @@ class CoreClient(Context):
         
 
     @staticmethod
-    def setup(
-            train_data, data_source, data_columns, data_id=None, callback=None,
-            eda=None, preprocessing=None, version=None, name=None):
+    def setup(setup_input, name=None):
         """Setup data reference.
 
         Create a DataUpload Job and scheduled the execution in CORO_TASKS list.
@@ -81,21 +79,8 @@ class CoreClient(Context):
                 :class:`~decanter.core.context.Context` created.
 
         """
-        data_columns = CoreBody.column_array(data_columns)
-        setup_body = CoreBody.SetupBody.create(
-            data_source=data_source,
-            data_id=data_id,
-            callback=callback,
-            eda=eda,
-            data_columns=data_columns,
-            preprocessing=preprocessing,
-            version=version
-        )
 
-        params = json.dumps(
-            setup_body.jsonable(), cls=CoreBody.ComplexEncoder)
-        params = json.loads(params)
-        data = DataSetup(train_data=train_data, setup_params=params, name=name)
+        data = DataSetup(setup_input=setup_input, name=name)
 
         try:
             if Context.LOOP is None:

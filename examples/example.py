@@ -7,10 +7,9 @@ import os
 import pandas as pd
 
 from decanter import core
-from decanter.core.core_api import TrainInput, PredictInput
+from decanter.core.core_api import TrainInput, PredictInput, SetupInput
 from decanter.core.enums.algorithms import Algo
 from decanter.core.enums.evaluators import Evaluator
-# from decanter.core.jobs import DataUpload, Experiment
 
 
 def main():
@@ -25,44 +24,29 @@ def main():
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    client = core.CoreClient(username='{usr}', password='{pwd}', host='{decantercoreserver}')
+    client = core.CoreClient(username='gp', password='gp-admin', host='http://localhost:3000')
 
-    train_file_path = '{file_path}'
-    test_file_path = '{file_path}'
+    current_path = os.path.dirname(os.path.abspath(__file__))
+    train_file_path = os.path.join(current_path, 'data/train.csv')
+    test_file_path = os.path.join(current_path, 'data/test.csv')
     train_file = open(train_file_path, 'r')
     test_df = pd.read_csv(test_file_path)
 
     # Upload data to Decanter server. Will Get the DataUpload result.
-    train_data = client.upload(file=train_file, name='train')
-    test_data = client.upload(file=test_df, name='test')
+    train_data = client.upload(file=train_file, name='upload_train_data')
+    test_data = client.upload(file=test_df, name='upload_test_data')
 
-    # Create DataUpload by exist data id
-    # train_data = DataUpload.create(data_id="{data_id}", name="titanic_train")
-    # test_data = DataUpload.create(data_id="{data_id}", name="titanic_test")
-
-    # Use context.run() to block the above instructions, making sure all the
-    # result will be done to further step.
-    # Logger message:
-    #     Job proccessing: Create a progress bar showing its current process.
-    #     Job finished: "[Job] 'name' done status: 'final status' id: 'id'"
-    client.run()
-
-    # Set up data to change data type.
-    train_data = client.setup(
-        data_source={
-            'uri': test_data.accessor['uri'],
-            'format': 'csv'
-            },
-        data_id=test_data.id,
+    # Set up data to change data type. Will Get the DataSetup result
+    setup_input = SetupInput(
+        data = train_data,
+        data_source=train_data.accessor,
+        data_id=train_data.id,
         data_columns=[
             {
-                'id': 'Survived',
+                'id': 'Pclass',
                 'data_type': 'categorical'
-            }, {
-                'id': 'Age',
-                'data_type': 'numerical'
-            }],
-        name='mysetup')
+            }])
+    train_data = client.setup(setup_input=setup_input, name='setup_data')
 
     # Settings for training model using TrainInput.
     train_input = TrainInput(
