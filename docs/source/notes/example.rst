@@ -3,7 +3,7 @@
 Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Upload, Train, Predict
+Upload, Setup, Train, Predict
 *************
 
 ``Import Packages``:
@@ -39,7 +39,6 @@ Upload, Train, Predict
 	# set the username, password, host
 	client = core.CoreClient(
 	        username='gp', password='gp-admin', host='http://localhost:3000')
-
 
 ``Open train & test file``:
 
