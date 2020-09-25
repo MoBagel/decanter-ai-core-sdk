@@ -25,10 +25,10 @@ def main():
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    client = core.CoreClient(username='{usr}', password='{pwd}', host='{host:port}')
+    client = core.CoreClient(username='gp', password='gp-admin', host='http://localhost:3000')
 
-    train_file_path = '{file_path}'
-    test_file_path = '{file_path}'
+    train_file_path = '/data/train.csv'
+    test_file_path = '/data/test.csv'
     train_file = open(train_file_path, 'r')
     test_df = pd.read_csv(test_file_path)
 
@@ -57,12 +57,8 @@ def main():
         data_id=test_data.id,
         data_columns=[
             {
-                'id': 'Survived',
+                'id': 'Pclass',
                 'data_type': 'categorical'
-            }, 
-            {
-                'id': 'Age',
-                'data_type': 'numerical'
             }],
         name='mysetup')
 
