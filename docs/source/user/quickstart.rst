@@ -27,7 +27,7 @@ in file ``examples/example.py``
 .. code-block:: python
 
     core.Context.create(
-        username='{usr}', password='{pwd}', host='{decantercoreserver}')
+        username='gp', password='gp-admin', host='http://localhost:3000')
 
 
 Run the command below: sh

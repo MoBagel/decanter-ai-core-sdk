@@ -91,6 +91,19 @@ Model
    :undoc-members:
    :show-inheritance:
 
+Enum
+------------------------
+Return the machine learning algorithm and evaluator supported by the current Decanter in the form of enumerate object.
 
 
+Algorithms
+~~~~~~~~~~~~
+.. automodule:: decanter.core.enums.algorithms
+   :members:
+
+
+Evaluators
+~~~~~~~~~~~~
+.. automodule:: decanter.core.enums.evaluators
+   :members:
 
