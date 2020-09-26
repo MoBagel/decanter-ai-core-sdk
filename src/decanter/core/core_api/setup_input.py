@@ -21,8 +21,8 @@ class SetupInput:
         .. code-block:: python
 
             setup_input = SetupInput(
-                data = train_data,
-                data_source=train_data.accessor,
+                data = upload_data,
+                data_source=upload_data.accessor,
                 data_columns=[
                     {
                         'id': 'Pclass',
