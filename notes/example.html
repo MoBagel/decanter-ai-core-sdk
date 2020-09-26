@@ -1,0 +1,192 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example &#8212; decanter-ai-core-sdk 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Contributing Guide" href="contributing.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing Guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">decanter-ai-core-sdk 1.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Example</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="example">
+<span id="id1"></span><h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="upload-setup-train-predict">
+<h2>Upload, Setup, Train, Predict<a class="headerlink" href="#upload-setup-train-predict" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Import</span> <span class="pre">Packages</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install decanter-ai-core-sdk
+
+import os
+import asyncio
+
+from decanter import core
+from decanter.core.core_api import TrainInput, PredictInput, SetupInput
+from decanter.core.extra.utils import check_response, gen_id
+from decanter.core.enums.algorithms import Algo
+from decanter.core.enums.evaluators import Evaluator
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">Context</span> <span class="pre">will</span> <span class="pre">set</span> <span class="pre">the</span> <span class="pre">connection</span> <span class="pre">to</span> <span class="pre">decanter</span> <span class="pre">core</span> <span class="pre">server,</span> <span class="pre">and</span> <span class="pre">create</span> <span class="pre">an</span> <span class="pre">event</span> <span class="pre">loop.</span> <span class="pre">Since</span> <span class="pre">Jupyter</span> <span class="pre">already</span> <span class="pre">have</span> <span class="pre">an</span> <span class="pre">event</span> <span class="pre">loop,</span> <span class="pre">SDK</span> <span class="pre">will</span> <span class="pre">just</span> <span class="pre">use</span> <span class="pre">the</span> <span class="pre">current</span> <span class="pre">event</span> <span class="pre">loop.</span> <span class="pre">In</span> <span class="pre">Jupyter,</span> <span class="pre">it</span> <span class="pre">will</span> <span class="pre">initially</span> <span class="pre">exist</span> <span class="pre">a</span> <span class="pre">running</span> <span class="pre">event</span> <span class="pre">loop.</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_running_loop</span><span class="p">()</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">CoreClient</span> <span class="pre">handles</span> <span class="pre">the</span> <span class="pre">actions</span> <span class="pre">of</span> <span class="pre">calling</span> <span class="pre">api</span> <span class="pre">and</span> <span class="pre">getting</span> <span class="pre">the</span> <span class="pre">results,</span></code>:
+<code class="docutils literal notranslate"><span class="pre">When</span> <span class="pre">initializing,</span> <span class="pre">need</span> <span class="pre">to</span> <span class="pre">set</span> <span class="pre">the</span> <span class="pre">usr,</span> <span class="pre">pwd,</span> <span class="pre">host</span> <span class="pre">to</span> <span class="pre">create</span> <span class="pre">Context.</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enable default logger</span>
+<span class="n">core</span><span class="o">.</span><span class="n">enable_default_logger</span><span class="p">()</span>
+<span class="c1"># set the username, password, host</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">CoreClient</span><span class="p">(</span>
+        <span class="n">username</span><span class="o">=</span><span class="s1">&#39;gp&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;gp-admin&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;http://host:port&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">train</span> <span class="pre">&amp;</span> <span class="pre">test</span> <span class="pre">file</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_file_path</span> <span class="o">=</span> <span class="s1">&#39;/data/train.csv&#39;</span>
+<span class="n">test_file_path</span> <span class="o">=</span> <span class="s1">&#39;/data/test.csv&#39;</span>
+<span class="n">train_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">train_file_path</span> <span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">test_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">test_file_path</span> <span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Upload</span> <span class="pre">data</span> <span class="pre">to</span> <span class="pre">CoreX</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">train_file</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;train_data&quot;</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">test_file</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test_data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Setup</span> <span class="pre">data</span> <span class="pre">to</span> <span class="pre">CoreX</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">setup_input</span> <span class="o">=</span> <span class="n">SetupInput</span><span class="p">(</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">,</span>
+    <span class="n">data_source</span><span class="o">=</span><span class="n">train_data</span><span class="o">.</span><span class="n">accessor</span><span class="p">,</span>
+    <span class="n">data_columns</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;Pclass&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;data_type&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span>
+        <span class="p">}])</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">setup_input</span><span class="o">=</span><span class="n">setup_input</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;setup_data&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">train</span> <span class="pre">parameters</span> <span class="pre">train</span> <span class="pre">model</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_input</span> <span class="o">=</span> <span class="n">TrainInput</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s1">&#39;Survived&#39;</span><span class="p">,</span> <span class="n">algos</span><span class="o">=</span><span class="p">[</span><span class="n">Algo</span><span class="o">.</span><span class="n">XGBoost</span><span class="p">],</span> <span class="n">max_model</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">exp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_input</span><span class="o">=</span><span class="n">train_input</span><span class="p">,</span> <span class="n">select_model_by</span><span class="o">=</span><span class="n">Evaluator</span><span class="o">.</span><span class="n">mean_per_class_error</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;myexp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">predict</span> <span class="pre">parameters</span> <span class="pre">and</span> <span class="pre">predict</span> <span class="pre">result</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predict_input</span> <span class="o">=</span> <span class="n">PredictInput</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">test_data</span><span class="p">,</span> <span class="n">experiment</span><span class="o">=</span><span class="n">exp</span><span class="p">)</span>
+<span class="n">pred_res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">predict_input</span><span class="o">=</span><span class="n">predict_input</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mypred&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Show</span> <span class="pre">the</span> <span class="pre">predict</span> <span class="pre">result</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pred_res</span><span class="o">.</span><span class="n">show_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-save-model">
+<h2>How to Save Model<a class="headerlink" href="#how-to-save-model" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Getting</span> <span class="pre">Mojo</span> <span class="pre">model</span> <span class="pre">zip</span> <span class="pre">file</span> <span class="pre">from</span> <span class="pre">decanter.core</span> <span class="pre">server</span> <span class="pre">and</span> <span class="pre">download</span> <span class="pre">to</span> <span class="pre">local.</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">decanter.core.core_api</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">save the model as zip file</span>
+<span class="sd">    model_id (str): ObjectId in 24 hex digits.</span>
+<span class="sd">    model_path (str): Path to store zip mojo file.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">model_id</span> <span class="o">=</span> <span class="p">{</span><span class="n">model_id</span><span class="p">}</span>
+<span class="n">model_path</span> <span class="o">=</span> <span class="s1">&#39;./tmp/model.zip&#39;</span>
+<span class="n">model</span><span class="o">.</span><span class="n">download_by_id</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">model_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Example</a><ul>
+<li><a class="reference internal" href="#upload-setup-train-predict">Upload, Setup, Train, Predict</a></li>
+<li><a class="reference internal" href="#how-to-save-model">How to Save Model</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="contributing.html"
+                        title="previous chapter">Contributing Guide</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing Guide"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">decanter-ai-core-sdk 1.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Example</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, MoBagel.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+    </div>
+  </body>
+</html>
