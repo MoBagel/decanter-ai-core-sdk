@@ -7,6 +7,28 @@ from decanter.core.enums import check_is_enum
 
 
 class SetupInput:
+    """Setup Input for Experiment Job.
+
+    Settings for model training.
+
+    Attributes:
+        data (:class:`~decanter.core.jobs.data_upload.DataUpload`):
+            Train data uploaded on Decanter Core server
+        setup_body (:class:`~decanter.core.core_api.body_obj.SetupBody`):
+            Request body for sending setup api.
+
+    Example:
+        .. code-block:: python
+
+            setup_input = SetupInput(
+                data = train_data,
+                data_source=train_data.accessor,
+                data_columns=[
+                    {
+                        'id': 'Pclass',
+                        'data_type': 'categorical'
+                    }])
+    """
     def __init__(
         self, data, data_source, data_columns, callback=None, data_id=None,
         eda=None, preprocessing=None, version=None):

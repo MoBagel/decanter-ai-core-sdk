@@ -45,8 +45,7 @@ class DataSetup(Job):
         """DataSetup Init.
 
         Args:
-            train_data (:obj:`~decanter.core.jobs.data_setup.DataSetup)
-            setup_params (:obj:`dict`, optional): Settings for setup data.
+            setup_input (:obj:`~decanter.core.jobs.data_setup.DataSetup)
             name (:obj:`str`, optional): Name to track Job progress
         """
         super().__init__(
@@ -71,7 +70,7 @@ class DataSetup(Job):
             name (str): (opt) Name to track Job progress
 
         Returns:
-            :class:`~decanter.core.jobs.data_upload.DataUpload` object
+            :class:`~decanter.core.jobs.data_setup.DataSetup` object
         """
         data = cls()
         data_resp = check_response(
@@ -90,7 +89,7 @@ class DataSetup(Job):
         """Show data content.
 
         Returns:
-            str: Content of uploaded data.
+            str: Content of setup data.
         """
         data_txt = None
         if self.is_success():
@@ -106,7 +105,7 @@ class DataSetup(Job):
         """Show data in pandas dataframe.
 
         Returns:
-            :class:`pandas.DataFrame`: Content of uploaded data.
+            :class:`pandas.DataFrame`: Content of setup data.
         """
         data_df = None
         if self.is_success():
@@ -119,7 +118,7 @@ class DataSetup(Job):
         return data_df
 
     def download_csv(self, path):
-        """DownLoad csv format of the uploaded data.
+        """DownLoad csv format of the setup data.
 
         Args:
             path (str): The path to download csv file.

@@ -297,7 +297,7 @@ class SetupTask(CoreTask):
     V2 eda use, setting v2 eda result for the data, preparing for custom eda.
 
     Attributes:
-        params (dict):
+        params (:class:`~decanter.core.core_api.setup_input.SetupInput`)::
             Settings for set up data.
     """
     def __init__(self, setup_input, name='Setup'):

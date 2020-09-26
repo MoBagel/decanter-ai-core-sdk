@@ -21,7 +21,7 @@ def main():
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    client = core.CoreClient(username='gp', password='gp-admin', host='http://host:port')
+    client = core.CoreClient(username='gp', password='gp-admin', host='http://localhost:3000')
 
     train_file_path = '/data/ts_data/iris_train.csv'
     test_file_path = '/data/ts_data/iris_test.csv'
@@ -29,30 +29,16 @@ def main():
     test_file = open(test_file_path, 'r')
 
     # Upload data to Decanter server. Will Get the DataUpload result.
-    train_data = client.upload(file=train_file)
-    test_data = client.upload(file=test_file)
+    train_data = client.upload(file=train_file, name='upload_train_data')
+    test_data = client.upload(file=test_file, name='upload_test_data')
 
     # train_data = DataUpload.create(data_id = "{data_id}", name="train_data")
     # test_data = DataUpload.create(data_id = "{data_id}", name="test_data")
 
-    # Use client.run() to block the above instructions, making sure all the
     # result will be done to further step.
     # Logger message:
     #     Job proccessing: Create a progress bar showing its current process.
     #     Job finished: "[Job] 'name' done status: 'final status' id: 'id'"
-
-    # Setup data to Decanter server. Will Get the DataSetup result.
-    setup_input = SetupInput(
-        data = train_data,
-        data_source=train_data.accessor,
-        data_columns=[
-            {
-                'id': 'date',
-                'data_type': 'datetime'
-            }],
-        )
-
-    train_data = client.setup(setup_input)
 
     # Settings for time series forecast training.
     train_input = TrainTSInput(
