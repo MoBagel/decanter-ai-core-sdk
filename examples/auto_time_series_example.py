@@ -4,7 +4,7 @@ Run; python -m examples.time_series_example
 import os
 
 from decanter import core
-from decanter.core.core_api import TrainTSInput, PredictTSInput
+from decanter.core.core_api import TrainTSInput, PredictTSInput, SetupInput
 from decanter.core.enums.algorithms import Algo
 from decanter.core.enums.evaluators import Evaluator
 # from decanter.core.jobs import DataUpload, Experiment
@@ -21,10 +21,10 @@ def main():
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    client = core.CoreClient(username='{usr}', password='{pwd}', host='{decantercoreserver}')
+    client = core.CoreClient(username='gp', password='gp-admin', host='http://host:port')
 
-    train_file_path = '{file_path}'
-    test_file_path = '{file_path}'
+    train_file_path = '/data/ts_data/iris_train.csv'
+    test_file_path = '/data/ts_data/iris_test.csv'
     train_file = open(train_file_path, 'r')
     test_file = open(test_file_path, 'r')
 
@@ -34,6 +34,25 @@ def main():
 
     # train_data = DataUpload.create(data_id = "{data_id}", name="train_data")
     # test_data = DataUpload.create(data_id = "{data_id}", name="test_data")
+
+    # Use client.run() to block the above instructions, making sure all the
+    # result will be done to further step.
+    # Logger message:
+    #     Job proccessing: Create a progress bar showing its current process.
+    #     Job finished: "[Job] 'name' done status: 'final status' id: 'id'"
+
+    # Setup data to Decanter server. Will Get the DataSetup result.
+    setup_input = SetupInput(
+        data = train_data,
+        data_source=train_data.accessor,
+        data_columns=[
+            {
+                'id': 'date',
+                'data_type': 'datetime'
+            }],
+        )
+
+    train_data = client.setup(setup_input)
 
     # Settings for time series forecast training.
     train_input = TrainTSInput(

@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from decanter.core.enums.evaluators import Evaluator
+from decanter.core.enums import check_is_enum
 
 def show_model_attr(metric, score_types, exp):
     """Show all models attribute in Experiment
@@ -25,6 +27,7 @@ def show_model_attr(metric, score_types, exp):
     """
     def get_attr(metric, score_types, exp_attributes):
         """Get all models metric of score_type in exp_attributes"""
+        metric = check_is_enum(Evaluator, metric)
         model_names = []
         model_attr_lists = [[] for i in range(len(score_types))]
         for key, val in exp_attributes.items():

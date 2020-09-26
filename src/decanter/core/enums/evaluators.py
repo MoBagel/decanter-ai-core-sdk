@@ -8,6 +8,24 @@ class Evaluator(Enum):
     """
     The Evaluator enumeration is the metrics currently 
     supported by the Decanter AI Core SDK
+    
+    - Regression
+        - auto (deviance)
+        - deviance
+        - mse
+        - mae
+        - rmsle
+        - r2
+    - Binary Classification
+        - auto (logloss)
+        - logloss
+        - lift_top_group
+        - auc
+        - misclassification
+    - Multinomial Classification
+        - auto (logloss)
+        - logloss
+        - misclassification
     """
     auto = 'auto'
     mse = 'mse'

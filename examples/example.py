@@ -40,7 +40,6 @@ def main():
     setup_input = SetupInput(
         data = train_data,
         data_source=train_data.accessor,
-        data_id=train_data.id,
         data_columns=[
             {
                 'id': 'Pclass',
