@@ -199,6 +199,14 @@ class SetupBody(CoreBodyObj):
         """Return SetupBody object with passed kwargs as attributes"""
         return cls(**kwargs)
 
+class Accessor(CoreBodyObj):
+    """Data accessor"""
+    @classmethod
+    @corex_obj(required={'uri', 'format'})
+    def create(cls, **kwargs):
+        """Return SetupBody object with passed kwargs as attributes"""
+        return cls(**kwargs)
+
 def column_array(cols):
     """Turn Josn columns to list of Column objects."""
     if cols is None:

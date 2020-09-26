@@ -48,54 +48,28 @@ class CoreClient(Context):
         
 
     @staticmethod
-    def setup(
-            train_data, data_source, data_columns, data_id=None, callback=None,
-            eda=None, preprocessing=None, version=None, name=None):
+    def setup(setup_input, name=None):
         """Setup data reference.
 
-        Create a DataUpload Job and scheduled the execution in CORO_TASKS list.
+        Create a DataSetup Job and scheduled the execution in CORO_TASKS list.
         Record the Job in JOBS list.
 
         Args:
-            data_source (dict): Accessor for files in hdfs,{
-                    'uri': string-Uri-of-hdfs,
-                    'format': Valid dataset format,
-                    'opt':(optional)}.
-            data_columns (list(dict)): Columns to be used for setup data, list
-                of {'id', 'data_type', 'nullable'}.
-            data_id (str): ObjectId in 24 hex digit format.
-            callback (:obj:`str`, optional): Uri to be notified of decanter
-                core activity state changes.
-            eda (:obj:`boolen`, optional): Will perform eda on this dataset
-                if true.
-            preprocessing (:obj:`dict`, optional): Specification for column
-                preprocessing.
-            version (:obj:`str`, optional): api version
-            name (:obj:`str`, optional) string, name for setup action.
+            setup_input
+                (:class:`~decanter.core.core_api.setup_input.SetupInput`):
+                stores the settings for training.
+            name (:obj:`str`, optional): name for setup action.
 
         Returns:
-            :class:`~decanter.core.jobs.data_upload.DataUpload` object
+            :class:`~decanter.core.jobs.data_setup.DataSetup` object
 
         Raises:
             AttributeError: If the function is called without
                 :class:`~decanter.core.context.Context` created.
 
         """
-        data_columns = CoreBody.column_array(data_columns)
-        setup_body = CoreBody.SetupBody.create(
-            data_source=data_source,
-            data_id=data_id,
-            callback=callback,
-            eda=eda,
-            data_columns=data_columns,
-            preprocessing=preprocessing,
-            version=version
-        )
 
-        params = json.dumps(
-            setup_body.jsonable(), cls=CoreBody.ComplexEncoder)
-        params = json.loads(params)
-        data = DataSetup(train_data=train_data, setup_params=params, name=name)
+        data = DataSetup(setup_input=setup_input, name=name)
 
         try:
             if Context.LOOP is None:

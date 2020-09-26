@@ -9,7 +9,7 @@ import sys
 
 from .context import Context
 from .client import CoreClient
-
+from .plot import show_model_attr
 
 core_logger = logging.getLogger(__name__)
 core_logger.addHandler(logging.NullHandler())
