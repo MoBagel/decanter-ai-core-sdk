@@ -48,7 +48,7 @@ class Experiment(Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress.
     """
-    def __init__(self, train_input, select_model_by=Evaluator.mse, name=None):
+    def __init__(self, train_input, select_model_by=Evaluator.auto, name=None):
         super().__init__(
             jobs=[train_input.data],
             task=TrainTask(train_input, name=name),
@@ -105,18 +105,20 @@ class Experiment(Job):
         class_ = self.__class__.__name__
         logger.debug('[%s] \'%s\' get best model', class_, self.name)
         model_list = self.attributes
-        attr = self.select_model_by
-        minlevel = {Evaluator.mse, Evaluator.mae, Evaluator.mean_per_class_error}
+        select_by_evaluator = Evaluator.resolve_select_model_by(self.select_model_by, self.hyperparameters['model_type'])
+        minlevel = {Evaluator.mse, Evaluator.mae, Evaluator.mean_per_class_error,
+                    Evaluator.deviance, Evaluator.logloss, Evaluator.rmse,
+                    Evaluator.rmsle, Evaluator.misclassification}
         best_model_id = None
         try:
             if self.select_model_by in minlevel:
                 best_model_id = min(
                     model_list.values(),
-                    key=lambda x: x['cv_averages'][attr])['model_id']
+                    key=lambda x: x['cv_averages'][select_by_evaluator])['model_id']
             else:
                 best_model_id = max(
                     model_list.values(),
-                    key=lambda x: x['cv_averages'][attr])['model_id']
+                    key=lambda x: x['cv_averages'][select_by_evaluator])['model_id']
         except AttributeError:
             logger.error('[%s] no models in %s result', class_, self.name)
         except KeyError as err:
@@ -164,7 +166,7 @@ class ExperimentTS(Experiment, Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress.
     """
-    def __init__(self, train_input, select_model_by=Evaluator.mse, name=None):
+    def __init__(self, train_input, select_model_by=Evaluator.auto, name=None):
         Job.__init__(
             self,
             jobs=[train_input.data],

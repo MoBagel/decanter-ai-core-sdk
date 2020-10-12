@@ -128,7 +128,7 @@ class CoreClient(Context):
         return data
 
     @staticmethod
-    def train(train_input, select_model_by=Evaluator.mse, name=None):
+    def train(train_input, select_model_by=Evaluator.auto, name=None):
         """Train model with data.
 
         Create a Experiment Job and scheduled the execution in CORO_TASKS list.
@@ -164,7 +164,7 @@ class CoreClient(Context):
         return exp
 
     @staticmethod
-    def train_ts(train_input, select_model_by=Evaluator.mse, name=None):
+    def train_ts(train_input, select_model_by=Evaluator.auto, name=None):
         """Train time series model with data.
 
         Create a Time Series Experiment Job and scheduled the execution

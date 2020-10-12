@@ -54,7 +54,7 @@ def main():
 
     # Start Model Training, get Experiment result in return.
     exp = client.train(
-        train_input=train_input, select_model_by=Evaluator.mean_per_class_error,
+        train_input=train_input, select_model_by=Evaluator.auto,
         name='myexp')
 
     # Settings for predict model using PredictInput.
