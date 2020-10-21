@@ -329,7 +329,7 @@ Record the Job in JOBS list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>setup_input</strong> – (<code class="xref py py-class docutils literal notranslate"><span class="pre">SetupInput</span></code>):
+<li><p><strong>setup_input</strong> – (<a class="reference internal" href="#decanter.core.core_api.setup_input.SetupInput" title="decanter.core.core_api.setup_input.SetupInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">SetupInput</span></code></a>):
 stores the settings for training.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – name for setup action.</p></li>
 </ul>
@@ -822,7 +822,7 @@ V2 eda use, setting v2 eda result for the data, preparing for custom eda.</p>
 <dd><p>Settings for set up data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SetupInput</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.core_api.setup_input.SetupInput" title="decanter.core.core_api.setup_input.SetupInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">SetupInput</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2102,6 +2102,61 @@ for time series forecast training.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-decanter.core.core_api.setup_input">
+<span id="setup-input"></span><h3>Setup Input<a class="headerlink" href="#module-decanter.core.core_api.setup_input" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="decanter.core.core_api.setup_input.SetupInput">
+<em class="property">class </em><code class="sig-prename descclassname">decanter.core.core_api.setup_input.</code><code class="sig-name descname">SetupInput</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">data_source</span></em>, <em class="sig-param"><span class="n">data_columns</span></em>, <em class="sig-param"><span class="n">callback</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">eda</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">preprocessing</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.setup_input.SetupInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Setup Input for Experiment Job.</p>
+<p>Settings for model training.</p>
+<dl class="py attribute">
+<dt id="decanter.core.core_api.setup_input.SetupInput.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#decanter.core.core_api.setup_input.SetupInput.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train data uploaded on Decanter Core server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="decanter.core.core_api.setup_input.SetupInput.setup_body">
+<code class="sig-name descname">setup_body</code><a class="headerlink" href="#decanter.core.core_api.setup_input.SetupInput.setup_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request body for sending setup api.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SetupBody</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">setup_input</span> <span class="o">=</span> <span class="n">SetupInput</span><span class="p">(</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">upload_data</span><span class="p">,</span>
+    <span class="n">data_source</span><span class="o">=</span><span class="n">upload_data</span><span class="o">.</span><span class="n">accessor</span><span class="p">,</span>
+    <span class="n">data_columns</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;Pclass&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;data_type&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span>
+        <span class="p">}])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="decanter.core.core_api.setup_input.SetupInput.get_setup_params">
+<code class="sig-name descname">get_setup_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.setup_input.SetupInput.get_setup_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Using setup_body to create the JSON request body for setting data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-decanter.core.core_api.predict_input">
 <span id="predict-input"></span><h3>Predict Input<a class="headerlink" href="#module-decanter.core.core_api.predict_input" title="Permalink to this headline">¶</a></h3>
 <p>Settings for the PredictResult and PredictTSResult</p>
@@ -2682,6 +2737,7 @@ supported by the Decanter AI Core SDK</p>
 </li>
 <li><a class="reference internal" href="#core-api-interface">Core Api Interface</a><ul>
 <li><a class="reference internal" href="#module-decanter.core.core_api.train_input">Train Input</a></li>
+<li><a class="reference internal" href="#module-decanter.core.core_api.setup_input">Setup Input</a></li>
 <li><a class="reference internal" href="#module-decanter.core.core_api.predict_input">Predict Input</a></li>
 <li><a class="reference internal" href="#module-decanter.core.core_api.model">Model</a></li>
 </ul>
