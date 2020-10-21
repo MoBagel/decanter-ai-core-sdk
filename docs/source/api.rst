@@ -77,6 +77,14 @@ Train Input
    :undoc-members:
    :show-inheritance:
 
+Setup Input
+~~~~~~~~~~~~
+.. automodule:: decanter.core.core_api.setup_input
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 Predict Input
 ~~~~~~~~~~~~~~
 .. automodule:: decanter.core.core_api.predict_input

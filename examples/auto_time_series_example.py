@@ -23,8 +23,8 @@ def main():
     #   "[Context] connect healty :)" if success.
     client = core.CoreClient(username='gp', password='gp-admin', host='http://localhost:3000')
 
-    train_file_path = '/data/ts_data/iris_train.csv'
-    test_file_path = '/data/ts_data/iris_test.csv'
+    train_file_path = 'data/ts_data/iris_train.csv'
+    test_file_path = 'data/ts_data/iris_test.csv'
     train_file = open(train_file_path, 'r')
     test_file = open(test_file_path, 'r')
 
