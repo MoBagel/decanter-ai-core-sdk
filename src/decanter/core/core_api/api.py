@@ -22,7 +22,7 @@ requests.packages.urllib3.disable_warnings()
 class CoreAPI:
     """Handle sending Decanter Core API requests."""
     def __init__(self):
-        self._corex_headers = {'user': 'api'}
+        self._corex_headers = {'user': 'sdk'}
 
     @property
     def corex_headers(self):
@@ -44,7 +44,7 @@ class CoreAPI:
             files: (opt) dictionary, {'name': file-like-objects}
                 (or {'name': file-tuple}) for multipart encoding upload.
             headers: (opt) dictionary, particular headers that decanter ai support,
-                {'user': 'api'} for decanter to know task source is from
+                {'user': 'sdk'} for decanter to know task source is from
                 decanter-ai-core-sdk.
 
         Returns:
