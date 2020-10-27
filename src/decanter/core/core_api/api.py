@@ -22,10 +22,14 @@ requests.packages.urllib3.disable_warnings()
 class CoreAPI:
     """Handle sending Decanter Core API requests."""
     def __init__(self):
-        pass
+        self._corex_headers = {'user': 'sdk'}
+
+    @property
+    def corex_headers(self):
+        return self._corex_headers
 
     @staticmethod
-    def requests_(http, url, json=None, data=None, files=None):
+    def requests_(http, url, json=None, data=None, files=None, headers=None):
         """Handle request sending to Decanter Core.
 
         Send corresponding Basic Auth request by argument and handle
@@ -39,6 +43,9 @@ class CoreAPI:
                 object to send in the body of request.
             files: (opt) dictionary, {'name': file-like-objects}
                 (or {'name': file-tuple}) for multipart encoding upload.
+            headers: (opt) dictionary, particular headers that decanter ai support,
+                {'user': 'sdk'} for decanter to know task source is from
+                decanter-ai-core-sdk.
 
         Returns:
             class:`Response <Response>` object
@@ -55,11 +62,11 @@ class CoreAPI:
             if http == 'POST':
                 return requests.post(
                     url=url, json=json, data=data,
-                    files=files, auth=basic_auth, verify=False)
+                    files=files, auth=basic_auth, verify=False, headers=headers)
             if http == 'PUT':
                 return requests.put(
                     url=url, json=json, data=data,
-                    files=files, auth=basic_auth, verify=False)
+                    files=files, auth=basic_auth, verify=False, headers=headers)
             if http == 'DELETE':
                 return requests.delete(
                     url=url, json=json, data=data,
@@ -136,7 +143,7 @@ class CoreAPI:
                 kwargs['encoding']
             )
         }
-        return self.requests_(http='POST', url='/v2/upload', files=files)
+        return self.requests_(http='POST', url='/v2/upload', files=files, headers=self.corex_headers)
 
     def get_tasks_by_id(self, task_id):
         """Get the task by task_id.
@@ -166,7 +173,7 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        return self.requests_(http='PUT', url='/tasks/%s/stop' % task_id)
+        return self.requests_(http='PUT', url='/tasks/%s/stop' % task_id, headers=self.corex_headers)
 
     def post_tasks_setup(self, **kwargs):
         """Setup data reference.
@@ -176,7 +183,7 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        return self.requests_(http='POST', url='/v2/tasks/setup', json=kwargs)
+        return self.requests_(http='POST', url='/v2/tasks/setup', json=kwargs, headers=self.corex_headers)
 
     def post_tasks_train(self, **kwargs):
         """Train model from data reference.
@@ -186,7 +193,7 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        return self.requests_(http='POST', url='/v2/tasks/train', json=kwargs)
+        return self.requests_(http='POST', url='/v2/tasks/train', json=kwargs, headers=self.corex_headers)
 
     def post_tasks_auto_ts_train(self, **kwargs):
         """Train time series forecast multi model from data reference.
@@ -197,7 +204,7 @@ class CoreAPI:
             class:`Response <Response>` object
         """
         return self.requests_(
-            http='POST', url='/v2/tasks/auto_ts/train', json=kwargs)
+            http='POST', url='/v2/tasks/auto_ts/train', json=kwargs, headers=self.corex_headers)
 
 
     def post_tasks_predict(self, **kwargs):
@@ -209,7 +216,7 @@ class CoreAPI:
             class:`Response <Response>` object
         """
         return self.requests_(
-            http='POST', url='/v2/tasks/predict', json=kwargs)
+            http='POST', url='/v2/tasks/predict', json=kwargs, headers=self.corex_headers)
 
     def post_tasks_auto_ts_predict(self, **kwargs):
         """Predict from time series forecast model.
@@ -220,7 +227,7 @@ class CoreAPI:
             class:`Response <Response>` object
         """
         return self.requests_(
-            http='POST', url='/v2/tasks/auto_ts/predict', json=kwargs)
+            http='POST', url='/v2/tasks/auto_ts/predict', json=kwargs, headers=self.corex_headers)
 
     def get_experiments_by_id(self, exp_id):
         """Get experiment metadata.
