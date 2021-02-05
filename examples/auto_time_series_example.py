@@ -6,6 +6,7 @@ import os
 from decanter import core
 from decanter.core.core_api import TrainTSInput, PredictTSInput, SetupInput
 from decanter.core.enums.algorithms import Algo
+from decanter.core.enums.algorithms_ts import AlgoTS
 from decanter.core.enums.evaluators import Evaluator
 # from decanter.core.jobs import DataUpload, Experiment
 
@@ -21,7 +22,7 @@ def main():
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    client = core.CoreClient(username='gp', password='gp-admin', host='http://localhost:3000')
+    client = core.CoreClient(username='gp', password='gp-admin', host='http://192.168.3.30:2999')
 
     train_file_path = 'data/ts_data/iris_train.csv'
     test_file_path = 'data/ts_data/iris_test.csv'
@@ -42,7 +43,7 @@ def main():
 
     # Settings for time series forecast training.
     train_input = TrainTSInput(
-        data=train_data, target='regression', forecast_horizon=7, gap=0,
+        data=train_data, target='regression', forecast_horizon=7, gap=0, algorithms=[AlgoTS.XGBoost],
         datetime_column='date', max_model=1, evaluator=Evaluator.r2, time_unit='day',
         max_iteration=10, numerical_groupby_method='mean')
 

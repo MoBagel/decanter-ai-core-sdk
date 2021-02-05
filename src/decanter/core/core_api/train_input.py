@@ -8,6 +8,7 @@ import json
 
 from decanter.core.core_api import CoreBody
 from decanter.core.enums.algorithms import Algo
+from decanter.core.enums.algorithms_ts import AlgoTS
 from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
 
@@ -95,8 +96,7 @@ class TrainInput:
             :obj:`dict`
         """
         setattr(self.train_body, 'train_data_id', self.data.id)
-        params = json.dumps(
-            self.train_body.jsonable(), cls=CoreBody.ComplexEncoder)
+        params = json.dumps(self.train_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
         return params
 
@@ -113,7 +113,7 @@ class TrainTSInput:
             Request body for sending time series training api.
     """
     def __init__(
-            self, data, target, datetime_column, forecast_horizon, gap, feature_types=None,
+            self, data, target, datetime_column, forecast_horizon, gap, algorithms, feature_types=None,
             callback=None, version='v2', max_iteration=None, generation_size=None,
             mutation_rate=None, crossover_rate=None, tolerance=None, validation_percentage=None,
             holdout_percentage=None, max_model=None, seed=None, evaluator=None,
@@ -122,6 +122,7 @@ class TrainTSInput:
             time_groups=None, max_window_for_feature_derivation=None):
 
         evaluator = check_is_enum(Evaluator, evaluator)
+        algorithms = [check_is_enum(AlgoTS, algo) for algo in algorithms]
         self.data = data
 
         geneticAlgorithm = CoreBody.GeneticAlgorithmParams.create(
@@ -139,7 +140,8 @@ class TrainTSInput:
             evaluator=evaluator,
             max_run_time=max_run_time,
             genetic_algorithm=geneticAlgorithm,
-            nfold=nfold
+            nfold=nfold,
+            algos = algorithms # user specifies algorithm used in TS analysis
         )
         group_by = CoreBody.TSGroupBy.create(
             time_unit=time_unit,

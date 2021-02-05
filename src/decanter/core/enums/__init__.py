@@ -1,7 +1,7 @@
 """Init jobs package"""
 from .evaluators import Evaluator
 from .algorithms import Algo
-
+from .algorithms import AlgoTS
 def check_is_enum(Enum, enum):
 	if isinstance(enum, str):
 		enum_isStr = eval('%s.%s'%(Enum.__name__, enum))
