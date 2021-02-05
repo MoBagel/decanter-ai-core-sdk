@@ -8,7 +8,7 @@ import json
 
 from decanter.core.core_api import CoreBody
 from decanter.core.enums.algorithms import Algo
-from decanter.core.enums.algorithms_ts import AlgoTS
+#from decanter.core.enums.algorithms_ts import AlgoTS
 from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
 
@@ -122,7 +122,7 @@ class TrainTSInput:
             time_groups=None, max_window_for_feature_derivation=None):
 
         evaluator = check_is_enum(Evaluator, evaluator)
-        algorithms = [check_is_enum(AlgoTS, algo) for algo in algorithms]
+        #algorithms = [check_is_enum(AlgoTS, algo) for algo in algorithms]
         self.data = data
 
         geneticAlgorithm = CoreBody.GeneticAlgorithmParams.create(
