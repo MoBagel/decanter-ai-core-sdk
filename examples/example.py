@@ -24,7 +24,7 @@ def main():
     # Create connection to Decanter server, and set up basic settings.
     # Logger message:
     #   "[Context] connect healty :)" if success.
-    client = core.CoreClient(username='gp', password='gp-admin', host='http://192.168.3.30:2999')
+    client = core.CoreClient(username='gp', password='gp-admin', host='http://localhost:3000')
 
     current_path = os.path.dirname(os.path.abspath(__file__))
     train_file_path = os.path.join(current_path, 'data/train.csv')
