@@ -25,6 +25,7 @@ class DataUpload(Job):
     """DataUpload manage to get the result from data upload.
 
     Handle the execution of upload task in order to upload data to
+
     Decanter Core server Stores the upload results in DataUpload attributes.
 
     Attributes:
