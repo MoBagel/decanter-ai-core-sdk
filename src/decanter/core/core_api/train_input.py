@@ -112,7 +112,7 @@ class TrainTSInput:
             Request body for sending time series training api.
     """
     def __init__(
-            self, data, target, datetime_column, forecast_horizon, gap, algorithms, feature_types=None,
+            self, data, target, datetime_column, forecast_horizon, gap, algorithms=None, feature_types=None,
             callback=None, version='v2', max_iteration=None, generation_size=None,
             mutation_rate=None, crossover_rate=None, tolerance=None, validation_percentage=None,
             holdout_percentage=None, max_model=None, seed=None, evaluator=None,
