@@ -3,7 +3,6 @@ Functions support other modules.
 """
 import uuid
 
-
 def check_response(response, key=None):
     """CHeck the api response.
 
@@ -14,7 +13,6 @@ def check_response(response, key=None):
     """
     code = response.status_code
     if not 200 <= code < 300:
-        print('response: ' + str(response))
         raise Exception('[Decanter Core response Error] Request Error')
 
     if key is not None and key not in response.json():
