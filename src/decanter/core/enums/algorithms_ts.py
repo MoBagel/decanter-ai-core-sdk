@@ -12,10 +12,10 @@ class AlgoTS(Enum):
 
     - Prophet: Prophet forecasting model for univariate time series datasets
     - Theta: Theta forecasting model
-    - DeepLearning: Deep Learning.
+    - LSTM: Google's LSTM.
     - XGBoost: eXtreme Gradient Boosting.
     """
     Prophet = 'Prophet'
     Theta = 'Theta'
-    DeepLearning = 'DeepLearning'
+    LSTM = 'LSTM'
     XGBoost = 'XGBoost'
