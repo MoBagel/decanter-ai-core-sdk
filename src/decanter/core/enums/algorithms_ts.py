@@ -15,7 +15,7 @@ class AlgoTS(Enum):
     - DeepLearning: Deep Learning.
     - XGBoost: eXtreme Gradient Boosting.
     """
-    prophet = 'Prophet'
-    theta = 'Theta'
+    Prophet = 'Prophet'
+    Theta = 'Theta'
     DeepLearning = 'DeepLearning'
     XGBoost = 'XGBoost'
