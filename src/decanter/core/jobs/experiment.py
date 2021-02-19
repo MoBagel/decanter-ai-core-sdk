@@ -106,9 +106,9 @@ class Experiment(Job):
         logger.debug('[%s] \'%s\' get best model', class_, self.name)
         model_list = self.attributes
         select_by_evaluator = Evaluator.resolve_select_model_by(self.select_model_by, self.hyperparameters['model_type'])
-        minlevel = {Evaluator.mse, Evaluator.mae, Evaluator.mean_per_class_error,
-                    Evaluator.deviance, Evaluator.logloss, Evaluator.rmse,
-                    Evaluator.rmsle, Evaluator.misclassification}
+        minlevel = {Evaluator.mse.value, Evaluator.mae.value, Evaluator.mean_per_class_error.value,
+                    Evaluator.deviance.value, Evaluator.logloss.value, Evaluator.rmse.value,
+                    Evaluator.rmsle.value, Evaluator.misclassification.value}
         best_model_id = None
         try:
             if self.select_model_by in minlevel:

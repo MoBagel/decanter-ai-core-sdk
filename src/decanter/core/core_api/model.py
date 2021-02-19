@@ -175,7 +175,6 @@ class MultiModel(Model):
     def __init__(self):
         self.get_model = CoreAPI().get_multimodels_by_id
         self.download_model = CoreAPI().get_models_download_by_id
-        self.get_model = CoreAPI().get_multimodels_by_id
         self.task_status = CoreStatus.PENDING
         self.id = None
         self.name = None
