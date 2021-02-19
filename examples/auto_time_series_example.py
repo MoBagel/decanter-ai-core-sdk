@@ -42,7 +42,7 @@ def main():
 
     # Settings for time series forecast training.
     train_input = TrainTSInput(
-        data=train_data, target='regression', forecast_horizon=7, gap=0,
+        data=train_data, target='regression', forecast_horizon=7, gap=0, algorithms=["XGBoost"],
         datetime_column='date', max_model=1, evaluator=Evaluator.r2, time_unit='day',
         max_iteration=10, numerical_groupby_method='mean')
 
