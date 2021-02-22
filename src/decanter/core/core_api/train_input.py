@@ -5,7 +5,7 @@
 # pylint: disable=no-member
 """Settings for the Model Training and Time Series MultiModel Training."""
 import json
-
+from decanter.core.core_api import CoreAPI
 from decanter.core.core_api import CoreBody
 from decanter.core.enums.algorithms import Algo
 from decanter.core.enums.evaluators import Evaluator
@@ -169,8 +169,6 @@ class TrainTSInput:
 
     @staticmethod
     def get_ts_algorithms():
-        from decanter.core.core_api import CoreAPI
-        import json
         core_api = CoreAPI()
         response = json.loads(getattr(core_api.get_info(), '_content'))['time_series']['algos']
         algos = [x['key'] for x in response]
