@@ -124,11 +124,9 @@ class CoreAPI:
         Endpoint: /v2/info
 
         Returns:
-            class: `list <str>` obj
+            class: `Response <Response>` obj
         """
-        response = json.loads(getattr(self.requests_(http='GET', url='/v2/info'), '_content'))['time_series']['algos']
-        algos = [x['key'] for x in response]
-        return algos
+        return self.requests_(http='GET', url='/v2/info')
 
     def post_data_delete(self, **kwargs):
         """Batch delete data.

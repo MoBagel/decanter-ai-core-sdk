@@ -167,6 +167,15 @@ class TrainTSInput:
             input_spec=input_spec
         )
 
+    @staticmethod
+    def get_ts_algorithms():
+        from decanter.core.core_api import CoreAPI
+        import json
+        core_api = CoreAPI()
+        response = json.loads(getattr(core_api.get_info(), '_content'))['time_series']['algos']
+        algos = [x['key'] for x in response]
+        return algos
+
     def get_train_params(self):
         """Using train_auto_ts_body to create the JSON request body
         for time series forecast training.
