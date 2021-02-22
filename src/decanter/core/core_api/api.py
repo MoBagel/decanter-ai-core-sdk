@@ -118,7 +118,7 @@ class CoreAPI:
         """
         return self.requests_(http='GET', url='/data/%s/file' % data_id)
 
-    def get_ts_algorithms(self):
+    def get_info(self):
         """Get list of available time series algorithms
 
         Endpoint: /v2/info
