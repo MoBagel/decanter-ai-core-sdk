@@ -81,7 +81,7 @@ class CoreAPI:
     def get_info(self):
         """Get list of available time series algorithms
 
-        Endpoint: /v2/data
+        Endpoint: /v2/info
 
         Returns:
             class: `Response <Response>` object
