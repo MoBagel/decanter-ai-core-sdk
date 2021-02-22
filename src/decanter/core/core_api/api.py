@@ -78,6 +78,17 @@ class CoreAPI:
             logger.error('[Core] Request Failed :(')
             raise Exception(err)
 
+    def get_info(self):
+        """Get list of available time series algorithms
+
+        Endpoint: /v2/data
+
+        Returns:
+            class: `Response <Response>` object
+
+        """
+        return self.requests_(http='GET', url='/v2/info')
+
     def get_data_list(self):
         """Get list of data metadata.
 
