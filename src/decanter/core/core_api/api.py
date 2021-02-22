@@ -118,6 +118,18 @@ class CoreAPI:
         """
         return self.requests_(http='GET', url='/data/%s/file' % data_id)
 
+    def get_ts_algorithms(self):
+        """Get list of available time series algorithms
+
+        Endpoint: /v2/info
+
+        Returns:
+            class: `list <str>` obj
+        """
+        response = json.loads(getattr(self.requests_(http='GET', url='/v2/info'), '_content'))['time_series']['algos']
+        algos = [x['key'] for x in response]
+        return algos
+
     def post_data_delete(self, **kwargs):
         """Batch delete data.
 
