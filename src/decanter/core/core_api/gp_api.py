@@ -11,7 +11,6 @@
 import logging
 
 import requests
-from requests.auth import HTTPBasicAuth
 from urllib3.exceptions import InsecureRequestWarning
 
 import decanter.core as core
@@ -28,7 +27,7 @@ class GPAPI:
     def requests_(http, url, json=None, data=None, files=None, headers=None):
         """Handle request sending to Decanter GP.
 
-        Send corresponding Basic Auth request by argument and handle
+        Send corresponding Bearer Auth request by argument and handle
         RequestException.
 
         Args:
@@ -50,25 +49,24 @@ class GPAPI:
             Exception: Occurred when raises RequestException
                     or calling wrong http method.
         """
-        bearer_auth = BearerAuth(core.Context.APIKEY)
-        #url = core.Context.HOST + url
+        bearer_auth = BearerAuth(core.Context.APIKEY) # TODO: custom authentication method -- will this work?
+        url = core.Context.HOST + url
 
-        # TODO: Figure out how logging in is handled in GP -- how is Context related to apikey and host?
         try:
             if http == 'GET':
-                return requests.get(url=url, auth=basic_auth, verify=False)
+                return requests.get(url=url, auth=bearer_auth, verify=False)
             if http == 'POST':
                 return requests.post(
                     url=url, json=json, data=data,
-                    files=files, auth=basic_auth, verify=False, headers=headers)
+                    files=files, auth=bearer_auth, verify=False, headers=headers)
             if http == 'PUT':
                 return requests.put(
                     url=url, json=json, data=data,
-                    files=files, auth=basic_auth, verify=False, headers=headers)
+                    files=files, auth=bearer_auth, verify=False, headers=headers)
             if http == 'DELETE':
                 return requests.delete(
                     url=url, json=json, data=data,
-                    files=files, auth=basic_auth, verify=False)
+                    files=files, auth=bearer_auth, verify=False)
 
             raise Exception('[GP] No such HTTP Method.')
 
@@ -116,6 +114,26 @@ class GPAPI:
         """
         return self.requests_('POST', '/v1/prediction/predict', json=kwargs)
 
+    def post_table_upload(self, **kwargs):
+        """ Upload dataset on GP backend
+
+        Endpoint: /v1/table/upload
+
+        Returns:
+            class: `Response <Response>` object
+        """
+        return self.requests_('POST', '/v1/table/upload', json=kwargs)
+
+    def put_table_update(self, **kwargs):
+        """Setup dataset on GP backend
+        
+        Endpoint: /v1/table/update
+        
+        Returns:
+            class: `Response <Response>` object
+        """
+        return self.requests_('PUT', '/v1/table/update', json=kwargs)
+    
     class BearerAuth(requests.auth.AuthBase):
         def __init__(self, apikey):
             self.apikey = apikey
