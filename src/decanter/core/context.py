@@ -26,6 +26,8 @@ class Context:
     'str: User name to login in Decanter Core server'
     PASSWORD = None
     'str: Password to login in Decanter Core server'
+    APIKEY = None
+    'str: apikey to login to Decanter GP server'
     HOST = None
     'str: Decanter Core server\'s URL.'
     LOOP = None
@@ -47,7 +49,7 @@ class Context:
         pass
 
     @classmethod
-    def create(cls, username, password, host):
+    def create(cls, username=None, password=None, apikey=None, host):
         """Create context instance and init neccessary variable and objects.
 
         Setting the user, password, and host for the funture connection when
@@ -68,6 +70,7 @@ class Context:
         Context.USERNAME = username
         Context.PASSWORD = password
         Context.HOST = host
+        Context.APIKEY = apikey
 
         # get the current event loop
         # it will create a new event loop if it does not exist
