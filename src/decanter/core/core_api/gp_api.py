@@ -133,7 +133,37 @@ class GPAPI:
             class: `Response <Response>` object
         """
         return self.requests_('PUT', '/v1/table/update', json=kwargs)
+
+    def get_table_by_id(self, table_id):
+        """Get table by id from GP backend, called by GPDataUpload's methods
+        
+        Endpoint: /v1/table/{table_id}
+        
+        Returns:
+            class: `Response <Response>` object
+        """
+        return self.requests_('GET', '/v1/table/%s' % table_id)
+
+    def get_table_csv_by_id(self, table_id):
+        """Get table csv file by id from GP backend, called by GPDataUpload's methods
+        
+        Endpoint: /v1/table/{table_id}/csv
+        
+        Returns:
+            class: `Response <Response>` object; downloads csv file
+        """
+        return self.requests_('GET', '/v1/table/%s/csv' % table_id)
     
+    def get_experiments_by_id(self, experiment_id):
+        """Get experiment metadata.
+
+        Endpoint: /experiments/{experiment_id}
+
+        Returns:
+            class:`Response <Response>` object
+        """
+        return self.requests_('GET', '/v1/experiment/%s' % experiment_id)
+
     class BearerAuth(requests.auth.AuthBase):
         def __init__(self, apikey):
             self.apikey = apikey

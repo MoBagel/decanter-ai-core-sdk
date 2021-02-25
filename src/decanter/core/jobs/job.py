@@ -8,7 +8,7 @@ import abc
 import asyncio
 import logging
 
-from decanter.core.core_api import CoreAPI
+from decanter.core.core_api import CoreAPI, GPAPI
 from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import block_method
 
@@ -42,6 +42,7 @@ class Job:
         self.jobs = jobs
         self.name = name
         self.core_service = CoreAPI()
+        self.gp_service = GPAPI()
 
     def is_done(self):
         """
