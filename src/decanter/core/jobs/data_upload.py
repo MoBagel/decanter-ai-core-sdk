@@ -10,6 +10,10 @@ import io
 import logging
 
 import pandas as pd
+from datetime import datetime
+import string
+import random
+import os
 
 from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import update
@@ -139,18 +143,11 @@ class GPDataUpload(Job):
     Decanter GP server; Stores the upload results in DataUpload attributes.
 
     Attributes:
-        jobs (list): None, list up jobs that DataUpload needs to wait for.
-        task (:class:`~decanter.core.jobs.task.UploadTask`): Upload task run by
-            DataUpload.
-        accessor (dict): Accessor for files in hdfs.
-        schema (dict): The original data schema.
-        originSchema (dict): The original data schema.
-        annotationsMeta (dict): information: Extra information for data.
-        options (dict): Extra information for data.
-        created_at (str): The date the data was created.
-        updated_at (str): The time the data was last updated.
-        completed_at (str): The time the data was completed at.
-        name (str): Name to track Job progress, will give default name if None.
+        created_at (string<date-time>): DateTime of when table started to upload
+        uid (string): unique Upload ID to track table upload
+        name (string): table name 
+        file (ioBufferedReader): File byte data
+        project_id (string): Project ID as ObjectID string
     """
     def __init__(self, file=None, name=None):
         """DataUpload Init.
@@ -159,18 +156,33 @@ class GPDataUpload(Job):
             file (file-object): DataUpload file to upload.
             name (:obj:`str`, optional): Name to track Job progress
         """
-        super().__init__(jobs=None,
-                         task=GPUploadTask(file, name),
-                         name=gen_id(self.__class__.__name__, name))
-
+        #TODO: 
+        #  required request body schema: 
+        #     created_at (string<date-time>): DateTime of when table started to upload
+        #     uid (string): unique Upload ID to track table upload
+        #     name (string): table name 
+        #     file (any): File byte data
+        #     project_id (string): Project ID as ObjectID string
         self.accessor = None
-        self.schema = None
-        self.originSchema = None
-        self.annotations = None
-        self.options = None
-        self.created_at = None
-        self.updated_at = None
-        self.completed_at = None
+        self.created_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        printable = string.hexdigits
+        self.uid = gen_id(self.__class__.__name__, name)
+        self.name = name
+        self.file = {'file': file}
+        self.project_id = ''.join(random.choice(printable) for i in range(24)) #'5fbcd4de6db13a0044153034'
+        self.source = 'datamanager'
+        self.file_size = 1
+        self.data = {}
+        self.data['created_at'] = self.created_at
+        self.data['uid'] = self.uid
+        self.data['source'] = self.source
+        self.data['name'] = self.name
+        self.data['project_id'] = self.project_id
+        self.data['file_size'] = self.file_size
+
+        super().__init__(jobs=None,
+                         task=GPUploadTask(self.file, self.data, name=self.name),
+                         name=self.uid)
     
     @classmethod
     def create(cls, data_id, name=None):

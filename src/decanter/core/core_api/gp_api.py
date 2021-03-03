@@ -9,8 +9,9 @@
 """
 
 import logging
-
 import requests
+
+from decanter.core.extra.bearer_auth import BearerAuth
 from urllib3.exceptions import InsecureRequestWarning
 
 import decanter.core as core
@@ -122,7 +123,9 @@ class GPAPI:
         Returns:
             class: `Response <Response>` object
         """
-        return self.requests_('POST', '/v1/table/upload', json=kwargs)
+        files = kwargs['file']
+        data = kwargs['data']
+        return self.requests_('POST', '/v1/table/upload', files=files, data=data)
 
     def put_table_update(self, **kwargs):
         """Setup dataset on GP backend
@@ -163,12 +166,11 @@ class GPAPI:
             class:`Response <Response>` object
         """
         return self.requests_('GET', '/v1/experiment/%s' % experiment_id)
-
-    class BearerAuth(requests.auth.AuthBase):
-        def __init__(self, apikey):
-            self.apikey = apikey
-        def __call__(self, r):
-            r.headers["authorization"] = "Bearer " + self.apikey
-            return r
-
+    
+    def get_worker_status(self, host_url):
+        """Send ping to host to see if connection is healthy
+        
+        Returns:
+            class: `Response <Response>` object"""
+        return self.requests_('GET', host_url)
         

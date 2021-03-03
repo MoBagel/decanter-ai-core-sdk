@@ -12,14 +12,35 @@ def check_response(response, key=None):
         class: `Response <Response>`
     """
     code = response.status_code
+    print("response:", response, response.text)
     if not 200 <= code < 300:
         raise Exception('[Decanter Core response Error] Request Error')
 
-    if key is not None and key not in response.json():
-        raise KeyError('[Decanter Core response Error] No key value')
+    #if key is not None and key not in response.json():
+    #    raise KeyError('[Decanter Core response Error] No key value')
+    if key is not None:
+        if key_is_in_response(response.json(), key):
+            return response
+        else:
+            raise KeyError('[Decanter Core response Error] No key value')
+    else:
+        return response
 
-    return response
+def key_is_in_response(dictionary, key):
+    for k, v in dictionary.items():
+        if k == key:
+            return True
+        elif isinstance(v, dict):
+            return key_is_in_response(v, key)
+    return False #raise KeyError('[Decanter Core response Error] No key value')
 
+def get_key(dictionary, key):
+    for k, v in dictionary.items():
+        if k == key:
+            return k
+        elif isinstance(v, dict):
+            return get_key(v, key)
+    raise KeyError('[Decanter Core response Error] No key value')
 
 def gen_id(type_, name):
     """Generate a random UUID if name isn't given.

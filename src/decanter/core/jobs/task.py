@@ -10,9 +10,9 @@ import logging
 from functools import partial
 
 from decanter.core import Context
-from decanter.core.core_api import CoreAPI
+from decanter.core.core_api import CoreAPI, GPAPI
 from decanter.core.extra import CoreStatus, CoreKeys
-from decanter.core.extra.utils import check_response, isnotebook, gen_id
+from decanter.core.extra.utils import check_response, isnotebook, gen_id, get_key
 
 try:
     if isnotebook():
@@ -174,7 +174,7 @@ class CoreTask(Task):
         self.response = check_response(
             api_func(**kwargs), key=CoreKeys.id.value)
         self.response = self.response.json()
-        self.id = self.response[CoreKeys.id.value]
+        self.id = get_key(self.response, CoreKeys.id.value)
         logger.debug(
             '[%s] \'%s\' upload task id: %s',
             self.__class__.__name__, self.name, self.id)
@@ -205,6 +205,7 @@ class UploadTask(CoreTask):
     Attributes:
         file (csv-file-object): The csv file to be uploaded.
     """
+
     def __init__(self, file, name=None):
         super().__init__(name=gen_id('UploadTask', name))
         self.file = file
@@ -216,23 +217,26 @@ class UploadTask(CoreTask):
             filename=self.file.name, file=self.file,
             encoding='text/plain(UTF-8)')
 
+
 class GPUploadTask(CoreTask):
     """Upload data to Decanter GP
 
     Attributes:
         file (csv-file-object): The csv file to be uploaded.
     """
-    def __init__(self, file, name=None):
+    def __init__(self, file, data, name=None):
         super().__init__(name=gen_id('GPUploadTask', name))
         self.file = file
-    
+        self.data = data
+
     def run(self):
         """Execute upload data by sending the upload api"""
         super().run_core_task(
             api_func=self.gp_service.post_table_upload,
-            filename=self.file.name, file=self.file,
-            encoding='text/plain(UTF-8)'
+            file=self.file, 
+            data=self.data
         )
+
 
 class TrainTask(CoreTask):
     """Train model on Decanter Core.
@@ -241,6 +245,7 @@ class TrainTask(CoreTask):
         train_input (:class:`~decanter.core.core_api.train_input.TrainInput`):
             Settings for training.
     """
+
     def __init__(self, train_input, name=None):
         super().__init__(name=gen_id('TrainTask', name))
         self.train_input = train_input
@@ -250,6 +255,7 @@ class TrainTask(CoreTask):
         train_params = self.train_input.get_train_params()
         super().run_core_task(api_func=self.core_service.post_tasks_train, **train_params)
 
+
 class GPTrainTask(CoreTask):
     """Train model on Decanter GP.
 
@@ -257,7 +263,6 @@ class GPTrainTask(CoreTask):
         train_input (:class:`~decanter.core.core_api.gp_train_input.GPTrainInput`):
             Settings for training.
     """
-    # TODO: implement GPTrainInput, similar in functionality to TrainInput
     def __init__(self, gp_train_input, name=None):
         super().__init__(name=gen_id('GPTrainTask', name))
         self.gp_train_input = gp_train_input
@@ -275,6 +280,7 @@ class TrainTSTask(CoreTask):
         train_input (:class:`~decanter.core.core_api.train_input.TrainTSInput`):
             Settings for training time series forecast models.
     """
+
     def __init__(self, train_input, name=None):
         super().__init__(name=gen_id('TrainTSTask', name))
         self.train_input = train_input
@@ -294,6 +300,7 @@ class PredictTask(CoreTask):
         predict_input (:class:`~decanter.core.core_api.predict_input.PredictInput`):
             Settings for prediction.
     """
+
     def __init__(self, predict_input, name=None):
         super().__init__(name=gen_id('PredictTask', name))
         self.predict_input = predict_input
@@ -305,34 +312,16 @@ class PredictTask(CoreTask):
             api_func=self.core_service.post_tasks_predict,
             **pred_params)
 
-class GPPredictTask(CoreTask):
-     """Predict model on Decanter GP.
-
-    Attributes:
-        gp_predict_input (:class:`~decanter.core.core_api.gp_predict_input.GPPredictInput`):
-            Settings for prediction.
-    """
-    # TODO: implement GPPredictInput
-    def __init__(self, gp_predict_input, name=None):
-        super().__init__(name=gen_id('GPPredictTask', name))
-        self.gp_predict_input = gp_predict_input
-    
-    def run(self):
-        """Execute predict model training by sending the predict api"""
-        gp_pred_params = self.gp_predict_input.getPredictParams() 
-        super().run_core_task(
-            api_func=self.gp_service.post_prediction_predict,
-            **pred_params
-        )
 
 class PredictTSTask(CoreTask):
     """Predict time series model on Decanter Core.
 
     Attributes:
-        predict_input \
+        predict_input
             (:class:`~decanter.core.core_api.predict_input.PredictTSInput`):
             Settings for time series prediction.
     """
+
     def __init__(self, predict_input, name=None):
         super().__init__(name=gen_id('PredictTSTask', name))
         self.predict_input = predict_input
@@ -354,6 +343,7 @@ class SetupTask(CoreTask):
         setup_input (:class:`~decanter.core.core_api.setup_input.SetupInput`):
             Settings for set up data.
     """
+
     def __init__(self, setup_input, name='Setup'):
         super().__init__(name=name)
         self.setup_input = setup_input
@@ -367,13 +357,13 @@ class SetupTask(CoreTask):
             api_func=self.core_service.post_tasks_setup,
             **setup_params)
 
+
 class GPSetupTask(CoreTask):
     """
     Attributes:
         gp_setup_input (:class:`~decanter.core.core_api.gp_setup_input.GPSetupInput`):
             Settings for set up data.
     """
-    # TODO: implement GPSetupInput
     def __init__(self, gp_setup_input, name='GPSetup'):
         super().__init__(name=name)
         self.gp_setup_input = gp_setup_input
@@ -386,4 +376,16 @@ class GPSetupTask(CoreTask):
         super().run_core_task(
             api_func=self.gp_service.put_table_update,
             **gp_setup_params
+        )
+
+class GPPredictTask(CoreTask):
+    def __init__(self, gp_predict_input, name=None):
+        super().__init__(name=gen_id("GPPredictTask", name))
+        self.gp_predict_input = gp_predict_input
+    
+    def run(self):
+        gp_pred_params = self.gp_predict_input.getPredictParams()
+        super().run_core_task(
+            api_func=self.gp_service.post_prediction_predict,
+            **pred_params
         )

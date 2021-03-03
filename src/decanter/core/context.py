@@ -5,12 +5,12 @@ import logging
 import pandas as pd
 
 from decanter.core.extra import CoreStatus
-import decanter.core.core_api.worker as worker
+import abc 
 
 logger = logging.getLogger(__name__)
 
 
-class Context:
+class Context(object):
     """Init the connection to decanter core server and functionality for running SDK.
 
     Example:
@@ -22,6 +22,7 @@ class Context:
             context.run()
 
     """
+    __metaclass__ = abc.ABCMeta
     USERNAME = None
     'str: User name to login in Decanter Core server'
     PASSWORD = None
@@ -49,7 +50,7 @@ class Context:
         pass
 
     @classmethod
-    def create(cls, username=None, password=None, apikey=None, host):
+    def create(cls, host, username=None, password=None, apikey=None):
         """Create context instance and init neccessary variable and objects.
 
         Setting the user, password, and host for the funture connection when
@@ -81,7 +82,6 @@ class Context:
             asyncio.set_event_loop(asyncio.new_event_loop())
             Context.LOOP = asyncio.get_event_loop()
             logger.debug('[Context] create and set new event loop')
-        context.healthy()
         return context
 
     @staticmethod
@@ -125,6 +125,7 @@ class Context:
         Context.USERNAME = Context.PASSWORD = Context.HOST = None
 
     @staticmethod
+    @abc.abstractmethod
     def healthy():
         """Check the connection between Decanter Core server.
 
@@ -132,15 +133,8 @@ class Context:
         authorization errors.
 
         """
-        try:
-            res = worker.Worker().get_status()
-            if res.status_code // 100 != 2:
-                raise Exception()
-        except Exception as err:
-            logger.error('[Context] connect not healthy :(')
-            raise SystemExit(err)
-        else:
-            logger.info('[Context] connect healthy :)')
+        raise NotImplementedError('Please Implement run method')
+
 
     @staticmethod
     def get_all_jobs():

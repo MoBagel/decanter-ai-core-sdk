@@ -123,6 +123,12 @@ class GPPredictResult(Job):
         updated_at (str): The time the data was last updated.
         completed_at (str): The time the data was completed at.
     """
+    #TODO: 
+        #  required request body schema: 
+        #     model_id (string): Model ID as ObjectID string
+        #     experiment_id (string): Experiment ID as ObjectID string
+        #     project_id (string): Project ID as ObjectID string
+
     def __init__(self, predict_input, name=None):
         super().__init__(
             jobs=[predict_input.data, predict_input.experiment],
@@ -136,6 +142,10 @@ class GPPredictResult(Job):
         self.created_at = None
         self.updated_at = None
         self.completed_at = None
+
+        self.model_id = ""
+        self.experiment_id = ""
+        self.project_id = ""
 
     @update
     def update_result(self, task_result):

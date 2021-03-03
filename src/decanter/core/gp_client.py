@@ -3,6 +3,7 @@
 import io
 import json
 import logging
+import requests
 
 import pandas as pd
 
@@ -44,7 +45,25 @@ class GPClient(Context):
             host (str): Decanter GP server URL.
         """
         Context.create(apikey=apikey, host=host)
-        
+        self.healthy()
+
+    @staticmethod
+    def healthy():
+        """Check the connection between Decanter GP server.
+
+        Send a fake request to determine if there's connection or
+        authorization errors.
+
+        """
+        try:
+            res = requests.get(Context.HOST)
+            if res.status_code // 100 != 2:
+                raise Exception()
+        except Exception as err:
+            logger.error('[Context] connect not healthy :(')
+            raise SystemExit(err)
+        else:
+            logger.info('[Context] connect healthy :)')
 
     @staticmethod
     def setup(setup_input, name=None):

@@ -159,6 +159,13 @@ class GPDataSetup(Job):
             setup_input (:obj:`~decanter.core.jobs.data_setup.DataSetup)
             name (:obj:`str`, optional): Name to track Job progress
         """
+        #TODO: 
+        #  required request body schema: 
+        #     columns (Array of objects: TableColumnsPartition): Array of COlumns with dataType updated
+        #     project_id (string): Project ID as ObjectID string
+        #     table_id (string): Table ID as ObjectID string
+        #     
+
         super().__init__(
             jobs=[setup_input.data],
             task=GPSetupTask(setup_input, name),
@@ -171,6 +178,10 @@ class GPDataSetup(Job):
         self.created_at = None
         self.updated_at = None
         self.completed_at = None
+
+        self.columns = []
+        self.project_id = ""
+        self.table_id = ""
 
     @classmethod
     def create(cls, data_id, name=None):

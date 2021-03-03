@@ -164,8 +164,25 @@ class GPExperiment(Experiment, Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress.
     """
+    #TODO: 
+        #  required request body schema: 
+        #     is_binary_classification (boolean): if this experiment is defined as binary classification
+        #     seed (number): Random Seed of experiment
+        #     stacked_ensemble (boolean): If experiment has stack ensemble enabled
+        #     nfold (number): Amount of folds in experiment
+        #     balance_class (boolean): if experiment has balanced class enabled
+        #     train_table_id (string): Train Table ID from CoreX table
+        #     stopping_metric (string): Stopping metric to be used on experiment
+        #     category (string): Experiment Category
+        #     tolerance (number): Experiment Tolerance
+        #     name (string): Experiments name
+        #     project_id (string): project ID as ObjectID string
+        #     features (Array of strings): List of experiment features
+        #     gp_table_id (string): Table ID from within GP
+        #     algos (array of strings): List of algorithms to use
+
     def __init__(self, train_input, select_model_by=Evaluator.auto, name=None):
-        Job.__init__(
+        Job.__init__(self,
             jobs=[train_input.data],
             task=GPTrainTask(train_input, name=name),
             name=gen_id(self.__class__.__name__, name))
@@ -186,6 +203,21 @@ class GPExperiment(Experiment, Job):
         self.created_at = None
         self.updated_at = None
         self.completed_at = None
+        
+        self.is_binary_classification = False
+        self.seed = 0
+        self.stacked_ensemble = False
+        self.nfold = 1
+        self.balance_class = False
+        self.train_table_id = ""
+        self.stopping_metric = ""
+        self.category = ""
+        self.tolerance = 0.1
+        self.name = ""
+        self.project_id = ""
+        self.features = []
+        self.gp_table_id = ""
+        self.algos = []
 
     @classmethod
     def create(cls, exp_id, name=None):

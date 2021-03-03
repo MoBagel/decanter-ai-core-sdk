@@ -9,6 +9,7 @@ import sys
 
 from .context import Context
 from .client import CoreClient
+from .gp_client import GPClient
 from .plot import show_model_attr
 
 core_logger = logging.getLogger(__name__)

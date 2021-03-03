@@ -14,6 +14,8 @@ import decanter.core.core_api.body_obj as CoreBody
 from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
 import decanter.core.jobs.task as jobsTask
+import decanter.core.core_api.worker as worker
+
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +47,26 @@ class CoreClient(Context):
             host (str): Decanter Core server URL.
         """
         Context.create(username=username, password=password, host=host)
+        self.healthy()
+
+
+    @staticmethod
+    def healthy():
+        """Check the connection between Decanter Core server.
+
+        Send a fake request to determine if there's connection or
+        authorization errors.
+
+        """
+        try:
+            res = worker.Worker().get_status()
+            if res.status_code // 100 != 2:
+                raise Exception()
+        except Exception as err:
+            logger.error('[Context] connect not healthy :(')
+            raise SystemExit(err)
+        else:
+            logger.info('[Context] connect healthy :)')
         
 
     @staticmethod
