@@ -40,7 +40,7 @@ test:
 
 upload:
 	python setup.py sdist bdist_wheel
-	twine upload dist/*
+	python -m twine upload dist/*
 
 release: upload clean
 
