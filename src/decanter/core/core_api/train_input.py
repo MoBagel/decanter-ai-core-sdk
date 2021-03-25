@@ -9,6 +9,8 @@ from decanter.core.core_api import CoreAPI
 from decanter.core.core_api import CoreBody
 from decanter.core.enums.algorithms import Algo
 from decanter.core.enums.evaluators import Evaluator
+from decanter.core.enums.time_units import TimeUnit
+from decanter.core.enums.numerical_group_by_methods import NumericalGroupByMethod
 from decanter.core.enums import check_is_enum
 
 class TrainInput:
@@ -121,6 +123,8 @@ class TrainTSInput:
             time_groups=None, max_window_for_feature_derivation=None):
 
         evaluator = check_is_enum(Evaluator, evaluator)
+        time_unit = check_is_enum(TimeUnit, time_unit)
+        numerical_groupby_method = check_is_enum(NumericalGroupByMethod, numerical_groupby_method)
         self.data = data
 
         geneticAlgorithm = CoreBody.GeneticAlgorithmParams.create(
