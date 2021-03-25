@@ -2,7 +2,7 @@
 from enum import Enum
 
 class TimeUnit(Enum):
-    HOUR = 'hour'
-    DAY = 'day'
-    MONTH = 'month'
-    YEAR = 'year'
+    hour = 'hour'
+    day = 'day'
+    month = 'month'
+    year = 'year'

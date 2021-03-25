@@ -1,7 +1,7 @@
 '''available numerical group by methods supported by corex'''
-import enum as Enum
+from enum import Enum
 
 class NumericalGroupByMethod(Enum):
-    SUM = 'sum'
-    MEAN = 'mean'
-    COUNT = 'count'
+    sum = 'sum'
+    mean = 'mean'
+    count = 'count'
