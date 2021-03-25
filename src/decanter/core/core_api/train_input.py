@@ -136,7 +136,6 @@ class TrainTSInput:
         build_spec = CoreBody.BuildSpec.create(
             tolerance=tolerance,
             validation_percentage=validation_percentage,
-            holdout_percentage=holdout_percentage,
             max_model=max_model,
             seed=seed,
             evaluator=evaluator,
@@ -161,7 +160,8 @@ class TrainTSInput:
             feature_types=feature_types,
             time_groups=time_groups,
             max_window_for_feature_derivation=max_window_for_feature_derivation,
-            group_by=group_by
+            group_by=group_by,
+            holdout_percentage=holdout_percentage
         )
 
         self.train_auto_ts_body = CoreBody.TrainAutoTSBody.create(
