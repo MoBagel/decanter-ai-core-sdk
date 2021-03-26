@@ -18,6 +18,10 @@ def check_response(response, key=None):
     if key is not None and key not in response.json():
         raise KeyError('[Decanter Core response Error] No key value')
 
+    if 'error' in response.json():
+        raise Exception(
+            f"[Decanter Core response Error] Request Error: {response.json()['error']['description']}")
+
     return response
 
 
