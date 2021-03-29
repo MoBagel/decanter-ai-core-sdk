@@ -13,10 +13,14 @@ def check_response(response, key=None):
     """
     code = response.status_code
     if not 200 <= code < 300:
-        raise Exception('[Decanter Core response Error] Request Error')
+        raise Exception(f'[Decanter Core response Error] Request Error: {response.text}')
 
     if key is not None and key not in response.json():
         raise KeyError('[Decanter Core response Error] No key value')
+
+    if 'error' in response.json():
+        raise Exception(
+            f"[Decanter Core response Error] Request Error: {response.json()['error']['description']}")
 
     return response
 

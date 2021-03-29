@@ -9,6 +9,9 @@ from decanter.core.core_api import CoreAPI
 from decanter.core.core_api import CoreBody
 from decanter.core.enums.algorithms import Algo
 from decanter.core.enums.evaluators import Evaluator
+from decanter.core.enums.time_units import TimeUnit
+from decanter.core.enums.numerical_group_by_methods import NumericalGroupByMethod
+from decanter.core.enums.categorical_group_by_method import CategoricalGroupByMethod
 from decanter.core.enums import check_is_enum
 
 class TrainInput:
@@ -121,6 +124,9 @@ class TrainTSInput:
             time_groups=None, max_window_for_feature_derivation=None):
 
         evaluator = check_is_enum(Evaluator, evaluator)
+        time_unit = check_is_enum(TimeUnit, time_unit)
+        numerical_groupby_method = check_is_enum(NumericalGroupByMethod, numerical_groupby_method)
+        categorical_groupby_method = check_is_enum(CategoricalGroupByMethod, categorical_groupby_method)
         self.data = data
 
         geneticAlgorithm = CoreBody.GeneticAlgorithmParams.create(
@@ -132,7 +138,6 @@ class TrainTSInput:
         build_spec = CoreBody.BuildSpec.create(
             tolerance=tolerance,
             validation_percentage=validation_percentage,
-            holdout_percentage=holdout_percentage,
             max_model=max_model,
             seed=seed,
             evaluator=evaluator,
@@ -157,7 +162,8 @@ class TrainTSInput:
             feature_types=feature_types,
             time_groups=time_groups,
             max_window_for_feature_derivation=max_window_for_feature_derivation,
-            group_by=group_by
+            group_by=group_by,
+            holdout_percentage=holdout_percentage
         )
 
         self.train_auto_ts_body = CoreBody.TrainAutoTSBody.create(
