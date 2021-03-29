@@ -4,4 +4,3 @@ from enum import Enum
 class NumericalGroupByMethod(Enum):
     sum = 'sum'
     mean = 'mean'
-    count = 'count'
