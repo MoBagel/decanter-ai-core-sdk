@@ -117,3 +117,14 @@ When contributing document, you’ll want to follow this checklist:
 
 3.  When presenting Python code, use single-quoted strings
     ('hello' instead of "hello").
+
+Package Release
+--------------------
+
+If you have the right permission, and you have twine installed, releasing a package is as simple as
+
+1.  update the version in ``setup.py``
+
+2.  ``make package``
+
+3.  ``make release``
