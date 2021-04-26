@@ -225,12 +225,12 @@ def column_array(cols):
 
 
 def cv_obj_array(cv):
-    """Turn Josn cv to list of CVObjects."""
+    """Turn JSON cv to list of CVObjects."""
     def build_cv_obj(cv):
         cv_objs = []
         for cv_obj in cv:
             try:
-                cv_objs.append(Column(id=cv_obj['cvTrain'], data_type=cv_obj['cvTest']))
+                cv_objs.append(Column(train=cv_obj['train'], test=cv_obj['test']))
             except KeyError as err:
                 raise ValueError('missing required value in cv types %s' % err)
         return cv_objs
