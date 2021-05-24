@@ -111,7 +111,7 @@ class Experiment(Job):
                     Evaluator.rmsle.value, Evaluator.misclassification.value}
         best_model_id = None
         try:
-            if self.select_model_by in minlevel:
+            if select_by_evaluator in minlevel:
                 best_model_id = min(
                     model_list.values(),
                     key=lambda x: x['cv_averages'][select_by_evaluator])['model_id']
