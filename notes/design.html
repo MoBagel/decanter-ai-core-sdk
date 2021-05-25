@@ -5,12 +5,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Design Notes &#8212; decanter-ai-core-sdk 1.0.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -49,16 +50,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="design-notes">
+  <section id="design-notes">
 <span id="design"></span><h1>Design Notes<a class="headerlink" href="#design-notes" title="Permalink to this headline">¶</a></h1>
 <p>If you are curious why Decanter AI Core SDK does certain things the way it does and not differently, this section is for you.</p>
-<div class="section" id="background">
+<section id="background">
 <h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="decanter-ai">
+<section id="decanter-ai">
 <h3>Decanter AI<a class="headerlink" href="#decanter-ai" title="Permalink to this headline">¶</a></h3>
 <p>Decanter AI is an AutoML tool, which is able to do feature engineering, auto model training and prediction.</p>
-</div>
-<div class="section" id="actions">
+</section>
+<section id="actions">
 <h3>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h3>
 <p>There are 4 actions that are provided by Decanter AI.</p>
 <ol class="arabic simple">
@@ -67,9 +68,9 @@
 <li><p>Train Data: Training models, based on the data upload previously.</p></li>
 <li><p>Predict Data: Predicting the data with the model which is trained previously.</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="design-decisions">
+</section>
+</section>
+<section id="design-decisions">
 <h2>Design Decisions<a class="headerlink" href="#design-decisions" title="Permalink to this headline">¶</a></h2>
 <p>When a developer is using Decanter’s API, such as using upload api to upload a csv file.
 He needs to start the upload by sending the upload request and monitor the status by continuously sending requests and receiving responses from getting task api. It’s not that convenient and it’ll block other processes while waiting for the task to be done, causing the decanter server to waste its resources, since it can process up to four tasks at a time.</p>
@@ -81,22 +82,22 @@ He needs to start the upload by sending the upload request and monitor the statu
 (ex. Tasks of uploading train and test data don’t depend on each other,
 making them run concurrently and asynchronously saves more time.)</p></li>
 </ol>
-</div>
-<div class="section" id="design-overview">
+</section>
+<section id="design-overview">
 <h2>Design Overview<a class="headerlink" href="#design-overview" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="context-module">
+<section id="context-module">
 <h3>Context Module<a class="headerlink" href="#context-module" title="Permalink to this headline">¶</a></h3>
 <p><cite>Context</cite> module manages the global eventloop.</p>
-</div>
-<div class="section" id="client-module">
+</section>
+<section id="client-module">
 <h3>Client Module<a class="headerlink" href="#client-module" title="Permalink to this headline">¶</a></h3>
 <p><cite>Client</cite> module provides main function SDK users, including 4 actions. The user creates the actions with specified parameters, therefore, it will put the task into eventloop list which is managed by <cite>Context</cite>.</p>
-</div>
-<div class="section" id="coreapi-module">
+</section>
+<section id="coreapi-module">
 <h3>CoreAPI Module<a class="headerlink" href="#coreapi-module" title="Permalink to this headline">¶</a></h3>
 <p><cite>CoreAPI</cite> module is a client of Decanter AI Server. Its responsibility is to communicate with Decanter AI server.</p>
-</div>
-<div class="section" id="job-and-task-module">
+</section>
+<section id="job-and-task-module">
 <h3>Job and Task Module<a class="headerlink" href="#job-and-task-module" title="Permalink to this headline">¶</a></h3>
 <p>We mainly have four actions to do during training models:</p>
 <ul class="simple">
@@ -119,10 +120,10 @@ it needs to wait for all the <cite>Job</cite> in its jobs list to be done.</p></
 </ol>
 <p>Ex. <cite>PredictResult &lt;Job&gt;</cite> must wait for <cite>Experiment &lt;Job&gt;</cite>
 and <cite>DataUpload &lt;Job&gt;</cite> to be done.</p>
-</div>
-</div>
-</div>
-<div class="section" id="how-to-do-it-asynchronously">
+</section>
+</section>
+</section>
+<section id="how-to-do-it-asynchronously">
 <h1>How to do it asynchronously?<a class="headerlink" href="#how-to-do-it-asynchronously" title="Permalink to this headline">¶</a></h1>
 <p>Why do we need asynchronous functionality? Since the decanter server can actually handle
 upto 4 tasks running at once, if we do the job synchronously, we could
@@ -174,41 +175,41 @@ so it can run other coroutines while waiting for the response.</p></li>
     <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="o">.</span><span class="n">status</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="structure-flow-overview">
+</section>
+<section id="structure-flow-overview">
 <h1>Structure Flow Overview<a class="headerlink" href="#structure-flow-overview" title="Permalink to this headline">¶</a></h1>
 <p>When we create the client of CoreClient() <code class="docutils literal notranslate"><span class="pre">client</span> <span class="pre">=</span> <span class="pre">CoreClient()</span></code> we simply
 create a <cite>Job</cite>. And its coroutines <code class="docutils literal notranslate"><span class="pre">Job.wait()</span></code> will be scheduled to
 execute in the event loop.</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../_images/flow_1.png" src="../_images/flow_1.png" />
-</div>
+</figure>
 <p>Notice that the event loop won’t start to run until we call
 <code class="docutils literal notranslate"><span class="pre">context.run()</span></code> and each <cite>Job</cite> has its own <cite>Task</cite> waiting to be finished.</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../_images/flow_2.png" src="../_images/flow_2.png" />
-</div>
+</figure>
 <p>But each <cite>Job</cite>’s task has different timing to start, as shown by the picture below.
 Ex. exp needs to wait for train data to finish, and pred_res needs to
 wait for test data and exp.</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../_images/flow_3.png" src="../_images/flow_3.png" />
-</div>
+</figure>
 <p>When a <cite>Job</cite> is finished, it will set its <code class="docutils literal notranslate"><span class="pre">is_done</span></code> tag to true, and
 leave the event loop.</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../_images/flow_4.png" src="../_images/flow_4.png" />
-</div>
+</figure>
 <p>Since the <cite>Job</cite> that waits for other <cite>Job</cite> s  will keep monitoring its <code class="docutils literal notranslate"><span class="pre">is_done</span></code> tag,
 when it finds all of the <cite>Job</cite> s its waiting are done, it will start to run
 its own <cite>Task</cite>.</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../_images/flow_5.png" src="../_images/flow_5.png" />
-</div>
-<div class="figure align-default">
+</figure>
+<figure class="align-default">
 <img alt="../_images/flow_6.png" src="../_images/flow_6.png" />
-</div>
-</div>
+</figure>
+</section>
 
 
             <div class="clearer"></div>
@@ -280,7 +281,7 @@ its own <cite>Task</cite>.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, MoBagel.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
     </div>
   </body>
 </html>
