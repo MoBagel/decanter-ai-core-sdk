@@ -10,6 +10,7 @@
 import logging
 
 import requests
+from requests_toolbelt import MultipartEncoder
 from requests.auth import HTTPBasicAuth
 from urllib3.exceptions import InsecureRequestWarning
 
@@ -21,6 +22,7 @@ requests.packages.urllib3.disable_warnings()
 
 class CoreAPI:
     """Handle sending Decanter Core API requests."""
+
     def __init__(self):
         self._corex_headers = {'user': 'sdk'}
 
@@ -147,14 +149,15 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        files = {
-            'csv': (
-                kwargs['filename'],
-                kwargs['file'],
-                kwargs['encoding']
-            )
-        }
-        return self.requests_(http='POST', url='/v2/upload', files=files, headers=self.corex_headers)
+        # use suggested package to post a large file up to 10G
+        # ref: https://docs.python-requests.org/en/master/user/quickstart/#post-a-multipart-encoded-file
+        csv = MultipartEncoder(
+            fields={
+                'csv': (kwargs['filename'], kwargs['file'], kwargs['encoding'])}
+        )
+        headers = self.corex_headers
+        headers['Content-Type'] = csv.content_type
+        return self.requests_(http='POST', url='/v2/upload', data=csv, headers=headers)
 
     def get_tasks_by_id(self, task_id):
         """Get the task by task_id.
@@ -216,7 +219,6 @@ class CoreAPI:
         """
         return self.requests_(
             http='POST', url='/v2/tasks/auto_ts/train', json=kwargs, headers=self.corex_headers)
-
 
     def post_tasks_predict(self, **kwargs):
         """Predict from model.
