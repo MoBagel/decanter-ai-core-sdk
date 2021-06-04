@@ -47,8 +47,8 @@ Upload, Setup, Train, Predict
 
 	train_file_path = '/data/train.csv'
 	test_file_path = '/data/test.csv'
-	train_file = open(train_file_path , 'r')
-	test_file = open(test_file_path , 'r')
+	train_file = open(train_file_path , 'rb')
+	test_file = open(test_file_path , 'rb')
 
 ``Upload data to CoreX``:
 
