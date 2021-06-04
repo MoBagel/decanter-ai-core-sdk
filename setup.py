@@ -6,6 +6,7 @@ print(long_description)
 
 requires = [
     'requests',
+    'requests-toolbelt',
     'pandas',
     'matplotlib',
     'tqdm',
