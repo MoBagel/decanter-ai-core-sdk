@@ -29,7 +29,7 @@ def main():
     current_path = os.path.dirname(os.path.abspath(__file__))
     train_file_path = os.path.join(current_path, 'data/train.csv')
     test_file_path = os.path.join(current_path, 'data/test.csv')
-    train_file = open(train_file_path, 'r')
+    train_file = open(train_file_path, 'rb')
     test_df = pd.read_csv(test_file_path)
 
     # Upload data to Decanter server. Will Get the DataUpload result.
@@ -38,7 +38,7 @@ def main():
 
     # Set up data to change data type. Will Get the DataSetup result
     setup_input = SetupInput(
-        data = train_data,
+        data=train_data,
         data_source=train_data.accessor,
         data_columns=[
             {

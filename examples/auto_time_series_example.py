@@ -25,8 +25,8 @@ def main():
 
     train_file_path = 'data/ts_data/iris_train.csv'
     test_file_path = 'data/ts_data/iris_test.csv'
-    train_file = open(train_file_path, 'r')
-    test_file = open(test_file_path, 'r')
+    train_file = open(train_file_path, 'rb')
+    test_file = open(test_file_path, 'rb')
 
     # Upload data to Decanter server. Will Get the DataUpload result.
     train_data = client.upload(file=train_file, name='upload_train_data')

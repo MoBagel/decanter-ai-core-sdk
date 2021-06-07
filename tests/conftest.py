@@ -9,8 +9,8 @@ import responses
 
 from decanter.core import Context, CoreClient
 from decanter.core.core_api import Model, MultiModel,\
-                                    TrainInput, TrainTSInput,\
-                                    PredictInput, PredictTSInput
+    TrainInput, TrainTSInput,\
+    PredictInput, PredictTSInput
 from decanter.core.extra import CoreStatus
 from decanter.core.jobs import DataUpload, Experiment, ExperimentTS
 
@@ -27,8 +27,8 @@ EXP_ID = '4expid'
 PREDRES_ID = '4resid'
 MODEL_ID = '4modelid'
 
-csv_file = open('./tests/data/test.csv', 'r')
-txt_file = open('./tests/data/test.txt', 'r')
+csv_file = open('./tests/data/test.csv', 'rb')
+txt_file = open('./tests/data/test.txt', 'rb')
 df_file = pd.read_csv('./tests/data/test.csv')
 
 core_results = {
