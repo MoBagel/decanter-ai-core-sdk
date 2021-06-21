@@ -112,7 +112,7 @@ class Experiment(Job):
                     Evaluator.rmsle.value, Evaluator.misclassification.value,
                     Evaluator.mape.value, Evaluator.wmape.value}
 
-        # Get best models among models with valid score
+        # Get the best model among models with valid score
         model_list = list(filter(lambda x: not np.isnan(
             x['cv_averages'][select_by_evaluator]), self.attributes.values()))
         best_model_id = None
