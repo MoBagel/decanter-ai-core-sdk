@@ -5,7 +5,7 @@ Experiment and ExperimentTS handles the training of models on Decanter Core serv
 and stores Experiment results in its attributes.
 """
 import logging
-
+import numpy as np
 from decanter.core.core_api import CoreAPI, Model, MultiModel
 from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import update
@@ -48,6 +48,7 @@ class Experiment(Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress.
     """
+
     def __init__(self, train_input, select_model_by=Evaluator.auto, name=None):
         super().__init__(
             jobs=[train_input.data],
@@ -104,20 +105,25 @@ class Experiment(Job):
             return
         class_ = self.__class__.__name__
         logger.debug('[%s] \'%s\' get best model', class_, self.name)
-        model_list = self.attributes
-        select_by_evaluator = Evaluator.resolve_select_model_by(self.select_model_by, self.hyperparameters['model_type'])
+        select_by_evaluator = Evaluator.resolve_select_model_by(
+            self.select_model_by, self.hyperparameters['model_type'])
         minlevel = {Evaluator.mse.value, Evaluator.mae.value, Evaluator.mean_per_class_error.value,
                     Evaluator.deviance.value, Evaluator.logloss.value, Evaluator.rmse.value,
-                    Evaluator.rmsle.value, Evaluator.misclassification.value}
+                    Evaluator.rmsle.value, Evaluator.misclassification.value,
+                    Evaluator.mape.value, Evaluator.wmape.value}
+
+        # Get best models among models with valid score
+        model_list = list(filter(lambda x: not np.isnan(
+            x['cv_averages'][select_by_evaluator]), self.attributes.values()))
         best_model_id = None
         try:
             if select_by_evaluator in minlevel:
                 best_model_id = min(
-                    model_list.values(),
+                    model_list,
                     key=lambda x: x['cv_averages'][select_by_evaluator])['model_id']
             else:
                 best_model_id = max(
-                    model_list.values(),
+                    model_list,
                     key=lambda x: x['cv_averages'][select_by_evaluator])['model_id']
         except AttributeError:
             logger.error('[%s] no models in %s result', class_, self.name)
@@ -166,6 +172,7 @@ class ExperimentTS(Experiment, Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress.
     """
+
     def __init__(self, train_input, select_model_by=Evaluator.auto, name=None):
         Job.__init__(
             self,
