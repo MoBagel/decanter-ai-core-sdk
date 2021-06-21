@@ -1,14 +1,15 @@
 """
-Function for user access the Evaluators Metrics 
+Function for user access the Evaluators Metrics
 of the Decanter AI Core SDK.
 """
 from enum import Enum
 
+
 class Evaluator(Enum):
     """
-    The Evaluator enumeration is the metrics currently 
+    The Evaluator enumeration is the metrics currently
     supported by the Decanter AI Core SDK
-    
+
     - Regression
         - auto (deviance)
         - deviance
@@ -16,6 +17,8 @@ class Evaluator(Enum):
         - mae
         - rmsle
         - r2
+        - mape (Supported from Decanter AI 4.9~)
+        - wmape (Supported from Decanter AI 4.9~)
     - Binary Classification
         - auto (logloss)
         - logloss
@@ -36,6 +39,8 @@ class Evaluator(Enum):
     logloss = 'logloss'
     deviance = 'deviance'
     r2 = 'r2'
+    mape = 'mape'
+    wmape = 'wmape'
     lift_top_group = 'lift_top_group'
     misclassification = 'misclassification'
     mean_per_class_error = 'mean_per_class_error'
