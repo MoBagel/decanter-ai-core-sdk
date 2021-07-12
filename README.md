@@ -25,8 +25,7 @@ pip install decanter-ai-core-sdk
 from decanter import core
 
 core.enable_default_logger()
-client = core.CoreClient(
-        username='gp', password='gp-admin', host='http://host:port')
+client = core.CoreClient(username=???, password=???, host=???)
 
 train_file = open(train_file_path, 'rb')
 train_data = client.upload(file=train_file, name="train")
