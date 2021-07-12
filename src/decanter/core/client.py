@@ -1,7 +1,6 @@
 # pylint: disable=too-many-arguments
 """Function for user handle the use of Decanter Core API."""
 import io
-import json
 import logging
 
 import pandas as pd
@@ -10,10 +9,8 @@ from decanter.core import Context
 from decanter.core.jobs import DataUpload, DataSetup,\
                        Experiment, ExperimentTS,\
                        PredictResult, PredictTSResult
-import decanter.core.core_api.body_obj as CoreBody
 from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
-import decanter.core.jobs.task as jobsTask
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +30,7 @@ class CoreClient(Context):
 
     """
     def __init__(self, username, password, host):
+        super().__init__()
         """Create context instance and init neccessary variable and objects.
 
             Setting the user, password, and host for the funture connection when
@@ -45,6 +43,7 @@ class CoreClient(Context):
             host (str): Decanter Core server URL.
         """
         Context.create(username=username, password=password, host=host)
+        self.api = Context.api
         
 
     @staticmethod
@@ -93,7 +92,7 @@ class CoreClient(Context):
         Args:
             file (csv-file, :obj:`pandas.DataFrame`): File uploaded to
                 core server.
-            name (:obj:`str`, optional): Name for upload action.
+            name (str, optional): Name for upload action.
 
         Returns:
             :class:`~decanter.core.jobs.data_upload.DataUpload` object
@@ -138,6 +137,9 @@ class CoreClient(Context):
             train_input
                 (:class:`~decanter.core.core_api.train_input.TrainInput`):
                 stores the settings for training.
+            select_model_by
+                (:class:`~decanter.core.enums.evaluators.Evaluator`):
+                if predict by trained experiment, how should we select best model
             name (:obj:`str`, optional): name for train action.
 
         Returns:
@@ -174,6 +176,9 @@ class CoreClient(Context):
             train_input
                 (:class:`~decanter.core.core_api.train_input.TrainTSInput`):
                 Settings for training.
+            select_model_by
+                (:class:`~decanter.core.enums.evaluators.Evaluator`):
+                if predict by trained experiment, how should we select best model
             name (:obj:`str`, optional): name for train time series action.
 
         Returns:

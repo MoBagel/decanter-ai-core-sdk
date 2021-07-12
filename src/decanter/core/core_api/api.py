@@ -12,7 +12,6 @@ import logging
 import requests
 from requests_toolbelt import MultipartEncoder
 from requests.auth import HTTPBasicAuth
-from urllib3.exceptions import InsecureRequestWarning
 
 import decanter.core as core
 
@@ -111,16 +110,6 @@ class CoreAPI:
         """
         return self.requests_(http='GET', url='/data/%s' % data_id)
 
-    def delete_data_by_id(self, data_id):
-        """Delete data metadata.
-
-        Endpoint: /data/{data_id}
-
-        Returns:
-            class:`Response <Response>` object
-        """
-        return self.requests_(http='DELETE', url='/data/delete%s' % data_id)
-
     def get_data_file_by_id(self, data_id):
         """Download csv file of data.
 
@@ -129,7 +118,7 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        return self.requests_(http='GET', url='/data/%s/file' % data_id)
+        return self.requests_(http='GET', url='/v2/data/%s/file' % data_id)
 
     def post_data_delete(self, **kwargs):
         """Batch delete data.
@@ -139,7 +128,7 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        return self.requests_(http='POST', url='/data/delete', json=kwargs)
+        return self.requests_(http='POST', url='/v2/data/delete', json=kwargs)
 
     def post_upload(self, **kwargs):
         """Upload csv file and setup data.
@@ -167,7 +156,7 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        return self.requests_(http='GET', url='/tasks/%s' % task_id)
+        return self.requests_(http='GET', url='/v2/tasks/%s' % task_id)
 
     def get_tasks_list(self):
         """Get list of tasks.
@@ -187,7 +176,7 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        return self.requests_(http='PUT', url='/tasks/%s/stop' % task_id, headers=self.corex_headers)
+        return self.requests_(http='PUT', url='/v2/tasks/%s/stop' % task_id, headers=self.corex_headers)
 
     def post_tasks_setup(self, **kwargs):
         """Setup data reference.
@@ -242,6 +231,24 @@ class CoreAPI:
         return self.requests_(
             http='POST', url='/v2/tasks/auto_ts/predict', json=kwargs, headers=self.corex_headers)
 
+    def batch_predict(self, model_id, **kwargs):
+        """
+        Post Batch Predict
+        CoreX will make a batch prediction
+
+        Keyword Arguments:
+        -----
+            featuresList (list)
+            threshold (number) (optional)
+            timestamp_format (string) (optional)
+        Returns (json):
+        ---------------
+        """
+        url = '/v2/models/%s/batch_predict' % model_id
+        if 'timestamp_format' not in kwargs:
+            kwargs['timestamp_format'] = 'yyyy-MM-dd HH:mm:ss'
+        return self.requests_(http='POST', url=url, json=kwargs, headers=self.corex_headers)
+
     def get_experiments_by_id(self, exp_id):
         """Get experiment metadata.
 
@@ -250,7 +257,7 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        return self.requests_(http='GET', url='/experiments/%s' % exp_id)
+        return self.requests_(http='GET', url='/v2/experiments/%s' % exp_id)
 
     def get_models_by_id(self, exp_id, model_id):
         """Get model metadata.
@@ -271,7 +278,7 @@ class CoreAPI:
         Returns:
             class:`Response <Response>` object
         """
-        return self.requests_(http='GET', url='/models/%s/download' % model_id)
+        return self.requests_(http='GET', url='/v2/models/%s/download' % model_id)
 
     def get_multimodels_by_id(self, exp_id, model_id):
         """Get multimodel meta data by model_id which trained in the experiment.
@@ -283,7 +290,7 @@ class CoreAPI:
         """
         return self.requests_(
             http='GET',
-            url='/auto_ts/experiments/%s/models/%s' % (exp_id, model_id))
+            url='/v2/auto_ts/experiments/%s/models/%s' % (exp_id, model_id))
 
     def get_worker_count(self):
         """Get counts of each type of worker
@@ -295,7 +302,7 @@ class CoreAPI:
         """
         return self.requests_(
             http='GET',
-            url='/worker/count')
+            url='/v2/worker/count')
 
     def get_worker_status(self):
         """List status of each worker
@@ -307,4 +314,4 @@ class CoreAPI:
         """
         return self.requests_(
             http='GET',
-            url='/worker/status')
+            url='/v2/worker/status')

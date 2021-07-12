@@ -14,16 +14,41 @@ from decanter.core.enums.numerical_group_by_methods import NumericalGroupByMetho
 from decanter.core.enums.categorical_group_by_method import CategoricalGroupByMethod
 from decanter.core.enums import check_is_enum
 
+
 class TrainInput:
     """Train Input for Experiment Job.
 
     Settings for model training.
 
-    Attributes:
+    Args:
         data (:class:`~decanter.core.jobs.data_upload.DataUpload`):
             Train data uploaded on Decanter Core server
-        train_body (:class:`~decanter.core.core_api.body_obj.TrainBody`):
-            Request body for sending train api.
+        target (str): the name of the target column
+        algos (:class:`~decanter.core.enums.algorithms.Algo`):
+            enabled algorithms (left with default None will enable all algorithms)
+        evaluator (:class:`~decanter.core.enums.evaluators.Evaluator`):
+            default evaluator for early stopping
+        features (list of str): selected feature for training
+        max_model (int):
+            Model family and hyperparameter search will stop after the specified number
+            of models are trained. Stacked Ensemble models are not counte.
+        tolerance (float):
+            Tolerance for early stop in both model training and model family and hyperparameter
+            search. A higher value results in less accurate models, but faster training times
+            and a larger model pool. Lower tolerance means better accuracy, but longer training
+            time and a smaller model pool. It is recommended that user start with higher
+            tolerance, and move to lower tolernce when the model training process is finalized
+        nfold (int):
+            The number of cross validation folds to be used during model training
+        seed (int):
+            Seed to be used for operations that have sudo random behavior.
+            Fixing seed across runs will ensure reproducible results
+        balance_class (bool): If true, will balance class distribution
+            The maximum relative size increase of the training data
+            after balancing class (in most cases, enabling the balance_classes option will
+            increase the data frame size
+        validation_percentage (float): Percentage of the train data to be used as the validation set.
+        holdout_percentage (float): Percentage of the training data to be used as a holdout set.
 
     Example:
         .. code-block:: python
@@ -44,7 +69,7 @@ class TrainInput:
             preprocessing=None, version=None):
 
         evaluator = check_is_enum(Evaluator, evaluator)
-        algos =  [check_is_enum(Algo, algo) for algo in algos]
+        algos = [check_is_enum(Algo, algo) for algo in algos]
         self.data = data
         if ts_split_train is None:
             train = None
@@ -108,11 +133,46 @@ class TrainTSInput:
 
     Settings for auto time series forecast training.
 
-    Attributes:
-        data (:class:`~decanter.core.jobs.data_upload.DataUpload`): Train data uploaded on
-            Decanter Core server
-        train_body (:class:`~decanter.core.core_api.body_obj.TrainAutoTSBody`):
-            Request body for sending time series training api.
+    Args:
+        data (:class:`~decanter.core.jobs.data_upload.DataUpload`):
+            Train data uploaded on Decanter Core server
+        target (str): the name of the target column
+        datetime_column (str): the name of the datetime column used for time series ordering
+        forecast_horizon (int):
+            The number of data points to predict for auto time series. In current time
+            series forecast model, the larger this value is, training time will take longer.
+        gap (int): The number of time units between the train data and prediction data
+        max_window_for_feature_derivation (int):
+            This value limit the number of features we can use from the past to generate
+            endogenous features. The value makes sure that when generating endogenous feature
+            for forecast time t, we only use features from
+            [t - gap - max_window_for_feature_derivation, t - gap). Note the larger this value
+            is, the fewer data is resulted after feature engineering.
+        algos (:class:`~decanter.core.enums.algorithms.Algo`):
+            enabled algorithms (left with default None will enable all algorithms)
+        evaluator (:class:`~decanter.core.enums.evaluators.Evaluator`):
+            default evaluator for early stopping
+        features (list of str): selected feature for training
+        max_model (int):
+            Model family and hyperparameter search will stop after the specified number
+            of models are trained. Stacked Ensemble models are not counte.
+        tolerance (float):
+            Tolerance for early stop in both model training and model family and hyperparameter
+            search. A higher value results in less accurate models, but faster training times
+            and a larger model pool. Lower tolerance means better accuracy, but longer training
+            time and a smaller model pool. It is recommended that user start with higher
+            tolerance, and move to lower tolernce when the model training process is finalized
+        nfold (int):
+            The number of cross validation folds to be used during model training
+        seed (int):
+            Seed to be used for operations that have sudo random behavior.
+            Fixing seed across runs will ensure reproducible results
+        balance_class (bool): If true, will balance class distribution
+            The maximum relative size increase of the training data
+            after balancing class (in most cases, enabling the balance_classes option will
+            increase the data frame size
+        validation_percentage (float): Percentage of the train data to be used as the validation set.
+        holdout_percentage (float): Percentage of the training data to be used as a holdout set.
     """
     def __init__(
             self, data, target, datetime_column, forecast_horizon, gap, algorithms=None, feature_types=None,

@@ -5,7 +5,7 @@ import logging
 import pandas as pd
 
 from decanter.core.extra import CoreStatus
-import decanter.core.core_api.worker as worker
+from decanter.core.core_api import CoreAPI, worker
 
 logger = logging.getLogger(__name__)
 
@@ -22,33 +22,27 @@ class Context:
             context.run()
 
     """
+    # 'str: User name to login in Decanter Core server'
     USERNAME = None
-    'str: User name to login in Decanter Core server'
+    # 'str: Password to login in Decanter Core server'
     PASSWORD = None
-    'str: Password to login in Decanter Core server'
+    # Decanter Core server\'s URL.'
     HOST = None
-    'str: Decanter Core server\'s URL.'
+    # .. _EventLoop: https://docs.python.org/3/library/asyncio-eventloop.html#event-loop
     LOOP = None
-    '''
-    `EventLoop`_.: Event Loop of Asynchronous I/O.
-
-    .. _EventLoop: https://docs.python.org/3/library/asyncio-eventloop.html#event-loop
-    '''
+    # list(`Task`_.): List of Tasks of Asynchronous I/O.
     CORO_TASKS = []
-    '''
-    list(`Task`_.): List of Tasks of Asynchronous I/O.
-
-    .. _Task: https://docs.python.org/3/library/asyncio-task.html#asyncio.Task
-    '''
+    # List of finished and waited Jobs.
     JOBS = []
-    'list(:class:`~decanter.core.jobs.job.Job`): List of finished and waited Jobs.'
+    # CoreX API endpoint
+    api = None
 
     def __init__(self):
         pass
 
     @classmethod
     def create(cls, username, password, host):
-        """Create context instance and init neccessary variable and objects.
+        """Create context instance and init necessary variable and objects.
 
         Setting the user, password, and host for the funture connection when
         calling APIs, and create an event loop if it isn't exist. Check if the
@@ -79,6 +73,7 @@ class Context:
             Context.LOOP = asyncio.get_event_loop()
             logger.debug('[Context] create and set new event loop')
         context.healthy()
+        Context.api = CoreAPI()
         return context
 
     @staticmethod
@@ -89,13 +84,15 @@ class Context:
         have been finished.
 
         """
-        logger.debug('Run %s coroutines', len(Context.CORO_TASKS))
+        logger.info('Run %s coroutines', len(Context.CORO_TASKS))
 
         if Context.LOOP is None:
             logger.error('[Context] create context before run')
             raise Exception()
 
-        if Context.LOOP.is_running() is False:
+        loop_running = Context.LOOP.is_running()
+        logger.info('[Context] Context.LOOP.is_running(): {})'.format(loop_running))
+        if loop_running is False:
             groups = asyncio.gather(*Context.CORO_TASKS)
             Context.LOOP.run_until_complete(groups)
             Context.CORO_TASKS = []

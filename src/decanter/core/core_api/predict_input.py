@@ -11,54 +11,48 @@ from decanter.core.enums import check_is_enum
 
 logger = logging.getLogger(__name__)
 
+
 class PredictInput:
     """Predict Input for PredictResult Job.
 
     Setting test data, best model, and the request body for prediction.
 
-    Attributes:
+    Args:
         data (:class:`~decanter.core.jobs.data_upload.DataUpload`): Test data.
         experiment (:class:`~decanter.core.jobs.experiment.Experiment`):
             Experiment from training.
-        pred_body(:class:`~decanter.core.extra.body_obj.PredictBody`):
-            Request body for sending predict api.
+        select_model (str, optional): Methods of screening models
+
+            - `best` (default): predict with the best model scored on cv average
+            - `model_id`: predict with the model designated by model_id
+            - `recommendation`: predict with the recommended model
+
+        select_opt (str, optional): Based on the options required by the select_model.
+            value with select_model case:
+
+            - `best`: None
+            - `model_id`: given the model ID (model ID will be in the format of ObjectID)
+            - `recommendation`: metric, ex: auc ...
+
+        keep_columns (:obj:`list`, optional): The names of the columns
+            that will be appended to the prediction data.
+        threshold (:obj:`double`, optional): Prediction threshold for
+            binary classification models. Max = 1, Min = 0
 
     Examples:
         .. code-block:: python
 
-            predict_input = PredictInput(data=test_data, experiment=exp,
-                                threshold=0.9, keep_columns=['col_1', 'col_3'])
+            predict_input = PredictInput(
+                data=test_data,
+                experiment=exp,
+                threshold=0.9,
+                keep_columns=['col_1', 'col_3']
+            )
 
     """
     def __init__(
             self, data, experiment, select_model='best', select_opt=None, callback=None,
             keep_columns=None, threshold=None, version=None):
-        """
-        Init Predict Input
-
-        Args:
-            data (:class:`~decanter.core.jobs.data_upload.DataUpload`): Test data.
-            experiment (:class:`~decanter.core.jobs.experiment.Experiment`):
-                Experiment from training.
-            select_model (:obj: `str`, optional): Methods of screening models
-                `best`: predict with the best model scored on cv average
-                `model_id`: predict with the model designated by model_id
-                `recommendation`: predict with the recommended model
-                Defaults to 'best'.
-            select_opt (:obj: `str`, optional): Based on the options required by 
-                the select_model.
-                value with select_model case:
-                    `best`: None
-                    `model_id`: given the model ID (model ID will be in the format of ObjectID)
-                    `recommendation`: metric, ex: auc ...
-            callback (:obj:`str`, optional): A uri to be notified of Decanter Core
-                activity state changes.
-            keep_columns (:obj:`list`, optional): The names of the columns
-                that will be appended to the prediction data.
-            threshold (:obj:`double`, optional): Prediction threshold for
-                binary classification models. Max = 1, Min = 0
-            version (:obj:`int`, optional): Api version
-        """
         self.data = data
         self.experiment = experiment
         self.pred_body = CoreBody.PredictBody.create(
@@ -104,18 +98,18 @@ class PredictTSInput(PredictInput):
 
     Setting test data, best model, and the request body for prediction.
 
-    Attributes:
-        data (:class:`~decanter.core.jobs.data_upload.DataUpload`): Test data
-        experiment (:class:`~decanter.core.jobs.experiment.ExperimentTS`):
-            Time series experiment from training.
-        pred_body (:class:`~decanter.core.extra.body_obj.PredictTSBody`):
-            Request body for sending predict api
+    Args:
+        data (:class:`~decanter.core.jobs.data_upload.DataUpload`): Test data.
+        experiment (:class:`~decanter.core.jobs.experiment.Experiment`):
+            Experiment from training.
+        threshold_max_by (float, optional): Prediction threshold for
+            binary classification only, can choose a threshold that
+            optimizes the given metric.Available options are:precision, f1,
+            accuracy, evaluator, recall, specificity, f2, f0point5, mean_per_class_error
     """
-    def __init__(
-            self, data, experiment, callback=None,
-            keep_columns=None, threshold_max_by=None, version=None):
+    def __init__(self, data, experiment, callback=None, threshold_max_by=None, version=None):
         super().__init__(data=data, experiment=experiment)
 
         self.pred_body = CoreBody.PredictBodyTSModel.create(
             data_id='tmp_data_id', model_id='tmp_model_id', callback=callback,
-            keep_columns=keep_columns, threshold_max_by=threshold_max_by, version=version)
+            threshold_max_by=threshold_max_by, version=version)

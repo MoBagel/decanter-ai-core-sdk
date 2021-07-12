@@ -67,8 +67,13 @@ loop.is_running()
 ```
 
 ## Tutorial for Jupyter Notebook
-If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.
-If you need to handle running tasks well, refer to our [jupyter_jobs_handle_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_jobs_handle_example.ipynb).
+1. first you need to install jupyter lab: `pip install jupyterlab`
+2. this is required for progress bar to display correctly: `pip install ipywidgets`
+3. (optional, conda venv for jupyter notebook) `conda install nb_conda`
+4. `jupyter lab`
+	* this should open your browser to jupyter lab page.
+    * If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.
+    * If you need to handle running tasks well, refer to our [jupyter_jobs_handle_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_jobs_handle_example.ipynb).
 
 
 ## Development Guide and Flow

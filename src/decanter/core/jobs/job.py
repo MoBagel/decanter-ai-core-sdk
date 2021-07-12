@@ -95,7 +95,9 @@ class Job:
 
             # check if any pre_request_jobs has failed
             if not all(job.is_success() for job in self.jobs):
-                message = ' '.join([job.status for job in self.jobs])
+                message = ' '.join([job.name + ':' + job.status for job in self.jobs])
+                for job in self.jobs:
+                    logger.info(job.task.result)
                 self.status = CoreStatus.FAIL
                 logger.info(
                     '[Job] %s failed due to some job fail in jobs:[%s]',
@@ -114,9 +116,7 @@ class Job:
                 await asyncio.sleep(3)
 
         self.status = self.task.status
-        logger.info(
-            '[Job] \'%s\' done status: %s id: %s',
-            self.name, self.status, self.id)
+        logger.info('[Job] \'%s\' done status: %s id: %s', self.name, self.status, self.id)
         return
 
     async def update(self):

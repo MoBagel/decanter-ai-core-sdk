@@ -4,13 +4,15 @@ Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Upload, Setup, Train, Predict
-*************
+*****************************
 
 ``Import Packages``:
 
+.. code-block:: bash
+
+    pip install decanter-ai-core-sdk
+
 .. code-block:: python
-	
-	!pip install decanter-ai-core-sdk
 
 	import os
 	import asyncio

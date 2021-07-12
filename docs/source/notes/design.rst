@@ -84,13 +84,13 @@ and `DataUpload <Job>` to be done.
 
 
 How to do it asynchronously?
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Why do we need asynchronous functionality? Since the decanter server can actually handle
 upto 4 tasks running at once, if we do the job synchronously, we could
 only do one task at a  time which is time-wasting.
 
-We address this by using the :doc:`python:library/asyncio-taskv` in the Python asyncio library
+We address this by using the :doc:`python:library/asyncio-task` in the Python asyncio library
 We use ``await`` to handle the blocking problems. According to
 `this passage <https://www.aeracode.org/2018/02/19/python-async-simplified/>`_.
 

@@ -1,9 +1,7 @@
 import json
+from typing import NamedTuple
 
 from decanter.core.core_api import CoreBody
-from decanter.core.enums.algorithms import Algo
-from decanter.core.enums.evaluators import Evaluator
-from decanter.core.enums import check_is_enum
 
 
 class SetupInput:
@@ -11,11 +9,13 @@ class SetupInput:
 
     Settings for model training.
 
-    Attributes:
+    Args:
         data (:class:`~decanter.core.jobs.data_upload.DataUpload`):
             Train data uploaded on Decanter Core server
-        setup_body (:class:`~decanter.core.core_api.body_obj.SetupBody`):
+        data_columns (list of :class:`ColumnSpec`):
             Request body for sending setup api.
+        eda (bool):
+            Whether to perform eda on data upload
 
     Example:
         .. code-block:: python
@@ -23,15 +23,12 @@ class SetupInput:
             setup_input = SetupInput(
                 data = upload_data,
                 data_source=upload_data.accessor,
-                data_columns=[
-                    {
-                        'id': 'Pclass',
-                        'data_type': 'categorical'
-                    }])
+                data_columns=[{ 'id': 'Pclass', 'data_type': 'categorical'}]
+            )
     """
     def __init__(
-        self, data, data_source, data_columns, callback=None, data_id=None,
-        eda=None, preprocessing=None, version=None):
+            self, data, data_columns, callback=None,
+            eda=None, preprocessing=None, version=None):
 
         self.data = data
 
@@ -58,3 +55,10 @@ class SetupInput:
             self.setup_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
         return params
+
+
+class ColumnSpec(NamedTuple):
+    id: str
+    data_type: str
+
+

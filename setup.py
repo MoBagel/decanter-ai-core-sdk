@@ -5,12 +5,12 @@ with open('README.md', 'r') as fh:
 print(long_description)
 
 requires = [
-    'requests',
-    'requests-toolbelt',
-    'pandas',
-    'matplotlib',
-    'tqdm',
-    'numpy'
+    'requests==2.25.1',
+    'requests-toolbelt==0.9.1',
+    'pandas==1.3.0',
+    'matplotlib==3.4.2',
+    'tqdm==4.61.2',
+    'numpy==1.21.0'
 ]
 
 dev_requirements = [

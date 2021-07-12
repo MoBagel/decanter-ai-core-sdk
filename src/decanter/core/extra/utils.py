@@ -2,6 +2,7 @@
 Functions support other modules.
 """
 import uuid
+import logging
 
 def check_response(response, key=None):
     """CHeck the api response.
@@ -47,3 +48,23 @@ def isnotebook():
         return False
     except NameError:
         return False
+
+
+def exception_handler(func):
+    logger = logging.getLogger(__name__)
+    def inner_function(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except Exception as e:
+            logger.error(e)
+    return inner_function
+
+
+def exception_handler_for_class_method(func):
+    logger = logging.getLogger(__name__)
+    def inner_function(self, *args, **kwargs):
+        try:
+            func(self, *args, **kwargs)
+        except Exception as e:
+            logger.error(e)
+    return inner_function

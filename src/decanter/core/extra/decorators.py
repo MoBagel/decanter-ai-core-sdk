@@ -34,7 +34,8 @@ def update(func):
     @wraps(func)
     def wrapper(self, *args, **kwargs):
         class_type = self.__class__.__name__
-        logger.debug('[%s] \'%s\' update result', class_type, self.name)
+        if not args[0]:
+            return
         try:
             self.result = args[0]
             for attr, val in self.result.items():
@@ -42,7 +43,7 @@ def update(func):
 
         except AttributeError as err:
             logger.debug('[%s] \'%s\' %s', class_type, self.name, err)
-            self.status == CoreStatus.FAIL
+            self.status = CoreStatus.FAIL
 
         else:
             func(self, *args, **kwargs)

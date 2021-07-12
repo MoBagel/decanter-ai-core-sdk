@@ -12,7 +12,8 @@ from functools import partial
 from decanter.core import Context
 from decanter.core.core_api import CoreAPI
 from decanter.core.extra import CoreStatus, CoreKeys
-from decanter.core.extra.utils import check_response, isnotebook, gen_id
+from decanter.core.extra.utils import check_response, gen_id, isnotebook, \
+    exception_handler, exception_handler_for_class_method
 
 try:
     if isnotebook():
@@ -130,6 +131,7 @@ class CoreTask(Task):
         logger.debug(
             '[Task]\'%s\' done update. status: %s', self.name, self.status)
 
+    @exception_handler_for_class_method
     def update_task_response(self):
         """Update the result from response
 
@@ -140,6 +142,7 @@ class CoreTask(Task):
             '[Task] \'%s\' start update task resp. status: %s',
             self.name, self.status)
 
+        @exception_handler
         def update_pbar(resp_progress):
             diff = int((resp_progress - self.progress)*100)
             self.pbar.update(diff)
@@ -152,7 +155,7 @@ class CoreTask(Task):
                     update_pbar(self.response[key])
                 setattr(self, attr, self.response[key])
             except KeyError as err:
-                logger.debug(str(err))
+                logger.debug(err)
 
     @abc.abstractmethod
     def run(self):
@@ -162,6 +165,7 @@ class CoreTask(Task):
         """
         raise NotImplementedError('Please Implement run method in CoreTask')
 
+    @exception_handler_for_class_method
     def run_core_task(self, api_func, **kwargs):
         """Start running Decanter Core task by calling api_func.
 
@@ -174,10 +178,6 @@ class CoreTask(Task):
             api_func(**kwargs), key=CoreKeys.id.value)
         self.response = self.response.json()
         self.id = self.response[CoreKeys.id.value]
-        logger.debug(
-            '[%s] \'%s\' upload task id: %s',
-            self.__class__.__name__, self.name, self.id)
-
         self.pbar = tqdm(
             total=100, position=CoreTask.BAR_CNT, leave=True,
             bar_format='{l_bar}{bar}', desc='Progress %s' % self.name)
