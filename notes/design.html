@@ -128,7 +128,7 @@ and <cite>DataUpload &lt;Job&gt;</cite> to be done.</p>
 <p>Why do we need asynchronous functionality? Since the decanter server can actually handle
 upto 4 tasks running at once, if we do the job synchronously, we could
 only do one task at a  time which is time-wasting.</p>
-<p>We address this by using the <span class="xref std std-doc">library/asyncio-taskv</span> in the Python asyncio library
+<p>We address this by using the <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html" title="(in Python v3.9)"><span>Coroutines and Tasks</span></a> in the Python asyncio library
 We use <code class="docutils literal notranslate"><span class="pre">await</span></code> to handle the blocking problems. According to
 <a class="reference external" href="https://www.aeracode.org/2018/02/19/python-async-simplified/">this passage</a>.</p>
 <p>“When you call <code class="docutils literal notranslate"><span class="pre">await</span></code>, the function you’re in gets suspended while whatever
@@ -250,7 +250,7 @@ its own <cite>Task</cite>.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -281,7 +281,7 @@ its own <cite>Task</cite>.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, MoBagel.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.1.0.
     </div>
   </body>
 </html>

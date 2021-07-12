@@ -4,13 +4,15 @@ Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Upload, Setup, Train, Predict
-*************
+*****************************
 
 ``Import Packages``:
 
+.. code-block:: bash
+
+    pip install decanter-ai-core-sdk
+
 .. code-block:: python
-	
-	!pip install decanter-ai-core-sdk
 
 	import os
 	import asyncio
@@ -47,8 +49,8 @@ Upload, Setup, Train, Predict
 
 	train_file_path = '/data/train.csv'
 	test_file_path = '/data/test.csv'
-	train_file = open(train_file_path , 'r')
-	test_file = open(test_file_path , 'r')
+	train_file = open(train_file_path , 'rb')
+	test_file = open(test_file_path , 'rb')
 
 ``Upload data to CoreX``:
 

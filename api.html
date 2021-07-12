@@ -74,68 +74,37 @@ Interfaces.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decanter.core.context.Context.CORO_TASKS">
 <span class="sig-name descname"><span class="pre">CORO_TASKS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#decanter.core.context.Context.CORO_TASKS" title="Permalink to this definition">¶</a></dt>
-<dd><p>List of Tasks of Asynchronous I/O.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>list(<a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task">Task</a>.)</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decanter.core.context.Context.HOST">
 <span class="sig-name descname"><span class="pre">HOST</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#decanter.core.context.Context.HOST" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decanter Core server’s URL.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decanter.core.context.Context.JOBS">
 <span class="sig-name descname"><span class="pre">JOBS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#decanter.core.context.Context.JOBS" title="Permalink to this definition">¶</a></dt>
-<dd><p>List of finished and waited Jobs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>list(<a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">Job</span></code></a>)</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decanter.core.context.Context.LOOP">
 <span class="sig-name descname"><span class="pre">LOOP</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#decanter.core.context.Context.LOOP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Event Loop of Asynchronous I/O.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-eventloop.html#event-loop">EventLoop</a>.</p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decanter.core.context.Context.PASSWORD">
 <span class="sig-name descname"><span class="pre">PASSWORD</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#decanter.core.context.Context.PASSWORD" title="Permalink to this definition">¶</a></dt>
-<dd><p>Password to login in Decanter Core server</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="decanter.core.context.Context.USERNAME">
 <span class="sig-name descname"><span class="pre">USERNAME</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#decanter.core.context.Context.USERNAME" title="Permalink to this definition">¶</a></dt>
-<dd><p>User name to login in Decanter Core server</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.context.Context.api">
+<span class="sig-name descname"><span class="pre">api</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#decanter.core.context.Context.api" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decanter.core.context.Context.close">
@@ -148,7 +117,7 @@ Jupyter Notebook).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="decanter.core.context.Context.create">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.context.Context.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create context instance and init neccessary variable and objects.</p>
+<dd><p>Create context instance and init necessary variable and objects.</p>
 <p>Setting the user, password, and host for the funture connection when
 calling APIs, and create an event loop if it isn’t exist. Check if the
 connection is healthy after args be set.</p>
@@ -346,7 +315,7 @@ stores the settings for training.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decanter.core.client.CoreClient.train">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">train_input</span></em>, <em class="sig-param"><span class="pre">select_model_by=&lt;Evaluator.auto:</span> <span class="pre">'auto'&gt;</span></em>, <em class="sig-param"><span class="pre">name=None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.train" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_model_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Evaluator.auto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.train" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train model with data.</p>
 <p>Create a Experiment Job and scheduled the execution in CORO_TASKS list.
 Record the Job in JOBS list.</p>
@@ -355,6 +324,8 @@ Record the Job in JOBS list.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>train_input</strong> – (<a class="reference internal" href="#decanter.core.core_api.train_input.TrainInput" title="decanter.core.core_api.train_input.TrainInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainInput</span></code></a>):
 stores the settings for training.</p></li>
+<li><p><strong>select_model_by</strong> – (<a class="reference internal" href="#decanter.core.enums.evaluators.Evaluator" title="decanter.core.enums.evaluators.Evaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Evaluator</span></code></a>):
+if predict by trained experiment, how should we select best model</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – name for train action.</p></li>
 </ul>
 </dd>
@@ -370,7 +341,7 @@ stores the settings for training.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decanter.core.client.CoreClient.train_ts">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">train_ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">train_input</span></em>, <em class="sig-param"><span class="pre">select_model_by=&lt;Evaluator.auto:</span> <span class="pre">'auto'&gt;</span></em>, <em class="sig-param"><span class="pre">name=None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.train_ts" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">train_ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_model_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Evaluator.auto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.train_ts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train time series model with data.</p>
 <p>Create a Time Series Experiment Job and scheduled the execution
 in CORO_TASKS list.  Record the Job in JOBS list.</p>
@@ -379,6 +350,8 @@ in CORO_TASKS list.  Record the Job in JOBS list.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>train_input</strong> – (<a class="reference internal" href="#decanter.core.core_api.train_input.TrainTSInput" title="decanter.core.core_api.train_input.TrainTSInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainTSInput</span></code></a>):
 Settings for training.</p></li>
+<li><p><strong>select_model_by</strong> – (<a class="reference internal" href="#decanter.core.enums.evaluators.Evaluator" title="decanter.core.enums.evaluators.Evaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Evaluator</span></code></a>):
+if predict by trained experiment, how should we select best model</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – name for train time series action.</p></li>
 </ul>
 </dd>
@@ -403,7 +376,7 @@ Record the Job in JOBS list.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>file</strong> (csv-file, <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>) – File uploaded to
 core server.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – Name for upload action.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Name for upload action.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -459,9 +432,9 @@ by other packages causing duplicate logging message.</p>
 <p>Introduce all the Jobs handling different kinds of actions, and the
 relation between <a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">Job</span></code></a> and
 <a class="reference internal" href="#decanter.core.jobs.task.Task" title="decanter.core.jobs.task.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a></p>
-<section id="id1">
-<h3>Task<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<span class="target" id="module-decanter.core.jobs.task"></span><p>This module defines tasks for different <a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">Job</span></code></a>.</p>
+<section id="module-decanter.core.jobs.task">
+<span id="task"></span><h3>Task<a class="headerlink" href="#module-decanter.core.jobs.task" title="Permalink to this headline">¶</a></h3>
+<p>This module defines tasks for different <a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">Job</span></code></a>.</p>
 <p>Handle the completion of tasks such as upload data, train, prediction…ect.
 Return the result to Job.</p>
 <dl class="py class">
@@ -651,32 +624,10 @@ of response.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="decanter.core.jobs.task.CoreTask.update_task_response">
-<span class="sig-name descname"><span class="pre">update_task_response</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.CoreTask.update_task_response" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the result from response</p>
-<p>Update progress, and status. Update progress bar due to the
-progress key value of response.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="decanter.core.jobs.task.CoreTask.run">
 <em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.CoreTask.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute Decanter Core task.
 :raises NotImplementedError: If child class do not implement this function.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="decanter.core.jobs.task.CoreTask.run_core_task">
-<span class="sig-name descname"><span class="pre">run_core_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.CoreTask.run_core_task" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start running Decanter Core task by calling api_func.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>api_func</strong> (<em>func</em>) – CoreAPI function.</p></li>
-<li><p><strong>kwargs</strong> – Parameters for api_func.</p></li>
-</ul>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -836,8 +787,8 @@ V2 eda use, setting v2 eda result for the data, preparing for custom eda.</p>
 </dd></dl>
 
 </section>
-<section id="id2">
-<h3>Jobs<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<section id="id1">
+<h3>Jobs<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <span class="target" id="module-decanter.core.jobs.job"></span><p>This module defines jobs to handle all kinds of actions.</p>
 <p>Handle the timeing of task’s execution, and stores the result
 of task in its attributes.</p>
@@ -1239,7 +1190,7 @@ DataUpload.</p>
 and stores Experiment results in its attributes.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="decanter.core.jobs.experiment.Experiment">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.experiment.</span></span><span class="sig-name descname"><span class="pre">Experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">train_input</span></em>, <em class="sig-param"><span class="pre">select_model_by=&lt;Evaluator.auto:</span> <span class="pre">'auto'&gt;</span></em>, <em class="sig-param"><span class="pre">name=None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.experiment.Experiment" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.experiment.</span></span><span class="sig-name descname"><span class="pre">Experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_model_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Evaluator.auto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.experiment.Experiment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.job.Job</span></code></a></p>
 <p>Experiment manage to get the results from model training.</p>
 <p>Handle the execution of training task in order to train model on
@@ -1486,7 +1437,7 @@ in best model attribute.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentTS">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.experiment.</span></span><span class="sig-name descname"><span class="pre">ExperimentTS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">train_input</span></em>, <em class="sig-param"><span class="pre">select_model_by=&lt;Evaluator.auto:</span> <span class="pre">'auto'&gt;</span></em>, <em class="sig-param"><span class="pre">name=None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentTS" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.experiment.</span></span><span class="sig-name descname"><span class="pre">ExperimentTS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_model_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Evaluator.auto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentTS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#decanter.core.jobs.experiment.Experiment" title="decanter.core.jobs.experiment.Experiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.experiment.Experiment</span></code></a>, <a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.job.Job</span></code></a></p>
 <p>ExperimentTS manage to get the result from time series model training.</p>
 <p>Handle the execution of time series training task in order train
@@ -2018,28 +1969,33 @@ PredictResult Job.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Train Input for Experiment Job.</p>
 <p>Settings for model training.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.train_input.TrainInput.data">
-<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#decanter.core.core_api.train_input.TrainInput.data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Train data uploaded on Decanter Core server</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a>) – Train data uploaded on Decanter Core server</p></li>
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – the name of the target column</p></li>
+<li><p><strong>algos</strong> (<a class="reference internal" href="#decanter.core.enums.algorithms.Algo" title="decanter.core.enums.algorithms.Algo"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algo</span></code></a>) – enabled algorithms (left with default None will enable all algorithms)</p></li>
+<li><p><strong>evaluator</strong> (<a class="reference internal" href="#decanter.core.enums.evaluators.Evaluator" title="decanter.core.enums.evaluators.Evaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Evaluator</span></code></a>) – default evaluator for early stopping</p></li>
+<li><p><strong>features</strong> (<em>list of str</em>) – selected feature for training</p></li>
+<li><p><strong>max_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Model family and hyperparameter search will stop after the specified number
+of models are trained. Stacked Ensemble models are not counte.</p></li>
+<li><p><strong>tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Tolerance for early stop in both model training and model family and hyperparameter
+search. A higher value results in less accurate models, but faster training times
+and a larger model pool. Lower tolerance means better accuracy, but longer training
+time and a smaller model pool. It is recommended that user start with higher
+tolerance, and move to lower tolernce when the model training process is finalized</p></li>
+<li><p><strong>nfold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The number of cross validation folds to be used during model training</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Seed to be used for operations that have sudo random behavior.
+Fixing seed across runs will ensure reproducible results</p></li>
+<li><p><strong>balance_class</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If true, will balance class distribution
+The maximum relative size increase of the training data
+after balancing class (in most cases, enabling the balance_classes option will
+increase the data frame size</p></li>
+<li><p><strong>validation_percentage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Percentage of the train data to be used as the validation set.</p></li>
+<li><p><strong>holdout_percentage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Percentage of the training data to be used as a holdout set.</p></li>
+</ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.train_input.TrainInput.train_body">
-<span class="sig-name descname"><span class="pre">train_body</span></span><a class="headerlink" href="#decanter.core.core_api.train_input.TrainInput.train_body" title="Permalink to this definition">¶</a></dt>
-<dd><p>Request body for sending train api.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainBody</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_input</span> <span class="o">=</span> <span class="n">TrainInput</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s1">&#39;Survived&#39;</span><span class="p">,</span>
 <span class="n">algos</span><span class="o">=</span><span class="n">Algo</span><span class="o">.</span><span class="n">XGBoost</span><span class="p">,</span> <span class="n">max_model</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
@@ -2064,29 +2020,42 @@ PredictResult Job.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Train Input for ExperimentTS Job.</p>
 <p>Settings for auto time series forecast training.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.train_input.TrainTSInput.data">
-<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#decanter.core.core_api.train_input.TrainTSInput.data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Train data uploaded on
-Decanter Core server</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a>) – Train data uploaded on Decanter Core server</p></li>
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – the name of the target column</p></li>
+<li><p><strong>datetime_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – the name of the datetime column used for time series ordering</p></li>
+<li><p><strong>forecast_horizon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The number of data points to predict for auto time series. In current time
+series forecast model, the larger this value is, training time will take longer.</p></li>
+<li><p><strong>gap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The number of time units between the train data and prediction data</p></li>
+<li><p><strong>max_window_for_feature_derivation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – This value limit the number of features we can use from the past to generate
+endogenous features. The value makes sure that when generating endogenous feature
+for forecast time t, we only use features from
+[t - gap - max_window_for_feature_derivation, t - gap). Note the larger this value
+is, the fewer data is resulted after feature engineering.</p></li>
+<li><p><strong>algos</strong> (<a class="reference internal" href="#decanter.core.enums.algorithms.Algo" title="decanter.core.enums.algorithms.Algo"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algo</span></code></a>) – enabled algorithms (left with default None will enable all algorithms)</p></li>
+<li><p><strong>evaluator</strong> (<a class="reference internal" href="#decanter.core.enums.evaluators.Evaluator" title="decanter.core.enums.evaluators.Evaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Evaluator</span></code></a>) – default evaluator for early stopping</p></li>
+<li><p><strong>features</strong> (<em>list of str</em>) – selected feature for training</p></li>
+<li><p><strong>max_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Model family and hyperparameter search will stop after the specified number
+of models are trained. Stacked Ensemble models are not counte.</p></li>
+<li><p><strong>tolerance</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Tolerance for early stop in both model training and model family and hyperparameter
+search. A higher value results in less accurate models, but faster training times
+and a larger model pool. Lower tolerance means better accuracy, but longer training
+time and a smaller model pool. It is recommended that user start with higher
+tolerance, and move to lower tolernce when the model training process is finalized</p></li>
+<li><p><strong>nfold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The number of cross validation folds to be used during model training</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Seed to be used for operations that have sudo random behavior.
+Fixing seed across runs will ensure reproducible results</p></li>
+<li><p><strong>balance_class</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If true, will balance class distribution
+The maximum relative size increase of the training data
+after balancing class (in most cases, enabling the balance_classes option will
+increase the data frame size</p></li>
+<li><p><strong>validation_percentage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Percentage of the train data to be used as the validation set.</p></li>
+<li><p><strong>holdout_percentage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Percentage of the training data to be used as a holdout set.</p></li>
+</ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.train_input.TrainTSInput.train_body">
-<span class="sig-name descname"><span class="pre">train_body</span></span><a class="headerlink" href="#decanter.core.core_api.train_input.TrainTSInput.train_body" title="Permalink to this definition">¶</a></dt>
-<dd><p>Request body for sending time series training api.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainAutoTSBody</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="decanter.core.core_api.train_input.TrainTSInput.get_train_params">
 <span class="sig-name descname"><span class="pre">get_train_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.train_input.TrainTSInput.get_train_params" title="Permalink to this definition">¶</a></dt>
@@ -2110,42 +2079,44 @@ for time series forecast training.</p>
 <section id="module-decanter.core.core_api.setup_input">
 <span id="setup-input"></span><h3>Setup Input<a class="headerlink" href="#module-decanter.core.core_api.setup_input" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
+<dt class="sig sig-object py" id="decanter.core.core_api.setup_input.ColumnSpec">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.core_api.setup_input.</span></span><span class="sig-name descname"><span class="pre">ColumnSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.setup_input.ColumnSpec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="decanter.core.core_api.setup_input.ColumnSpec.data_type">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">data_type</span></span><a class="headerlink" href="#decanter.core.core_api.setup_input.ColumnSpec.data_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="decanter.core.core_api.setup_input.ColumnSpec.id">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#decanter.core.core_api.setup_input.ColumnSpec.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="decanter.core.core_api.setup_input.SetupInput">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.core_api.setup_input.</span></span><span class="sig-name descname"><span class="pre">SetupInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eda</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.setup_input.SetupInput" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.core_api.setup_input.</span></span><span class="sig-name descname"><span class="pre">SetupInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eda</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.setup_input.SetupInput" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Setup Input for Experiment Job.</p>
 <p>Settings for model training.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.setup_input.SetupInput.data">
-<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#decanter.core.core_api.setup_input.SetupInput.data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Train data uploaded on Decanter Core server</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a>) – Train data uploaded on Decanter Core server</p></li>
+<li><p><strong>data_columns</strong> (list of <a class="reference internal" href="#decanter.core.core_api.setup_input.ColumnSpec" title="decanter.core.core_api.setup_input.ColumnSpec"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnSpec</span></code></a>) – Request body for sending setup api.</p></li>
+<li><p><strong>eda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether to perform eda on data upload</p></li>
+</ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.setup_input.SetupInput.setup_body">
-<span class="sig-name descname"><span class="pre">setup_body</span></span><a class="headerlink" href="#decanter.core.core_api.setup_input.SetupInput.setup_body" title="Permalink to this definition">¶</a></dt>
-<dd><p>Request body for sending setup api.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SetupBody</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">setup_input</span> <span class="o">=</span> <span class="n">SetupInput</span><span class="p">(</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">upload_data</span><span class="p">,</span>
     <span class="n">data_source</span><span class="o">=</span><span class="n">upload_data</span><span class="o">.</span><span class="n">accessor</span><span class="p">,</span>
-    <span class="n">data_columns</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;Pclass&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;data_type&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span>
-        <span class="p">}])</span>
+    <span class="n">data_columns</span><span class="o">=</span><span class="p">[{</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;Pclass&#39;</span><span class="p">,</span> <span class="s1">&#39;data_type&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}]</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py method">
@@ -2171,42 +2142,40 @@ for time series forecast training.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Predict Input for PredictResult Job.</p>
 <p>Setting test data, best model, and the request body for prediction.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.predict_input.PredictInput.data">
-<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#decanter.core.core_api.predict_input.PredictInput.data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test data.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a>) – Test data.</p></li>
+<li><p><strong>experiment</strong> (<a class="reference internal" href="#decanter.core.jobs.experiment.Experiment" title="decanter.core.jobs.experiment.Experiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Experiment</span></code></a>) – Experiment from training.</p></li>
+<li><p><strong>select_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – <p>Methods of screening models</p>
+<ul>
+<li><p><cite>best</cite> (default): predict with the best model scored on cv average</p></li>
+<li><p><cite>model_id</cite>: predict with the model designated by model_id</p></li>
+<li><p><cite>recommendation</cite>: predict with the recommended model</p></li>
+</ul>
+</p></li>
+<li><p><strong>select_opt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – <p>Based on the options required by the select_model.
+value with select_model case:</p>
+<ul>
+<li><p><cite>best</cite>: None</p></li>
+<li><p><cite>model_id</cite>: given the model ID (model ID will be in the format of ObjectID)</p></li>
+<li><p><cite>recommendation</cite>: metric, ex: auc …</p></li>
+</ul>
+</p></li>
+<li><p><strong>keep_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional) – The names of the columns
+that will be appended to the prediction data.</p></li>
+<li><p><strong>threshold</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">double</span></code>, optional) – Prediction threshold for
+binary classification models. Max = 1, Min = 0</p></li>
+</ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.predict_input.PredictInput.experiment">
-<span class="sig-name descname"><span class="pre">experiment</span></span><a class="headerlink" href="#decanter.core.core_api.predict_input.PredictInput.experiment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Experiment from training.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.experiment.Experiment" title="decanter.core.jobs.experiment.Experiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Experiment</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.predict_input.PredictInput.pred_body">
-<span class="sig-name descname"><span class="pre">pred_body</span></span><a class="headerlink" href="#decanter.core.core_api.predict_input.PredictInput.pred_body" title="Permalink to this definition">¶</a></dt>
-<dd><p>Request body for sending predict api.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PredictBody</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 <p class="rubric">Examples</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predict_input</span> <span class="o">=</span> <span class="n">PredictInput</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">test_data</span><span class="p">,</span> <span class="n">experiment</span><span class="o">=</span><span class="n">exp</span><span class="p">,</span>
-                    <span class="n">threshold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">keep_columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;col_1&#39;</span><span class="p">,</span> <span class="s1">&#39;col_3&#39;</span><span class="p">])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predict_input</span> <span class="o">=</span> <span class="n">PredictInput</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">test_data</span><span class="p">,</span>
+    <span class="n">experiment</span><span class="o">=</span><span class="n">exp</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+    <span class="n">keep_columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;col_1&#39;</span><span class="p">,</span> <span class="s1">&#39;col_3&#39;</span><span class="p">]</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py method">
@@ -2224,43 +2193,22 @@ for time series forecast training.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="decanter.core.core_api.predict_input.PredictTSInput">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.core_api.predict_input.</span></span><span class="sig-name descname"><span class="pre">PredictTSInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_max_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.predict_input.PredictTSInput" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.core_api.predict_input.</span></span><span class="sig-name descname"><span class="pre">PredictTSInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_max_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.predict_input.PredictTSInput" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#decanter.core.core_api.predict_input.PredictInput" title="decanter.core.core_api.predict_input.PredictInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.core_api.predict_input.PredictInput</span></code></a></p>
 <p>Time series predict input for  PredictTSResult Job.</p>
 <p>Setting test data, best model, and the request body for prediction.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.predict_input.PredictTSInput.data">
-<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#decanter.core.core_api.predict_input.PredictTSInput.data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test data</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a></p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a>) – Test data.</p></li>
+<li><p><strong>experiment</strong> (<a class="reference internal" href="#decanter.core.jobs.experiment.Experiment" title="decanter.core.jobs.experiment.Experiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Experiment</span></code></a>) – Experiment from training.</p></li>
+<li><p><strong>threshold_max_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Prediction threshold for
+binary classification only, can choose a threshold that
+optimizes the given metric.Available options are:precision, f1,
+accuracy, evaluator, recall, specificity, f2, f0point5, mean_per_class_error</p></li>
+</ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.predict_input.PredictTSInput.experiment">
-<span class="sig-name descname"><span class="pre">experiment</span></span><a class="headerlink" href="#decanter.core.core_api.predict_input.PredictTSInput.experiment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Time series experiment from training.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.experiment.ExperimentTS" title="decanter.core.jobs.experiment.ExperimentTS"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExperimentTS</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="decanter.core.core_api.predict_input.PredictTSInput.pred_body">
-<span class="sig-name descname"><span class="pre">pred_body</span></span><a class="headerlink" href="#decanter.core.core_api.predict_input.PredictTSInput.pred_body" title="Permalink to this definition">¶</a></dt>
-<dd><p>Request body for sending predict api</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PredictTSBody</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -2658,6 +2606,7 @@ Algorithms of the Decanter AI Core SDK.</p>
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.enums.algorithms.</span></span><span class="sig-name descname"><span class="pre">Algo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.enums.algorithms.Algo" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Algo enumeration is the machine learning algorithms currently
 supported by the Decanter AI Core SDK</p>
+<p>TrainInput (used by client.train) supported algorithms</p>
 <ul class="simple">
 <li><p>DRF: Distributed Random Forest.</p></li>
 <li><p>GLM: Generalized Linear Model.</p></li>
@@ -2665,6 +2614,16 @@ supported by the Decanter AI Core SDK</p>
 <li><p>DeepLearning: Deep Learning.</p></li>
 <li><p>StackedEnsemble: Stacked Ensemble.</p></li>
 <li><p>XGBoost: eXtreme Gradient Boosting.</p></li>
+</ul>
+<p>TrainTSInput (used by client.train_ts) supported algorithms</p>
+<ul class="simple">
+<li><p>GLM: Generalized Linear Model.</p></li>
+<li><p>DRF: Distributed Random Forest.</p></li>
+<li><p>GBM: Gradient Boosting Machine.</p></li>
+<li><p>XGBoost: eXtreme Gradient Boosting.</p></li>
+<li><p>arima: auto arima (available only after 4.9 deployed with Exodus, only available for regression).</p></li>
+<li><p>prophet: auto arima (available only after 4.9 deployed with Exodus, only available for regression).</p></li>
+<li><p>ets: auto arima (available only after 4.9 deployed with Exodus, only available for regression).</p></li>
 </ul>
 </dd></dl>
 
@@ -2687,6 +2646,8 @@ supported by the Decanter AI Core SDK</p>
 <li><p>mae</p></li>
 <li><p>rmsle</p></li>
 <li><p>r2</p></li>
+<li><p>mape (Supported from Decanter AI 4.9~)</p></li>
+<li><p>wmape (Supported from Decanter AI 4.9~)</p></li>
 </ul>
 </dd>
 </dl>
@@ -2736,8 +2697,8 @@ supported by the Decanter AI Core SDK</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#jobs">Jobs</a><ul>
-<li><a class="reference internal" href="#id1">Task</a></li>
-<li><a class="reference internal" href="#id2">Jobs</a></li>
+<li><a class="reference internal" href="#module-decanter.core.jobs.task">Task</a></li>
+<li><a class="reference internal" href="#id1">Jobs</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#core-api-interface">Core Api Interface</a><ul>
@@ -2766,7 +2727,7 @@ supported by the Decanter AI Core SDK</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -2797,7 +2758,7 @@ supported by the Decanter AI Core SDK</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, MoBagel.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.1.0.
     </div>
   </body>
 </html>

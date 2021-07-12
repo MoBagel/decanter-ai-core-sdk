@@ -51,16 +51,17 @@
 <section id="upload-setup-train-predict">
 <h2>Upload, Setup, Train, Predict<a class="headerlink" href="#upload-setup-train-predict" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Import</span> <span class="pre">Packages</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install decanter-ai-core-sdk
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install decanter-ai-core-sdk
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
 
-import os
-import asyncio
-
-from decanter import core
-from decanter.core.core_api import TrainInput, PredictInput, SetupInput
-from decanter.core.extra.utils import check_response, gen_id
-from decanter.core.enums.algorithms import Algo
-from decanter.core.enums.evaluators import Evaluator
+<span class="kn">from</span> <span class="nn">decanter</span> <span class="kn">import</span> <span class="n">core</span>
+<span class="kn">from</span> <span class="nn">decanter.core.core_api</span> <span class="kn">import</span> <span class="n">TrainInput</span><span class="p">,</span> <span class="n">PredictInput</span><span class="p">,</span> <span class="n">SetupInput</span>
+<span class="kn">from</span> <span class="nn">decanter.core.extra.utils</span> <span class="kn">import</span> <span class="n">check_response</span><span class="p">,</span> <span class="n">gen_id</span>
+<span class="kn">from</span> <span class="nn">decanter.core.enums.algorithms</span> <span class="kn">import</span> <span class="n">Algo</span>
+<span class="kn">from</span> <span class="nn">decanter.core.enums.evaluators</span> <span class="kn">import</span> <span class="n">Evaluator</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">Context</span> <span class="pre">will</span> <span class="pre">set</span> <span class="pre">the</span> <span class="pre">connection</span> <span class="pre">to</span> <span class="pre">decanter</span> <span class="pre">core</span> <span class="pre">server,</span> <span class="pre">and</span> <span class="pre">create</span> <span class="pre">an</span> <span class="pre">event</span> <span class="pre">loop.</span> <span class="pre">Since</span> <span class="pre">Jupyter</span> <span class="pre">already</span> <span class="pre">have</span> <span class="pre">an</span> <span class="pre">event</span> <span class="pre">loop,</span> <span class="pre">SDK</span> <span class="pre">will</span> <span class="pre">just</span> <span class="pre">use</span> <span class="pre">the</span> <span class="pre">current</span> <span class="pre">event</span> <span class="pre">loop.</span> <span class="pre">In</span> <span class="pre">Jupyter,</span> <span class="pre">it</span> <span class="pre">will</span> <span class="pre">initially</span> <span class="pre">exist</span> <span class="pre">a</span> <span class="pre">running</span> <span class="pre">event</span> <span class="pre">loop.</span></code>:</p>
@@ -80,8 +81,8 @@ from decanter.core.enums.evaluators import Evaluator
 <p><code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">train</span> <span class="pre">&amp;</span> <span class="pre">test</span> <span class="pre">file</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_file_path</span> <span class="o">=</span> <span class="s1">&#39;/data/train.csv&#39;</span>
 <span class="n">test_file_path</span> <span class="o">=</span> <span class="s1">&#39;/data/test.csv&#39;</span>
-<span class="n">train_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">train_file_path</span> <span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-<span class="n">test_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">test_file_path</span> <span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">train_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">train_file_path</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+<span class="n">test_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">test_file_path</span> <span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Upload</span> <span class="pre">data</span> <span class="pre">to</span> <span class="pre">CoreX</span></code>:</p>
@@ -158,7 +159,7 @@ from decanter.core.enums.evaluators import Evaluator
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -186,7 +187,7 @@ from decanter.core.enums.evaluators import Evaluator
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020, MoBagel.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.1.0.
     </div>
   </body>
 </html>
