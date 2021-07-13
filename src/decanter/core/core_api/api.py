@@ -247,6 +247,7 @@ class CoreAPI:
         url = '/v2/models/%s/batch_predict' % model_id
         if 'timestamp_format' not in kwargs:
             kwargs['timestamp_format'] = 'yyyy-MM-dd HH:mm:ss'
+        kwargs['version'] = 'v2'
         return self.requests_(http='POST', url=url, json=kwargs, headers=self.corex_headers)
 
     def get_experiments_by_id(self, exp_id):
