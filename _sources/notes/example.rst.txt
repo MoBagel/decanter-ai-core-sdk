@@ -40,7 +40,7 @@ Upload, Setup, Train, Predict
 	core.enable_default_logger()
 	# set the username, password, host
 	client = core.CoreClient(
-	        username='gp', password='gp-admin', host='http://host:port')
+	        username=???, password=???, host='http://host:port')
 
 
 ``Open train & test file``:

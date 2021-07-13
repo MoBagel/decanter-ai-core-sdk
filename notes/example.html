@@ -71,11 +71,11 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">CoreClient</span> <span class="pre">handles</span> <span class="pre">the</span> <span class="pre">actions</span> <span class="pre">of</span> <span class="pre">calling</span> <span class="pre">api</span> <span class="pre">and</span> <span class="pre">getting</span> <span class="pre">the</span> <span class="pre">results,</span></code>:
 <code class="docutils literal notranslate"><span class="pre">When</span> <span class="pre">initializing,</span> <span class="pre">need</span> <span class="pre">to</span> <span class="pre">set</span> <span class="pre">the</span> <span class="pre">usr,</span> <span class="pre">pwd,</span> <span class="pre">host</span> <span class="pre">to</span> <span class="pre">create</span> <span class="pre">Context.</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enable default logger</span>
-<span class="n">core</span><span class="o">.</span><span class="n">enable_default_logger</span><span class="p">()</span>
-<span class="c1"># set the username, password, host</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">CoreClient</span><span class="p">(</span>
-        <span class="n">username</span><span class="o">=</span><span class="s1">&#39;gp&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;gp-admin&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;http://host:port&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span># enable default logger
+core.enable_default_logger()
+# set the username, password, host
+client = core.CoreClient(
+        username=???, password=???, host=&#39;http://host:port&#39;)
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">train</span> <span class="pre">&amp;</span> <span class="pre">test</span> <span class="pre">file</span></code>:</p>
