@@ -11,12 +11,12 @@ logger = logging.getLogger(__name__)
 
 def get_or_create_eventloop():
     try:
-        return get_or_create_eventloop()
+        return asyncio.get_event_loop()
     except RuntimeError as ex:
         if "There is no current event loop in thread" in str(ex):
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-            return get_or_create_eventloop()
+            return asyncio.get_event_loop()
 
 class Context:
     """Init the connection to decanter core server and functionality for running SDK.
