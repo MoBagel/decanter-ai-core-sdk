@@ -204,15 +204,18 @@ class UploadTask(CoreTask):
     Attributes:
         file (csv-file-object): The csv file to be uploaded.
     """
-    def __init__(self, file, name=None):
+    def __init__(self, file, name=None, eda=True):
         super().__init__(name=gen_id('UploadTask', name))
         self.file = file
+        self.eda = eda
 
     def run(self):
         """Execute upload data by sending the upload api."""
         super().run_core_task(
             api_func=self.core_service.post_upload,
-            filename=self.file.name, file=self.file,
+            filename=self.file.name,
+            file=self.file,
+            eda=self.eda,
             encoding='text/plain(UTF-8)')
 
 

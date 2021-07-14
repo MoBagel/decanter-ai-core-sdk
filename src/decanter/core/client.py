@@ -83,7 +83,7 @@ class CoreClient(Context):
         return data
 
     @staticmethod
-    def upload(file, name=None):
+    def upload(file, name=None, eda=True):
         """Upload csv file or pandas dataframe.
 
         Create a DataUpload Job and scheduled the execution in CORO_TASKS list.
@@ -93,6 +93,7 @@ class CoreClient(Context):
             file (csv-file, :obj:`pandas.DataFrame`): File uploaded to
                 core server.
             name (str, optional): Name for upload action.
+            eda (bool, optional): Whether to perform eda on data upload
 
         Returns:
             :class:`~decanter.core.jobs.data_upload.DataUpload` object
@@ -113,7 +114,7 @@ class CoreClient(Context):
             file = io.StringIO(file)
             file.name = 'no_name'
 
-        data = DataUpload(file=file, name=name)
+        data = DataUpload(file=file, name=name, eda=eda)
         # check context validation
         try:
             if Context.LOOP is None:

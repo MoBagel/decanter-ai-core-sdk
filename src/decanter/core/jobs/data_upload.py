@@ -41,7 +41,7 @@ class DataUpload(Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress, will give default name if None.
     """
-    def __init__(self, file=None, name=None):
+    def __init__(self, file=None, name=None, eda=True):
         """DataUpload Init.
 
         Args:
@@ -49,7 +49,7 @@ class DataUpload(Job):
             name (:obj:`str`, optional): Name to track Job progress
         """
         super().__init__(jobs=None,
-                         task=UploadTask(file, name),
+                         task=UploadTask(file, name, eda),
                          name=gen_id(self.__class__.__name__, name))
 
         self.accessor = None

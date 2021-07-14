@@ -14,8 +14,7 @@ class SetupInput:
             Train data uploaded on Decanter Core server
         data_columns (list of :class:`ColumnSpec`):
             Request body for sending setup api.
-        eda (bool):
-            Whether to perform eda on data upload
+        eda (bool): Whether to perform eda on data setup
 
     Example:
         .. code-block:: python

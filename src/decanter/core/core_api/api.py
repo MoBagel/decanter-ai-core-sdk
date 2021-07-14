@@ -146,7 +146,10 @@ class CoreAPI:
         )
         headers = self.corex_headers
         headers['Content-Type'] = csv.content_type
-        return self.requests_(http='POST', url='/v2/upload', data=csv, headers=headers)
+        url = '/v2/upload'
+        if 'eda' in kwargs and not kwargs['eda']:
+            url = url + '?eda=true'
+        return self.requests_(http='POST', url=url, data=csv, headers=headers)
 
     def get_tasks_by_id(self, task_id):
         """Get the task by task_id.
