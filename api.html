@@ -367,7 +367,7 @@ if predict by trained experiment, how should we select best model</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="decanter.core.client.CoreClient.upload">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">upload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.upload" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">upload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eda</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.upload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upload csv file or pandas dataframe.</p>
 <p>Create a DataUpload Job and scheduled the execution in CORO_TASKS list.
 Record the Job in JOBS list.</p>
@@ -377,6 +377,7 @@ Record the Job in JOBS list.</p>
 <li><p><strong>file</strong> (csv-file, <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>) – File uploaded to
 core server.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Name for upload action.</p></li>
+<li><p><strong>eda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to perform eda on data upload</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -641,7 +642,7 @@ of response.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="decanter.core.jobs.task.UploadTask">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.task.</span></span><span class="sig-name descname"><span class="pre">UploadTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.UploadTask" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.task.</span></span><span class="sig-name descname"><span class="pre">UploadTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eda</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.UploadTask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#decanter.core.jobs.task.CoreTask" title="decanter.core.jobs.task.CoreTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.task.CoreTask</span></code></a></p>
 <p>Upload data to Decanter Core.</p>
 <dl class="py attribute">
@@ -995,7 +996,7 @@ message for remind.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="decanter.core.jobs.data_upload.DataUpload">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.data_upload.</span></span><span class="sig-name descname"><span class="pre">DataUpload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.data_upload.DataUpload" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.data_upload.</span></span><span class="sig-name descname"><span class="pre">DataUpload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eda</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.data_upload.DataUpload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.job.Job</span></code></a></p>
 <p>DataUpload manage to get the result from data upload.</p>
 <p>Handle the execution of upload task in order to upload data to
@@ -2107,7 +2108,7 @@ for time series forecast training.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a>) – Train data uploaded on Decanter Core server</p></li>
 <li><p><strong>data_columns</strong> (list of <a class="reference internal" href="#decanter.core.core_api.setup_input.ColumnSpec" title="decanter.core.core_api.setup_input.ColumnSpec"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnSpec</span></code></a>) – Request body for sending setup api.</p></li>
-<li><p><strong>eda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether to perform eda on data upload</p></li>
+<li><p><strong>eda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether to perform eda on data setup</p></li>
 </ul>
 </dd>
 </dl>
