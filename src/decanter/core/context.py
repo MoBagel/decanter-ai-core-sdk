@@ -3,21 +3,20 @@ import asyncio
 import logging
 
 import pandas as pd
-import requests
-from requests.auth import HTTPBasicAuth
 
 from decanter.core.extra import CoreStatus
+from decanter.core.core_api import CoreAPI, worker
 
 logger = logging.getLogger(__name__)
 
 def get_or_create_eventloop():
     try:
-        return asyncio.get_event_loop()
+        return get_or_create_eventloop()
     except RuntimeError as ex:
         if "There is no current event loop in thread" in str(ex):
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-            return asyncio.get_event_loop()
+            return get_or_create_eventloop()
 
 class Context:
     """Init the connection to decanter core server and functionality for running SDK.
@@ -31,33 +30,27 @@ class Context:
             context.run()
 
     """
+    # 'str: User name to login in Decanter Core server'
     USERNAME = None
-    'str: User name to login in Decanter Core server'
+    # 'str: Password to login in Decanter Core server'
     PASSWORD = None
-    'str: Password to login in Decanter Core server'
+    # Decanter Core server\'s URL.'
     HOST = None
-    'str: Decanter Core server\'s URL.'
+    # .. _EventLoop: https://docs.python.org/3/library/asyncio-eventloop.html#event-loop
     LOOP = None
-    '''
-    `EventLoop`_.: Event Loop of Asynchronous I/O.
-
-    .. _EventLoop: https://docs.python.org/3/library/asyncio-eventloop.html#event-loop
-    '''
+    # list(`Task`_.): List of Tasks of Asynchronous I/O.
     CORO_TASKS = []
-    '''
-    list(`Task`_.): List of Tasks of Asynchronous I/O.
-
-    .. _Task: https://docs.python.org/3/library/asyncio-task.html#asyncio.Task
-    '''
+    # List of finished and waited Jobs.
     JOBS = []
-    'list(:class:`~decanter.core.jobs.job.Job`): List of finished and waited Jobs.'
+    # CoreX API endpoint
+    api = None
 
     def __init__(self):
         pass
 
     @classmethod
     def create(cls, username, password, host):
-        """Create conext instance and init neccessary variable and objects.
+        """Create context instance and init necessary variable and objects.
 
         Setting the user, password, and host for the funture connection when
         calling APIs, and create an event loop if it isn't exist. Check if the
@@ -87,8 +80,8 @@ class Context:
             asyncio.set_event_loop(asyncio.new_event_loop())
             Context.LOOP = get_or_create_eventloop()
             logger.debug('[Context] create and set new event loop')
-
         context.healthy()
+        Context.api = CoreAPI()
         return context
 
     @staticmethod
@@ -99,13 +92,15 @@ class Context:
         have been finished.
 
         """
-        logger.debug('Run %s coroutines', len(Context.CORO_TASKS))
+        logger.info('Run %s coroutines', len(Context.CORO_TASKS))
 
         if Context.LOOP is None:
             logger.error('[Context] create context before run')
             raise Exception()
 
-        if Context.LOOP.is_running() is False:
+        loop_running = Context.LOOP.is_running()
+        logger.info('[Context] Context.LOOP.is_running(): {})'.format(loop_running))
+        if loop_running is False:
             groups = asyncio.gather(*Context.CORO_TASKS)
             Context.LOOP.run_until_complete(groups)
             Context.CORO_TASKS = []
@@ -140,17 +135,14 @@ class Context:
 
         """
         try:
-            url = '%s/data/test' % Context.HOST
-            res = requests.delete(
-                url, auth=HTTPBasicAuth(Context.USERNAME, Context.PASSWORD),
-                timeout=2)
-            if res.status_code != 400:
+            res = worker.Worker().get_status()
+            if res.status_code // 100 != 2:
                 raise Exception()
-        except (Exception, requests.exceptions.RequestException) as err:
+        except Exception as err:
             logger.error('[Context] connect not healthy :(')
             raise SystemExit(err)
         else:
-            logger.info('[Context] connect healty :)')
+            logger.info('[Context] connect healthy :)')
 
     @staticmethod
     def get_all_jobs():
@@ -207,7 +199,7 @@ class Context:
             names (list(str)): Names of wish to select.
 
         Returns:
-            list(:class:`~corex.jobs.job.Job`): Jobs with name in names list.
+            list(:class:`~decanter.core.jobs.job.Job`): Jobs with name in names list.
 
         """
         res = []
@@ -222,8 +214,8 @@ class Context:
         """Stop Jobs in jobs_list.
 
         Args:
-            jobs_list (list(:class:`~decanter.core.jobs.job.Job`)): List of jobs
-                instance wished to be stopped.
+            jobs_list (list(:class:`~decanter.core.jobs.job.Job`)):
+                List of jobs instance wished to be stopped.
         """
         for job in jobs_list:
             job.stop()
@@ -234,4 +226,3 @@ class Context:
         for job in Context.JOBS:
             if job.status not in ['done', 'fail', 'invalid']:
                 job.stop()
-
