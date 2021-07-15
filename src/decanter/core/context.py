@@ -9,6 +9,14 @@ from decanter.core.core_api import CoreAPI, worker
 
 logger = logging.getLogger(__name__)
 
+def get_or_create_eventloop():
+    try:
+        return asyncio.get_event_loop()
+    except RuntimeError as ex:
+        if "There is no current event loop in thread" in str(ex):
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            return asyncio.get_event_loop()
 
 class Context:
     """Init the connection to decanter core server and functionality for running SDK.
@@ -65,12 +73,12 @@ class Context:
 
         # get the current event loop
         # it will create a new event loop if it does not exist
-        Context.LOOP = asyncio.get_event_loop()
+        Context.LOOP = get_or_create_eventloop()
 
         # if the current loop is closed create a new one
         if Context.LOOP.is_closed():
             asyncio.set_event_loop(asyncio.new_event_loop())
-            Context.LOOP = asyncio.get_event_loop()
+            Context.LOOP = get_or_create_eventloop()
             logger.debug('[Context] create and set new event loop')
         context.healthy()
         Context.api = CoreAPI()
@@ -107,7 +115,7 @@ class Context:
         """
         logger.debug('[Context] try to close context')
         if Context.LOOP is not None:
-            Context.LOOP = asyncio.get_event_loop()
+            Context.LOOP = get_or_create_eventloop()
             if Context.LOOP.is_running() is False:
                 Context.LOOP.close()
                 logger.info('[Context] close event loop successfully')
