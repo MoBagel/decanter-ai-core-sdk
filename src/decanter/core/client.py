@@ -7,8 +7,8 @@ import pandas as pd
 
 from decanter.core import Context
 from decanter.core.jobs import DataUpload, DataSetup,\
-                       Experiment, ExperimentTS,\
-                       PredictResult, PredictTSResult
+    Experiment, ExperimentTS, ExperimentCluster,\
+    PredictResult, PredictTSResult
 from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
 
@@ -29,6 +29,7 @@ class CoreClient(Context):
             client.upload(data={csv-file-type/dataframe})
 
     """
+
     def __init__(self, username, password, host):
         super().__init__()
         """Create context instance and init neccessary variable and objects.
@@ -44,7 +45,6 @@ class CoreClient(Context):
         """
         Context.create(username=username, password=password, host=host)
         self.api = Context.api
-        
 
     @staticmethod
     def setup(setup_input, name=None):
@@ -153,8 +153,8 @@ class CoreClient(Context):
         select_model_by = check_is_enum(Evaluator, select_model_by)
         logger.debug('[Core] Create Train Job')
         exp = Experiment(
-                train_input=train_input,
-                select_model_by=select_model_by, name=name)
+            train_input=train_input,
+            select_model_by=select_model_by, name=name)
         try:
             if Context.LOOP is None:
                 raise AttributeError('[Core] event loop is \'NoneType\'')
@@ -205,6 +205,41 @@ class CoreClient(Context):
             logger.error('[Core] Context not created')
             raise
         return exp_ts
+
+    @staticmethod
+    def train_cluster(train_input, name=None):
+        """Train cluster model with data.
+
+        Create a Cluster Experiment Job and scheduled the execution
+        in CORO_TASKS list.  Record the Job in JOBS list.
+
+        Args:
+            train_input
+                (:class:`~decanter.core.core_api.train_input.TrainClusterInput`):
+                Settings for training.
+            name (:obj:`str`, optional): name for train time series action.
+
+        Returns:
+            :class:`~decanter.core.jobs.experiment.ExperimentTS` object
+
+        Raises:
+            AttributeError: If the function is called without
+                :class:`~decanter.core.context.Context` created.
+        """
+        logger.debug('[Core] Create Train Cluster Job')
+        exp = ExperimentCluster(
+            train_input=train_input,
+            select_model_by=Evaluator.tot_withinss, name=name)
+        try:
+            if Context.LOOP is None:
+                raise AttributeError('[Core] event loop is \'NoneType\'')
+            task = Context.LOOP.create_task(exp.wait())
+            Context.CORO_TASKS.append(task)
+            Context.JOBS.append(exp)
+        except AttributeError:
+            logger.error('[Core] Context not created')
+            raise
+        return exp
 
     @staticmethod
     def predict(predict_input, name=None):

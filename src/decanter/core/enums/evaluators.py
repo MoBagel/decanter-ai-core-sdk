@@ -29,6 +29,9 @@ class Evaluator(Enum):
         - auto (logloss)
         - logloss
         - misclassification
+    - Clustering
+        - auto (tot_withinss)
+        - tot_withinss
     """
     auto = 'auto'
     mse = 'mse'
@@ -44,6 +47,7 @@ class Evaluator(Enum):
     lift_top_group = 'lift_top_group'
     misclassification = 'misclassification'
     mean_per_class_error = 'mean_per_class_error'
+    tot_withinss = 'tot_withinss'
 
     @staticmethod
     def resolve_select_model_by(select_model_by, model_type):
@@ -52,6 +56,8 @@ class Evaluator(Enum):
                 return Evaluator.deviance.value
             elif model_type == "multinomial classification" or model_type == "binary classification":
                 return Evaluator.logloss.value
+            elif model_type == "clustering":
+                return Evaluator.tot_withinss.value
             else:
                 raise Exception(f"Illegal model type: {model_type}")
         else:

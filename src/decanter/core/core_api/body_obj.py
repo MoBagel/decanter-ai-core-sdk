@@ -21,6 +21,7 @@ class ComplexEncoder(json.JSONEncoder):
     Returns:
         function: `jsonable`
     """
+
     def default(self, obj):
         if hasattr(obj, 'jsonable'):
             return obj.jsonable()
@@ -34,6 +35,7 @@ class CoreBodyObj:
     Has the jsonable function to return the Dictionary of object.
 
     """
+
     def __init__(self, **kwargs):
         """Add the argument pass in as attributes."""
         self.__dict__.update(
@@ -88,6 +90,15 @@ class TrainBody(CoreBodyObj):
     @corex_obj(required={'target', 'train_data_id', 'algos'})
     def create(cls, **kwargs):
         """Return TrainBody object with passed kwargs as attributes"""
+        return cls(**kwargs)
+
+
+class ClusterTrainBody(CoreBodyObj):
+    """ClusterTrainBody"""
+    @classmethod
+    @corex_obj(required={'train_data_id'})
+    def create(cls, **kwargs):
+        """Return ClusterTrainBody object with passed kwargs as attributes"""
         return cls(**kwargs)
 
 
@@ -157,6 +168,7 @@ class InputSpec(CoreBodyObj):
         """Return InputSpec object with passed kwargs as attributes"""
         return cls(**kwargs)
 
+
 class BuildSpec(CoreBodyObj):
     """Attribute for TrainAutoTSBody."""
     @classmethod
@@ -164,6 +176,7 @@ class BuildSpec(CoreBodyObj):
     def create(cls, **kwargs):
         """Return BuildSpec object with passed kwargs as attributes"""
         return cls(**kwargs)
+
 
 class TrainAutoTSBody(CoreBodyObj):
     """Body for auto time series train api."""
@@ -191,6 +204,7 @@ class PredictBodyTSModel(CoreBodyObj):
         """Return PredictBodyTSModel object with passed kwargs as attributes"""
         return cls(**kwargs)
 
+
 class SetupBody(CoreBodyObj):
     """Body for setup api."""
     @classmethod
@@ -199,6 +213,7 @@ class SetupBody(CoreBodyObj):
         """Return SetupBody object with passed kwargs as attributes"""
         return cls(**kwargs)
 
+
 class Accessor(CoreBodyObj):
     """Data accessor"""
     @classmethod
@@ -206,6 +221,7 @@ class Accessor(CoreBodyObj):
     def create(cls, **kwargs):
         """Return SetupBody object with passed kwargs as attributes"""
         return cls(**kwargs)
+
 
 def column_array(cols):
     """Turn Josn columns to list of Column objects."""

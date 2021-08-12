@@ -201,6 +201,16 @@ class CoreAPI:
         """
         return self.requests_(http='POST', url='/v2/tasks/train', json=kwargs, headers=self.corex_headers)
 
+    def post_tasks_cluster_train(self, **kwargs):
+        """Train model from data reference.
+
+        Endpoint: /v2/tasks/cluster_train
+
+        Returns:
+            class:`Response <Response>` object
+        """
+        return self.requests_(http='POST', url='/v2/tasks/cluster_train', json=kwargs, headers=self.corex_headers)
+
     def post_tasks_auto_ts_train(self, **kwargs):
         """Train time series forecast multi model from data reference.
 

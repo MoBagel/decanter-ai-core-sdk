@@ -11,7 +11,7 @@ from decanter.core.extra import CoreStatus
 from decanter.core.extra.decorators import update
 from decanter.core.extra.utils import check_response, gen_id
 from decanter.core.jobs.job import Job
-from decanter.core.jobs.task import TrainTask, TrainTSTask
+from decanter.core.jobs.task import TrainTask, TrainTSTask, TrainClusterTask
 from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
 
@@ -211,3 +211,75 @@ class ExperimentTS(Experiment, Job):
                 with the specific id.
         """
         return super(ExperimentTS, cls).create(exp_id=exp_id, name=name)
+
+
+class ExperimentCluster(Experiment, Job):
+    """ExperimentTS manage to get the result from clustering model training.
+
+    Handle the execution of clustering training task in order train
+    clustering model on Decanter Core server Stores the training results in
+    ExperimentCluster's attributes.
+
+    Attributes:
+        jobs (list(:class:`~decanter.core.jobs.job.Job`)): [DataUpload]. List of jobs
+            that ExperimentTS needs to wait till completed.
+        task (:class:`~decanter.core.jobs.task.TrainTSTask`):
+            Time series training task run by ExperimentTS Job.
+        train_input (:class:`~decanter.core.core_api.train_input.TrainTSInput`):
+            Settings for time series training models.
+        best_model (:class:`~decanter.core.core_api.model.MultiModel`): MultiModel with the
+            best score in `select_model_by` argument
+        select_model_by (str): The score to select best model
+        features (list(str)): The features used for training
+        train_data_id (str): The ID of the train data
+        target (str): The target of the experiment
+        test_base_id (str): The ID for the test base data
+        models (list(str)): The models' id of the experiment
+        hyperparameters (dict): The hyperparameters of the experiment.
+        attributes (dict): The experiment attributes.
+        recommendations (dict): Recommended model for each evaluator.
+        created_at (str): The date the data was created.
+        options (dict): Extra information for experiment.
+        updated_at (str): The time the data was last updated.
+        completed_at (str): The time the data was completed at.
+        name (str): Name to track Job progress.
+    """
+
+    def __init__(self, train_input, select_model_by=Evaluator.auto, name=None):
+        Job.__init__(
+            self,
+            jobs=[train_input.data],
+            task=TrainClusterTask(train_input, name=name),
+            name=gen_id(self.__class__.__name__, name))
+
+        select_model_by = check_is_enum(Evaluator, select_model_by)
+        self.train_input = train_input
+        self.best_model = Model()
+        self.select_model_by = select_model_by
+        self.features = None
+        self.train_data_id = None
+        self.target = None
+        self.test_base_id = None
+        self.models = None
+        self.hyperparameters = None
+        self.attributes = None
+        self.recommendations = None
+        self.options = None
+        self.created_at = None
+        self.updated_at = None
+        self.completed_at = None
+
+    @classmethod
+    def create(cls, exp_id, name=None):
+        """Create Clustering Experiment by exp_id. Inherit from
+        :func:`~Experiment.create`
+
+        Args:
+            exp_id (str): ObjectId in 24 hex digits
+            name (:obj:`str`, optional): (opt) Name to track Job progress
+
+        Returns:
+            :class:`~decanter.core.jobs.experiment.ExperimentTS`: Experiment object\
+                with the specific id.
+        """
+        return super(ExperimentCluster, cls).create(exp_id=exp_id, name=name)
