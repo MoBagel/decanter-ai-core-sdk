@@ -279,7 +279,7 @@ class ExperimentCluster(Experiment, Job):
             name (:obj:`str`, optional): (opt) Name to track Job progress
 
         Returns:
-            :class:`~decanter.core.jobs.experiment.ExperimentTS`: Experiment object\
+            :class:`~decanter.core.jobs.experiment.ExperimentCluster`: Experiment object\
                 with the specific id.
         """
         return super(ExperimentCluster, cls).create(exp_id=exp_id, name=name)
