@@ -57,6 +57,7 @@ class TrainInput:
             algos=Algo.XGBoost, max_model=2, tolerance=0.9)
 
     """
+
     def __init__(
             self, data, target, algos,
             callback=None, test_base_id=None, test_data_id=None,
@@ -174,6 +175,7 @@ class TrainTSInput:
         validation_percentage (float): Percentage of the train data to be used as the validation set.
         holdout_percentage (float): Percentage of the training data to be used as a holdout set.
     """
+
     def __init__(
             self, data, target, datetime_column, forecast_horizon, gap, algorithms=None, feature_types=None,
             callback=None, version='v2', max_iteration=None, generation_size=None,
@@ -204,7 +206,7 @@ class TrainTSInput:
             max_run_time=max_run_time,
             genetic_algorithm=geneticAlgorithm,
             nfold=nfold,
-            algos = algorithms # user specifies algorithm used in TS analysis
+            algos=algorithms  # user specifies algorithm used in TS analysis
         )
         group_by = CoreBody.TSGroupBy.create(
             time_unit=time_unit,
@@ -249,5 +251,51 @@ class TrainTSInput:
         """
         setattr(self.train_auto_ts_body.input_spec, 'train_data_id', self.data.id)
         params = json.dumps(self.train_auto_ts_body.jsonable(), cls=CoreBody.ComplexEncoder)
+        params = json.loads(params)
+        return params
+
+
+class TrainClusterInput:
+    """Train Input for Clustering Experiment Job.
+
+    Settings for model training.
+
+    Args:
+        data (:class:`~decanter.core.jobs.data_upload.DataUpload`):
+            Train data uploaded on Decanter Core server
+        features (list of str): selected feature for training
+        seed (int):
+            Seed to be used for operations that have sudo random behavior.
+            Fixing seed across runs will ensure reproducible results
+
+    Example:
+        .. code-block:: python
+
+            train_input = TrainClusterInput(data=train_data)
+
+    """
+
+    def __init__(
+            self, data, callback=None, features=None, feature_types=None, k=None, seed=None, version=None):
+
+        self.data = data
+
+        self.train_body = CoreBody.ClusterTrainBody.create(
+            train_data_id='tmp_data_id',
+            callback=callback,
+            features=features,
+            feature_types=feature_types,
+            seed=seed,
+            k=k,
+            version=version)
+
+    def get_train_params(self):
+        """Using train_body to create the JSON request body for training.
+
+        Returns:
+            :obj:`dict`
+        """
+        setattr(self.train_body, 'train_data_id', self.data.id)
+        params = json.dumps(self.train_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
         return params

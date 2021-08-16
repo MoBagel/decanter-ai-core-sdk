@@ -204,6 +204,7 @@ class UploadTask(CoreTask):
     Attributes:
         file (csv-file-object): The csv file to be uploaded.
     """
+
     def __init__(self, file, name=None, eda=True):
         super().__init__(name=gen_id('UploadTask', name))
         self.file = file
@@ -226,6 +227,7 @@ class TrainTask(CoreTask):
         train_input (:class:`~decanter.core.core_api.train_input.TrainInput`):
             Settings for training.
     """
+
     def __init__(self, train_input, name=None):
         super().__init__(name=gen_id('TrainTask', name))
         self.train_input = train_input
@@ -243,6 +245,7 @@ class TrainTSTask(CoreTask):
         train_input (:class:`~decanter.core.core_api.train_input.TrainTSInput`):
             Settings for training time series forecast models.
     """
+
     def __init__(self, train_input, name=None):
         super().__init__(name=gen_id('TrainTSTask', name))
         self.train_input = train_input
@@ -255,6 +258,25 @@ class TrainTSTask(CoreTask):
             api_func=self.core_service.post_tasks_auto_ts_train, **train_params)
 
 
+class TrainClusterTask(CoreTask):
+    """Train time series forecast models on Decanter Core.
+
+    Attributes:
+        train_input (:class:`~decanter.core.core_api.train_input.TrainTSInput`):
+            Settings for training time series forecast models.
+    """
+
+    def __init__(self, train_input, name=None):
+        super().__init__(name=gen_id('TrainClusterTask', name))
+        self.train_input = train_input
+
+    def run(self):
+        """Execute clustering training by sending the cluster triain api."""
+        train_params = self.train_input.get_train_params()
+        super().run_core_task(
+            api_func=self.core_service.post_tasks_cluster_train, **train_params)
+
+
 class PredictTask(CoreTask):
     """Predict model on Decanter Core.
 
@@ -262,6 +284,7 @@ class PredictTask(CoreTask):
         predict_input (:class:`~decanter.core.core_api.predict_input.PredictInput`):
             Settings for prediction.
     """
+
     def __init__(self, predict_input, name=None):
         super().__init__(name=gen_id('PredictTask', name))
         self.predict_input = predict_input
@@ -282,6 +305,7 @@ class PredictTSTask(CoreTask):
             (:class:`~decanter.core.core_api.predict_input.PredictTSInput`):
             Settings for time series prediction.
     """
+
     def __init__(self, predict_input, name=None):
         super().__init__(name=gen_id('PredictTSTask', name))
         self.predict_input = predict_input
@@ -303,6 +327,7 @@ class SetupTask(CoreTask):
         setup_input (:class:`~decanter.core.core_api.setup_input.SetupInput`):
             Settings for set up data.
     """
+
     def __init__(self, setup_input, name='Setup'):
         super().__init__(name=name)
         self.setup_input = setup_input
