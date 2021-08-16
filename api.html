@@ -345,6 +345,30 @@ if predict by trained experiment, how should we select best model</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="decanter.core.client.CoreClient.train_cluster">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">train_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.train_cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train cluster model with data.</p>
+<p>Create a Cluster Experiment Job and scheduled the execution
+in CORO_TASKS list.  Record the Job in JOBS list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_input</strong> – (<a class="reference internal" href="#decanter.core.core_api.train_input.TrainClusterInput" title="decanter.core.core_api.train_input.TrainClusterInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainClusterInput</span></code></a>):
+Settings for training.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – name for train time series action.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#decanter.core.jobs.experiment.ExperimentTS" title="decanter.core.jobs.experiment.ExperimentTS"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExperimentTS</span></code></a> object</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AttributeError" title="(in Python v3.9)"><strong>AttributeError</strong></a> – If the function is called without
+    <a class="reference internal" href="#decanter.core.context.Context" title="decanter.core.context.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a> created.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="decanter.core.client.CoreClient.train_ts">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">train_ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_model_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Evaluator.auto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.client.CoreClient.train_ts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train time series model with data.</p>
@@ -714,6 +738,30 @@ of response.</p>
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.TrainTSTask.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute time seires forecast model training by sending the auto
 time series forecast train api.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="decanter.core.jobs.task.TrainClusterTask">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.task.</span></span><span class="sig-name descname"><span class="pre">TrainClusterTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.TrainClusterTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#decanter.core.jobs.task.CoreTask" title="decanter.core.jobs.task.CoreTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.task.CoreTask</span></code></a></p>
+<p>Train time series forecast models on Decanter Core.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.task.TrainClusterTask.train_input">
+<span class="sig-name descname"><span class="pre">train_input</span></span><a class="headerlink" href="#decanter.core.jobs.task.TrainClusterTask.train_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Settings for training time series forecast models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.core_api.train_input.TrainTSInput" title="decanter.core.core_api.train_input.TrainTSInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainTSInput</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decanter.core.jobs.task.TrainClusterTask.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.task.TrainClusterTask.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute clustering training by sending the cluster triain api.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1442,6 +1490,237 @@ in best model attribute.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.experiment.</span></span><span class="sig-name descname"><span class="pre">ExperimentCluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_model_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Evaluator.auto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#decanter.core.jobs.experiment.Experiment" title="decanter.core.jobs.experiment.Experiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.experiment.Experiment</span></code></a>, <a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.job.Job</span></code></a></p>
+<p>ExperimentTS manage to get the result from clustering model training.</p>
+<p>Handle the execution of clustering training task in order train
+clustering model on Decanter Core server Stores the training results in
+ExperimentCluster’s attributes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.jobs">
+<span class="sig-name descname"><span class="pre">jobs</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>[DataUpload]. List of jobs
+that ExperimentTS needs to wait till completed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list(<a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">Job</span></code></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.task">
+<span class="sig-name descname"><span class="pre">task</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time series training task run by ExperimentTS Job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.task.TrainTSTask" title="decanter.core.jobs.task.TrainTSTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainTSTask</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.train_input">
+<span class="sig-name descname"><span class="pre">train_input</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.train_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Settings for time series training models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.core_api.train_input.TrainTSInput" title="decanter.core.core_api.train_input.TrainTSInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainTSInput</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.best_model">
+<span class="sig-name descname"><span class="pre">best_model</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.best_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>MultiModel with the
+best score in <cite>select_model_by</cite> argument</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.core_api.model.MultiModel" title="decanter.core.core_api.model.MultiModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiModel</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.select_model_by">
+<span class="sig-name descname"><span class="pre">select_model_by</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.select_model_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>The score to select best model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.features">
+<span class="sig-name descname"><span class="pre">features</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.features" title="Permalink to this definition">¶</a></dt>
+<dd><p>The features used for training</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.train_data_id">
+<span class="sig-name descname"><span class="pre">train_data_id</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.train_data_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the train data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.target">
+<span class="sig-name descname"><span class="pre">target</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.target" title="Permalink to this definition">¶</a></dt>
+<dd><p>The target of the experiment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.test_base_id">
+<span class="sig-name descname"><span class="pre">test_base_id</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.test_base_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID for the test base data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.models">
+<span class="sig-name descname"><span class="pre">models</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.models" title="Permalink to this definition">¶</a></dt>
+<dd><p>The models’ id of the experiment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a>(<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.hyperparameters">
+<span class="sig-name descname"><span class="pre">hyperparameters</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>The hyperparameters of the experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.attributes">
+<span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>The experiment attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.recommendations">
+<span class="sig-name descname"><span class="pre">recommendations</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.recommendations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recommended model for each evaluator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.created_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>The date the data was created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.options">
+<span class="sig-name descname"><span class="pre">options</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extra information for experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.updated_at">
+<span class="sig-name descname"><span class="pre">updated_at</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.updated_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time the data was last updated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.completed_at">
+<span class="sig-name descname"><span class="pre">completed_at</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.completed_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time the data was completed at.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name to track Job progress.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentCluster.create">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentCluster.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create Clustering Experiment by exp_id. Inherit from
+<a class="reference internal" href="#decanter.core.jobs.experiment.Experiment.create" title="decanter.core.jobs.experiment.Experiment.create"><code class="xref py py-func docutils literal notranslate"><span class="pre">create()</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exp_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – ObjectId in 24 hex digits</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – (opt) Name to track Job progress</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Experiment object                with the specific id.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#decanter.core.jobs.experiment.ExperimentCluster" title="decanter.core.jobs.experiment.ExperimentCluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExperimentCluster</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="decanter.core.jobs.experiment.ExperimentTS">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.jobs.experiment.</span></span><span class="sig-name descname"><span class="pre">ExperimentTS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_model_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Evaluator.auto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.jobs.experiment.ExperimentTS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#decanter.core.jobs.experiment.Experiment" title="decanter.core.jobs.experiment.Experiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.experiment.Experiment</span></code></a>, <a class="reference internal" href="#decanter.core.jobs.job.Job" title="decanter.core.jobs.job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">decanter.core.jobs.job.Job</span></code></a></p>
@@ -1969,6 +2248,39 @@ PredictResult Job.</p>
 <section id="module-decanter.core.core_api.train_input">
 <span id="train-input"></span><h3>Train Input<a class="headerlink" href="#module-decanter.core.core_api.train_input" title="Permalink to this headline">¶</a></h3>
 <p>Settings for the Model Training and Time Series MultiModel Training.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="decanter.core.core_api.train_input.TrainClusterInput">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.core_api.train_input.</span></span><span class="sig-name descname"><span class="pre">TrainClusterInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.train_input.TrainClusterInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Train Input for Clustering Experiment Job.</p>
+<p>Settings for model training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="#decanter.core.jobs.data_upload.DataUpload" title="decanter.core.jobs.data_upload.DataUpload"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataUpload</span></code></a>) – Train data uploaded on Decanter Core server</p></li>
+<li><p><strong>features</strong> (<em>list of str</em>) – selected feature for training</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Seed to be used for operations that have sudo random behavior.
+Fixing seed across runs will ensure reproducible results</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_input</span> <span class="o">=</span> <span class="n">TrainClusterInput</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="decanter.core.core_api.train_input.TrainClusterInput.get_train_params">
+<span class="sig-name descname"><span class="pre">get_train_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.train_input.TrainClusterInput.get_train_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Using train_body to create the JSON request body for training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="decanter.core.core_api.train_input.TrainInput">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">decanter.core.core_api.train_input.</span></span><span class="sig-name descname"><span class="pre">TrainInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_base_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_data_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_run_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nfold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ts_split_split_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ts_split_cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ts_split_train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ts_split_test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">balance_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_after_balance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_factors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_percentage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holdout_percentage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#decanter.core.core_api.train_input.TrainInput" title="Permalink to this definition">¶</a></dt>
@@ -2676,6 +2988,14 @@ supported by the Decanter AI Core SDK</p>
 <li><p>auto (logloss)</p></li>
 <li><p>logloss</p></li>
 <li><p>misclassification</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Clustering</dt><dd><ul>
+<li><p>auto (tot_withinss)</p></li>
+<li><p>tot_withinss</p></li>
 </ul>
 </dd>
 </dl>
