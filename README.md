@@ -1,7 +1,8 @@
+# MoBagel Decanter AI Core SDK
+
 [![PyPI version](https://badge.fury.io/py/decanter-ai-core-sdk.svg)](https://pypi.org/project/decanter-ai-core-sdk/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/MoBagel/decanter-ai-core-sdk)
 [![GitHub Super-Linter](https://github.com/MoBagel/decanter-ai-core-sdk/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
-# MoBagel Decanter AI Core SDK
 
 Decanter AI is a powerful AutoML tool which enables everyone to build ML models and make predictions without data science background. With Decanter AI Core SDK, you can integrate Decanter AI into your application more easily with Python.
 
