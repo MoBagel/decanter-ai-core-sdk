@@ -91,8 +91,8 @@ For guidance on setting up a development environment and how to make a contribut
 ## Links
 For more details on design, guidance on setting up a development environment, and SDK usage.
 
-* Decanter AI Introduction: https://mobagel.com/product/
-* Decanter AI SDK Introduction: https://mobagel.github.io/decanter-ai-core-sdk/
-* Code: https://github.com/MoBagel/decanter-ai-core-sdk
-* Installation: https://mobagel.github.io/decanter-ai-core-sdk/user/install.html
-* API interface: https://mobagel.github.io/decanter-ai-core-sdk/api.html
+* Decanter AI Introduction: <https://mobagel.com/product/>
+* Decanter AI SDK Introduction: <https://mobagel.github.io/decanter-ai-core-sdk/>
+* Code: <https://github.com/MoBagel/decanter-ai-core-sdk>
+* Installation: <https://mobagel.github.io/decanter-ai-core-sdk/user/install.html>
+* API interface: <https://mobagel.github.io/decanter-ai-core-sdk/api.html>
