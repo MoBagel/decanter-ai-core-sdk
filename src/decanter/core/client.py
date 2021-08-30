@@ -12,8 +12,7 @@ from decanter.core.jobs import DataUpload, DataSetup,\
 from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
 
-logger = logging.
-getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 class CoreClient(Context):
