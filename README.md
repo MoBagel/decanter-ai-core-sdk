@@ -1,9 +1,10 @@
-[![PyPI version](https://badge.fury.io/py/decanter-ai-core-sdk.svg)](https://pypi.org/project/decanter-ai-core-sdk/)
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/MoBagel/decanter-ai-core-sdk)
-
 # MoBagel Decanter AI Core SDK
 
-Decanter AI is a powerful AutoML tool which enables everyone to build ML models and make predictions without data science background. With Decanter AI Core SDK, you can integrate Decanter AI into your application more easily with Python. 
+[![PyPI version](https://badge.fury.io/py/decanter-ai-core-sdk.svg)](https://pypi.org/project/decanter-ai-core-sdk/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/MoBagel/decanter-ai-core-sdk)
+[![GitHub Super-Linter](https://github.com/MoBagel/decanter-ai-core-sdk/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
+Decanter AI is a powerful AutoML tool which enables everyone to build ML models and make predictions without data science background. With Decanter AI Core SDK, you can integrate Decanter AI into your application more easily with Python.
 
 It supports actions such as data uploading, model training, and prediction to run in a more efficient way and access results more easily. You can also use Decanter AI Core SDK in Jupyter Notebook for better visualization.
 
@@ -44,20 +45,20 @@ $ python -m example.file
 Progress UploadTask_train:  55%|█████████████████████████████████████████
 ```
 
-## Example Dataset Path 
+## Example Dataset Path
 * `examples/data/` - store the general dataset
 * `examples/data/ts_data` - store the time series dataset
 
 
 ## Example Code
 * General Data
-	* Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
-	* Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
+  * Python Script: [example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/example.py)
+  * Jupyter: [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb)
 * Time Series Data
-	* Python Script: [auto_time_series_example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/auto_time_series_example.py)  
+  * Python Script: [auto_time_series_example.py](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/auto_time_series_example.py)
 
-Note:  
-Since Jupyter already have an event loop (asyncio), SDK will just use the current event loop. See more in [here](https://www.notion.so/API-615d2fba4e7f45c4b5fe63cc192e481f#bb4f0a4b2847450abc4f80b025469170).  
+Note:
+Since Jupyter already have an event loop (asyncio), SDK will just use the current event loop. See more in [here](https://www.notion.so/API-615d2fba4e7f45c4b5fe63cc192e481f#bb4f0a4b2847450abc4f80b025469170).
 More details about asyncio in [learn asyncio](https://docs.python.org/3/library/asyncio.html)
 ```python
 import asyncio
@@ -70,9 +71,9 @@ loop.is_running()
 2. this is required for progress bar to display correctly: `pip install ipywidgets`
 3. (optional, conda venv for jupyter notebook) `conda install nb_conda`
 4. `jupyter lab`
-	* this should open your browser to jupyter lab page.
-    * If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.
-    * If you need to handle running tasks well, refer to our [jupyter_jobs_handle_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_jobs_handle_example.ipynb).
+* this should open your browser to jupyter lab page.
+* If you want to learn how to build ML models with Decanter AI, visit our [jupyter_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_example.ipynb) for step by step tutorial.
+* If you need to handle running tasks well, refer to our [jupyter_jobs_handle_example.ipynb](https://github.com/MoBagel/decanter-ai-core-sdk/blob/master/examples/jupyter_jobs_handle_example.ipynb).
 
 
 ## Development Guide and Flow
@@ -90,8 +91,8 @@ For guidance on setting up a development environment and how to make a contribut
 ## Links
 For more details on design, guidance on setting up a development environment, and SDK usage.
 
-* Decanter AI Introduction: https://mobagel.com/product/
-* Decanter AI SDK Introduction: https://mobagel.github.io/decanter-ai-core-sdk/
-* Code: https://github.com/MoBagel/decanter-ai-core-sdk
-* Installation: https://mobagel.github.io/decanter-ai-core-sdk/user/install.html
-* API interface: https://mobagel.github.io/decanter-ai-core-sdk/api.html
+* Decanter AI Introduction: <https://mobagel.com/product/>
+* Decanter AI SDK Introduction: <https://mobagel.github.io/decanter-ai-core-sdk/>
+* Code: <https://github.com/MoBagel/decanter-ai-core-sdk>
+* Installation: <https://mobagel.github.io/decanter-ai-core-sdk/user/install.html>
+* API interface: <https://mobagel.github.io/decanter-ai-core-sdk/api.html>
