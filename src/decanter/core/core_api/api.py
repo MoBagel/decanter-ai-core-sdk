@@ -9,13 +9,12 @@
 """
 import logging
 
+import decanter.core as core
 import requests
 from requests.adapters import HTTPAdapter
 from requests.auth import HTTPBasicAuth
 from requests_toolbelt import MultipartEncoder
 from urllib3.util.retry import Retry
-
-import decanter.core as core
 
 logger = logging.getLogger(__name__)
 requests.packages.urllib3.disable_warnings()

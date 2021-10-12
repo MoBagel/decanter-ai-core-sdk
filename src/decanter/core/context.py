@@ -9,6 +9,7 @@ from decanter.core.core_api import CoreAPI, worker
 
 logger = logging.getLogger(__name__)
 
+
 def get_or_create_eventloop():
     try:
         return asyncio.get_event_loop()
@@ -17,6 +18,7 @@ def get_or_create_eventloop():
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             return asyncio.get_event_loop()
+
 
 class Context:
     """Init the connection to decanter core server and functionality for running SDK.
@@ -38,9 +40,9 @@ class Context:
     HOST = None
     # .. _EventLoop: https://docs.python.org/3/library/asyncio-eventloop.html#event-loop
     LOOP = None
-    # list(`Task`_.): List of Tasks of Asynchronous I/O.
+    # type: List[Task]= List of Tasks of Asynchronous I/O.
     CORO_TASKS = []
-    # List of finished and waited Jobs.
+    # type: List[Task]= list of finished and waited Jobs.
     JOBS = []
     # CoreX API endpoint
     api = None
