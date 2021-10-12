@@ -12,11 +12,22 @@ import logging
 import requests
 from requests_toolbelt import MultipartEncoder
 from requests.auth import HTTPBasicAuth
-
+from urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
 import decanter.core as core
 
 logger = logging.getLogger(__name__)
 requests.packages.urllib3.disable_warnings()
+
+# Retry when having temporary connection issue with CoreX
+# ref: https://stackoverflow.com/a/35504626
+requests_session = requests.Session()
+retries = Retry(total=5,
+                backoff_factor=0.1,
+                status_forcelist=[500, 502, 503, 504])
+
+requests_session.mount('http://', HTTPAdapter(max_retries=retries))
+requests_session.mount('https://', HTTPAdapter(max_retries=retries))
 
 
 class CoreAPI:
@@ -59,17 +70,17 @@ class CoreAPI:
         url = core.Context.HOST + url
         try:
             if http == 'GET':
-                return requests.get(url=url, auth=basic_auth, verify=False)
+                return requests_session.get(url=url, auth=basic_auth, verify=False)
             if http == 'POST':
-                return requests.post(
+                return requests_session.post(
                     url=url, json=json, data=data,
                     files=files, auth=basic_auth, verify=False, headers=headers)
             if http == 'PUT':
-                return requests.put(
+                return requests_session.put(
                     url=url, json=json, data=data,
                     files=files, auth=basic_auth, verify=False, headers=headers)
             if http == 'DELETE':
-                return requests.delete(
+                return requests_session.delete(
                     url=url, json=json, data=data,
                     files=files, auth=basic_auth, verify=False)
 
