@@ -3,7 +3,6 @@ import asyncio
 import logging
 
 import pandas as pd
-
 from decanter.core.core_api import CoreAPI, worker
 from decanter.core.extra import CoreStatus
 
