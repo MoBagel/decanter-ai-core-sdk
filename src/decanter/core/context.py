@@ -4,10 +4,11 @@ import logging
 
 import pandas as pd
 
-from decanter.core.extra import CoreStatus
 from decanter.core.core_api import CoreAPI, worker
+from decanter.core.extra import CoreStatus
 
 logger = logging.getLogger(__name__)
+
 
 def get_or_create_eventloop():
     try:
@@ -17,6 +18,7 @@ def get_or_create_eventloop():
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             return asyncio.get_event_loop()
+
 
 class Context:
     """Init the connection to decanter core server and functionality for running SDK.
@@ -30,6 +32,7 @@ class Context:
             context.run()
 
     """
+
     # 'str: User name to login in Decanter Core server'
     USERNAME = None
     # 'str: Password to login in Decanter Core server'
@@ -38,9 +41,9 @@ class Context:
     HOST = None
     # .. _EventLoop: https://docs.python.org/3/library/asyncio-eventloop.html#event-loop
     LOOP = None
-    # list(`Task`_.): List of Tasks of Asynchronous I/O.
+    # List of Tasks of Asynchronous I/O.
     CORO_TASKS = []
-    # List of finished and waited Jobs.
+    # list of finished and waited Jobs.
     JOBS = []
     # CoreX API endpoint
     api = None
@@ -79,7 +82,7 @@ class Context:
         if Context.LOOP.is_closed():
             asyncio.set_event_loop(asyncio.new_event_loop())
             Context.LOOP = get_or_create_eventloop()
-            logger.debug('[Context] create and set new event loop')
+            logger.debug("[Context] create and set new event loop")
         context.healthy()
         Context.api = CoreAPI()
         return context
@@ -92,14 +95,14 @@ class Context:
         have been finished.
 
         """
-        logger.info('Run %s coroutines', len(Context.CORO_TASKS))
+        logger.info("Run %s coroutines", len(Context.CORO_TASKS))
 
         if Context.LOOP is None:
-            logger.error('[Context] create context before run')
+            logger.error("[Context] create context before run")
             raise Exception()
 
         loop_running = Context.LOOP.is_running()
-        logger.info('[Context] Context.LOOP.is_running(): {})'.format(loop_running))
+        logger.info("[Context] Context.LOOP.is_running(): {})".format(loop_running))
         if loop_running is False:
             groups = asyncio.gather(*Context.CORO_TASKS)
             Context.LOOP.run_until_complete(groups)
@@ -113,15 +116,15 @@ class Context:
         Jupyter Notebook).
 
         """
-        logger.debug('[Context] try to close context')
+        logger.debug("[Context] try to close context")
         if Context.LOOP is not None:
             Context.LOOP = get_or_create_eventloop()
             if Context.LOOP.is_running() is False:
                 Context.LOOP.close()
-                logger.info('[Context] close event loop successfully')
+                logger.info("[Context] close event loop successfully")
         else:
-            logger.info('[Context] no event loop to close')
-        logger.debug('[Context] remain CORO TASKS %s', len(Context.CORO_TASKS))
+            logger.info("[Context] no event loop to close")
+        logger.debug("[Context] remain CORO TASKS %s", len(Context.CORO_TASKS))
         Context.JOBS = []
         Context.CORO_TASKS = []
         Context.USERNAME = Context.PASSWORD = Context.HOST = None
@@ -139,10 +142,10 @@ class Context:
             if res.status_code // 100 != 2:
                 raise Exception()
         except Exception as err:
-            logger.error('[Context] connect not healthy :(')
+            logger.error("[Context] connect not healthy :(")
             raise SystemExit(err)
         else:
-            logger.info('[Context] connect healthy :)')
+            logger.info("[Context] connect healthy :)")
 
     @staticmethod
     def get_all_jobs():
@@ -171,23 +174,20 @@ class Context:
             Exception: If any status in status list is invalid.
 
         """
-        jobs_status = {
-            'Job': [],
-            'status': []
-        }
+        jobs_status = {"Job": [], "status": []}
         for job in Context.JOBS:
-            jobs_status['Job'].append(job.name)
-            jobs_status['status'].append(job.status)
+            jobs_status["Job"].append(job.name)
+            jobs_status["status"].append(job.status)
 
         jobs_df = pd.DataFrame(jobs_status)
         if status:
             if any(stat not in CoreStatus.ALL_STATUS for stat in status):
-                raise Exception('Invalid status.')
+                raise Exception("Invalid status.")
 
-            return jobs_df.loc[jobs_df['status'].isin(status)]
+            return jobs_df.loc[jobs_df["status"].isin(status)]
 
         if sort_by_status:
-            jobs_df = jobs_df.sort_values(by=['status'])
+            jobs_df = jobs_df.sort_values(by=["status"])
 
         return jobs_df
 
@@ -224,5 +224,5 @@ class Context:
     def stop_all_jobs():
         """Stop all Jobs which status is still in pending or running"""
         for job in Context.JOBS:
-            if job.status not in ['done', 'fail', 'invalid']:
+            if job.status not in ["done", "fail", "invalid"]:
                 job.stop()
