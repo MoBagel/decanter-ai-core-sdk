@@ -5,12 +5,12 @@ with open('README.md', 'r') as fh:
 print(long_description)
 
 requires = [
-    'requests==2.25.1',
-    'requests-toolbelt==0.9.1',
-    'pandas==1.3.0',
-    'matplotlib==3.4.2',
-    'tqdm==4.61.2',
-    'numpy==1.21.0'
+    'request>==2.25.1',
+    'requests-toolbelt>=0.9.1',
+    'pandas>=1.3.0',
+    'matplotlib>=3.4.2',
+    'tqdm>=4.61.2',
+    'numpy>=1.21.0'
 ]
 
 dev_requirements = [
@@ -26,7 +26,7 @@ setuptools.setup(
     name='decanter-ai-core-sdk',
     author='Mobagel',
     author_email='us@mobagel.com',
-    version='1.1.6',
+    version='1.1.7',
     license='MIT',
     description='Decanter AI Core SDK for the easy use of Decanter Core API.',
     long_description=long_description,
