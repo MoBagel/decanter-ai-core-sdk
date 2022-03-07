@@ -42,3 +42,4 @@ class Algo(Enum):
     ets = 'ets'
     theta = 'theta'
     tpot = 'tpot'
+    lgbm_gpu = 'lgbm_gpu'
