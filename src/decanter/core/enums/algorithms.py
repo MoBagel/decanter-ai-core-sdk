@@ -38,32 +38,32 @@ class Algo(Enum):
     - lstm
     """
 
-    '''
+    """
     These are the algorithm names for swarm mode decanter
-    '''
-    DRF = 'DRF'
-    GLM = 'GLM'
-    GBM = 'GBM'
-    DeepLearning = 'DeepLearning'
-    StackedEnsemble = 'StackedEnsemble'
-    XGBoost = 'XGBoost'
-    arima = 'arima'
-    prophet = 'prophet'
-    ets = 'ets'
-    theta = 'theta'
-    tpot = 'tpot'
-    lgbm_gpu = 'lgbm_gpu'
-    lgbm_speed = 'lgbm_speed'
-    lgbm_accuracy = 'lgbm_accuracy'
-    lstm = 'lstm'
-    few_shot_learning = 'few_shot_learning'
+    """
+    DRF = "DRF"
+    GLM = "GLM"
+    GBM = "GBM"
+    DeepLearning = "DeepLearning"
+    StackedEnsemble = "StackedEnsemble"
+    XGBoost = "XGBoost"
+    arima = "arima"
+    prophet = "prophet"
+    ets = "ets"
+    theta = "theta"
+    tpot = "tpot"
+    lgbm_gpu = "lgbm_gpu"
+    lgbm_speed = "lgbm_speed"
+    lgbm_accuracy = "lgbm_accuracy"
+    lstm = "lstm"
+    few_shot_learning = "few_shot_learning"
 
-    '''
+    """
     These are the algorithm names which is changed for K8S mode decanter
-    '''
-    autotpot = 'autotpot'
-    rfmulticlassifier = 'rfmulticlassifier'
-    fewshotlearning = 'fewshotlearning'
-    lgbmaccuracy = 'lgbmaccuracy'
-    lgbmspeed = 'lgbmspeed'
-    metaprophet = 'metaprophet'
+    """
+    autotpot = "autotpot"
+    rfmulticlassifier = "rfmulticlassifier"
+    fewshotlearning = "fewshotlearning"
+    lgbmaccuracy = "lgbmaccuracy"
+    lgbmspeed = "lgbmspeed"
+    metaprophet = "metaprophet"
