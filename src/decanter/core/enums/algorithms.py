@@ -28,7 +28,8 @@ class Algo(Enum):
     - GBM: Gradient Boosting Machine.
     - XGBoost: eXtreme Gradient Boosting.
     - arima: auto arima (available only after 4.9 deployed with Exodus, only available for regression).
-    - prophet(=metaprophet): auto prophet (available only after 4.9 deployed with Exodus, only available for regression).
+    - prophet
+    (=metaprophet): auto prophet (available only after 4.9 deployed with Exodus, only available for regression).
     - theta: auto theta (available only after 4.9 deployed with Exodus, only available for regression).
     - ets: auto ets (available only after 4.10 deployed with Exodus, only available for regression).
     - lgbm_accuracy(=lgbmaccuracy)
@@ -66,5 +67,3 @@ class Algo(Enum):
     lgbmaccuracy = 'lgbmaccuracy'
     lgbmspeed = 'lgbmspeed'
     metaprophet = 'metaprophet'
-
-
