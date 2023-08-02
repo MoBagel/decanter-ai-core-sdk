@@ -41,6 +41,7 @@ class DataUpload(Job):
         completed_at (str): The time the data was completed at.
         name (str): Name to track Job progress, will give default name if None.
     """
+
     def __init__(self, file=None, name=None, eda=True):
         """DataUpload Init.
 
@@ -48,9 +49,11 @@ class DataUpload(Job):
             file (file-object): DataUpload file to upload.
             name (:obj:`str`, optional): Name to track Job progress
         """
-        super().__init__(jobs=None,
-                         task=UploadTask(file, name, eda),
-                         name=gen_id(self.__class__.__name__, name))
+        super().__init__(
+            jobs=None,
+            task=UploadTask(file, name, eda),
+            name=gen_id(self.__class__.__name__, name),
+        )
 
         self.accessor = None
         self.schema = None
@@ -73,8 +76,7 @@ class DataUpload(Job):
             :class:`~decanter.core.jobs.data_upload.DataUpload` object
         """
         data = cls()
-        data_resp = check_response(
-            data.core_service.get_data_by_id(data_id)).json()
+        data_resp = check_response(data.core_service.get_data_by_id(data_id)).json()
         data.update_result(data_resp)
         data.status = CoreStatus.DONE
         data.name = name
@@ -94,11 +96,12 @@ class DataUpload(Job):
         data_txt = None
         if self.is_success():
             data_txt = check_response(
-                self.core_service.get_data_file_by_id(self.id)).text
+                self.core_service.get_data_file_by_id(self.id)
+            ).text
         else:
             logger.error(
-                '[%s] \'%s\' show data failed',
-                self.__class__.__name__, self.name)
+                "[%s] '%s' show data failed", self.__class__.__name__, self.name
+            )
         return data_txt
 
     def show_df(self):
@@ -109,12 +112,11 @@ class DataUpload(Job):
         """
         data_df = None
         if self.is_success():
-            data_csv = check_response(
-                self.core_service.get_data_file_by_id(self.id))
-            data_csv = data_csv.content.decode('utf-8')
+            data_csv = check_response(self.core_service.get_data_file_by_id(self.id))
+            data_csv = data_csv.content.decode("utf-8")
             data_df = pd.read_csv(io.StringIO(data_csv))
         else:
-            logger.error('[%s get result] fail', self.__class__.__name__)
+            logger.error("[%s get result] fail", self.__class__.__name__)
         return data_df
 
     def download_csv(self, path):
@@ -125,9 +127,10 @@ class DataUpload(Job):
         """
         if self.is_success():
             data_csv = check_response(
-                self.core_service.get_data_file_by_id(self.id)).text
-            save_csv = open(path, 'w+')
+                self.core_service.get_data_file_by_id(self.id)
+            ).text
+            save_csv = open(path, "w+")
             save_csv.write(data_csv)
             save_csv.close()
         else:
-            logger.error('[%s get result] fail', self.__class__.__name__)
+            logger.error("[%s get result] fail", self.__class__.__name__)

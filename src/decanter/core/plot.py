@@ -12,6 +12,7 @@ import pandas as pd
 from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
 
+
 def show_model_attr(metric, score_types, exp):
     """Show all models attribute in Experiment
 
@@ -25,6 +26,7 @@ def show_model_attr(metric, score_types, exp):
     Returns:
         class pandas.DataFrame
     """
+
     def get_attr(metric, score_types, exp_attributes):
         """Get all models metric of score_type in exp_attributes"""
         metric = check_is_enum(Evaluator, metric)
@@ -37,14 +39,12 @@ def show_model_attr(metric, score_types, exp):
 
         return model_names, model_attr_lists
 
-    type_map = {
-        'cv_averages': 'cv_averages',
-        'validation': 'validation_scores'
-    }
+    type_map = {"cv_averages": "cv_averages", "validation": "validation_scores"}
 
     score_types = [type_map[score_type] for score_type in score_types]
     model_names, attr_lists = get_attr(
-        metric=metric, score_types=score_types, exp_attributes=exp.attributes)
+        metric=metric, score_types=score_types, exp_attributes=exp.attributes
+    )
 
     model_labels = score_types
 
@@ -57,20 +57,19 @@ def show_model_attr(metric, score_types, exp):
     bar_n = len(score_types)
     for i, attr_vals in enumerate(attr_lists):
         axes.bar(
-            chart_bars + width/bar_n * i,
-            attr_vals, width,
-            label=model_labels[i])
+            chart_bars + width / bar_n * i, attr_vals, width, label=model_labels[i]
+        )
         ymin = min(attr_vals) if ymin is None else min(ymin, min(attr_vals))
         ymax = max(attr_vals) if ymax is None else max(ymax, max(attr_vals))
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
-    axes.set_ylabel('{} Scores'.format(metric))
+    axes.set_ylabel("{} Scores".format(metric))
     axes.set_xticks(chart_bars)
     axes.set_xticklabels(model_names)
     axes_ = plt.gca()
     axes_.set_ylim(bottom=ymin, top=ymax)
     locs, _ = plt.yticks()
-    unit = (locs[1] - locs[0])
+    unit = locs[1] - locs[0]
     axes_.set_ylim(bottom=ymin - unit, top=ymax + unit)
     axes.legend()
 
@@ -78,11 +77,14 @@ def show_model_attr(metric, score_types, exp):
         for rect in rects:
             height = rect.get_height()
             axes.annotate(
-                '%s', height,
+                "%s",
+                height,
                 xy=(rect.get_x() + rect.get_width() / bar_n, height),
                 xytext=(0, 5),  # 3 points vertical offset
-                textcoords='offset points',
-                ha='center', va='bottom')
+                textcoords="offset points",
+                ha="center",
+                va="bottom",
+            )
 
     for rect in rects:
         autolabel(rect)
@@ -91,7 +93,7 @@ def show_model_attr(metric, score_types, exp):
 
     plt.show()
 
-    columns = ['name', 'id'] + score_types
+    columns = ["name", "id"] + score_types
     model_table = []
     for i, model_name in enumerate(model_names):
         row = [model_name, exp.models[i]]

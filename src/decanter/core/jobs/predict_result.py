@@ -39,11 +39,13 @@ class PredictResult(Job):
         updated_at (str): The time the data was last updated.
         completed_at (str): The time the data was completed at.
     """
+
     def __init__(self, predict_input, name=None):
         super().__init__(
             jobs=[predict_input.data, predict_input.experiment],
             task=PredictTask(predict_input, name=name),
-            name=gen_id(self.__class__.__name__, name))
+            name=gen_id(self.__class__.__name__, name),
+        )
         self.accessor = None
         self.schema = None
         self.originSchema = None
@@ -64,12 +66,13 @@ class PredictResult(Job):
         Returns:
             str: Content of PredictResult.
         """
-        pred_txt = ''
+        pred_txt = ""
         if self.is_success():
             pred_txt = check_response(
-                self.core_service.get_data_file_by_id(self.id)).text
+                self.core_service.get_data_file_by_id(self.id)
+            ).text
         else:
-            logger.error('[%s] fail', self.__class__.__name__)
+            logger.error("[%s] fail", self.__class__.__name__)
         return pred_txt
 
     def show_df(self):
@@ -80,12 +83,11 @@ class PredictResult(Job):
         """
         pred_df = None
         if self.is_success():
-            pred_csv = check_response(
-                self.core_service.get_data_file_by_id(self.id))
-            pred_csv = pred_csv.content.decode('utf-8')
+            pred_csv = check_response(self.core_service.get_data_file_by_id(self.id))
+            pred_csv = pred_csv.content.decode("utf-8")
             pred_df = pd.read_csv(io.StringIO(pred_csv))
         else:
-            logger.error('[%s] fail', self.__class__.__name__)
+            logger.error("[%s] fail", self.__class__.__name__)
         return pred_df
 
     def download_csv(self, path):
@@ -96,12 +98,13 @@ class PredictResult(Job):
         """
         if self.is_success():
             data_csv = check_response(
-                self.core_service.get_data_file_by_id(self.id)).text
-            save_csv = open(path, 'w+')
+                self.core_service.get_data_file_by_id(self.id)
+            ).text
+            save_csv = open(path, "w+")
             save_csv.write(data_csv)
             save_csv.close()
         else:
-            logger.error('[%s] Fail to Download', self.__class__.__name__)
+            logger.error("[%s] Fail to Download", self.__class__.__name__)
 
 
 class PredictTSResult(PredictResult, Job):
@@ -124,12 +127,14 @@ class PredictTSResult(PredictResult, Job):
         updated_at (str): The time the data was last updated.
         completed_at (str): The time the data was completed at.
     """
+
     def __init__(self, predict_input, name=None):
         Job.__init__(
             self,
             jobs=[predict_input.data, predict_input.experiment],
             task=PredictTSTask(predict_input, name=name),
-            name=gen_id(self.__class__.__name__, name))
+            name=gen_id(self.__class__.__name__, name),
+        )
         self.accessor = None
         self.schema = None
         self.originSchema = None

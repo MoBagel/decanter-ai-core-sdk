@@ -36,6 +36,7 @@ class Model:
         updated_at (str): The time the model was last updated.
         completed_at (str): The time the model was completed_at.
     """
+
     def __init__(self):
         self.get_model = CoreAPI().get_models_by_id
         self.download_model = CoreAPI().get_models_download_by_id
@@ -69,15 +70,14 @@ class Model:
                 server when getting model's metadata.
         """
         model = cls()
-        get_models_resp = check_response(
-            model.get_model(exp_id, model_id)).json()
+        get_models_resp = check_response(model.get_model(exp_id, model_id)).json()
         try:
             for attr, val in get_models_resp.items():
                 if attr == CoreKeys.id.value:
                     attr = CoreKeys.id.name
                 model.__dict__.update({attr: val})
         except AttributeError:
-            logger.error('[Model] No result from decanter.core.')
+            logger.error("[Model] No result from decanter.core.")
 
         model.task_status = CoreStatus.DONE
         return model
@@ -88,15 +88,14 @@ class Model:
         Get and Set attributes from the response attribute from
         decanter server.
         """
-        get_models_resp = check_response(
-            self.get_model(exp_id, model_id)).json()
+        get_models_resp = check_response(self.get_model(exp_id, model_id)).json()
         try:
             for attr, val in get_models_resp.items():
                 if attr == CoreKeys.id.value:
                     attr = CoreKeys.id.name
                 self.__dict__.update({attr: val})
         except AttributeError:
-            logger.error('[%s] No result from decanter.core.', self.__class__.__name__)
+            logger.error("[%s] No result from decanter.core.", self.__class__.__name__)
 
         self.task_status = CoreStatus.DONE
 
@@ -131,9 +130,8 @@ class Model:
             model_id (str): ObjectId in 24 hex digits.
             model_path (str): Path to store zip mojo file.
         """
-        resp = check_response(
-            cls().download_model(model_id))
-        zfile = open(model_path, 'wb')
+        resp = check_response(cls().download_model(model_id))
+        zfile = open(model_path, "wb")
         zfile.write(resp.content)
         zfile.close()
 
@@ -147,10 +145,9 @@ class Model:
             model_path (str): Path to store zip mojo file.
         """
         if self.id is None:
-            logger.info('[Model] %s model id is NoneType', self.name)
-        resp = check_response(
-            self.download_model(model_id=self.id))
-        zfile = open(model_path, 'wb')
+            logger.info("[Model] %s model id is NoneType", self.name)
+        resp = check_response(self.download_model(model_id=self.id))
+        zfile = open(model_path, "wb")
         zfile.write(resp.content)
         zfile.close()
 
@@ -172,6 +169,7 @@ class MultiModel(Model):
         updated_at (str): The time the model was last updated.
         completed_at (str): The time the model was completed_at.
     """
+
     def __init__(self):
         self.get_model = CoreAPI().get_multimodels_by_id
         self.download_model = CoreAPI().get_models_download_by_id
@@ -194,8 +192,8 @@ class MultiModel(Model):
     @classmethod
     def download_by_id(cls, model_id, model_path):
         """MultiModel has no download method"""
-        logger.info('MultiModel doesn\'t support download in local.')
+        logger.info("MultiModel doesn't support download in local.")
 
     def download(self, model_path):
         """MultiModel has no download method"""
-        logger.info('MultiModel doesn\'t support download in local.')
+        logger.info("MultiModel doesn't support download in local.")

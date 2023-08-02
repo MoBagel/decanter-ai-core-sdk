@@ -53,7 +53,8 @@ class Experiment(Job):
         super().__init__(
             jobs=[train_input.data],
             task=TrainTask(train_input, name=name),
-            name=gen_id(self.__class__.__name__, name))
+            name=gen_id(self.__class__.__name__, name),
+        )
 
         select_model_by = check_is_enum(Evaluator, select_model_by)
         self.train_input = train_input
@@ -85,8 +86,7 @@ class Experiment(Job):
                 with the specific id.
         """
         core_service = CoreAPI()
-        exp_resp = check_response(
-            core_service.get_experiments_by_id(exp_id)).json()
+        exp_resp = check_response(core_service.get_experiments_by_id(exp_id)).json()
         exp = cls(train_input=None)
         exp.update_result(exp_resp)
         exp.status = CoreStatus.DONE
@@ -104,29 +104,42 @@ class Experiment(Job):
         if not self.task.is_success():
             return
         class_ = self.__class__.__name__
-        logger.debug('[%s] \'%s\' get best model', class_, self.name)
+        logger.debug("[%s] '%s' get best model", class_, self.name)
         select_by_evaluator = Evaluator.resolve_select_model_by(
-            self.select_model_by, self.hyperparameters['model_type'])
-        minlevel = {Evaluator.mse.value, Evaluator.mae.value, Evaluator.mean_per_class_error.value,
-                    Evaluator.deviance.value, Evaluator.logloss.value, Evaluator.rmse.value,
-                    Evaluator.rmsle.value, Evaluator.misclassification.value,
-                    Evaluator.mape.value, Evaluator.wmape.value}
+            self.select_model_by, self.hyperparameters["model_type"]
+        )
+        minlevel = {
+            Evaluator.mse.value,
+            Evaluator.mae.value,
+            Evaluator.mean_per_class_error.value,
+            Evaluator.deviance.value,
+            Evaluator.logloss.value,
+            Evaluator.rmse.value,
+            Evaluator.rmsle.value,
+            Evaluator.misclassification.value,
+            Evaluator.mape.value,
+            Evaluator.wmape.value,
+        }
 
         # Get the best model among models with valid score
-        model_list = list(filter(lambda x: not np.isnan(
-            x['cv_averages'][select_by_evaluator]), self.attributes.values()))
+        model_list = list(
+            filter(
+                lambda x: not np.isnan(x["cv_averages"][select_by_evaluator]),
+                self.attributes.values(),
+            )
+        )
         best_model_id = None
         try:
             if select_by_evaluator in minlevel:
                 best_model_id = min(
-                    model_list,
-                    key=lambda x: x['cv_averages'][select_by_evaluator])['model_id']
+                    model_list, key=lambda x: x["cv_averages"][select_by_evaluator]
+                )["model_id"]
             else:
                 best_model_id = max(
-                    model_list,
-                    key=lambda x: x['cv_averages'][select_by_evaluator])['model_id']
+                    model_list, key=lambda x: x["cv_averages"][select_by_evaluator]
+                )["model_id"]
         except AttributeError:
-            logger.error('[%s] no models in %s result', class_, self.name)
+            logger.error("[%s] no models in %s result", class_, self.name)
         except KeyError as err:
             logger.error(err)
 
@@ -134,11 +147,10 @@ class Experiment(Job):
             self.best_model.update(self.id, best_model_id)
             self.best_model.task_status = self.task.status
             logger.debug(
-                '[%s] \'%s\' best model id: %s',
-                class_, self.name, best_model_id)
+                "[%s] '%s' best model id: %s", class_, self.name, best_model_id
+            )
         else:
-            logger.error(
-                '[%s] fail to get best model', class_)
+            logger.error("[%s] fail to get best model", class_)
 
 
 class ExperimentTS(Experiment, Job):
@@ -178,7 +190,8 @@ class ExperimentTS(Experiment, Job):
             self,
             jobs=[train_input.data],
             task=TrainTSTask(train_input, name=name),
-            name=gen_id(self.__class__.__name__, name))
+            name=gen_id(self.__class__.__name__, name),
+        )
 
         select_model_by = check_is_enum(Evaluator, select_model_by)
         self.train_input = train_input
@@ -250,7 +263,8 @@ class ExperimentCluster(Experiment, Job):
             self,
             jobs=[train_input.data],
             task=TrainClusterTask(train_input, name=name),
-            name=gen_id(self.__class__.__name__, name))
+            name=gen_id(self.__class__.__name__, name),
+        )
 
         select_model_by = check_is_enum(Evaluator, select_model_by)
         self.train_input = train_input

@@ -59,16 +59,34 @@ class TrainInput:
     """
 
     def __init__(
-            self, data, target, algos,
-            callback=None, test_base_id=None, test_data_id=None,
-            evaluator=None, features=None, feature_types=None,
-            max_run_time=None, max_model=None, tolerance=None, nfold=None,
-            ts_split_split_by=None, ts_split_cv=None, ts_split_train=None,
-            ts_split_test=None, seed=None, balance_class=None,
-            max_after_balance=None, sampling_factors=None,
-            validation_percentage=None, holdout_percentage=None, apu=None,
-            preprocessing=None, version=None):
-
+        self,
+        data,
+        target,
+        algos,
+        callback=None,
+        test_base_id=None,
+        test_data_id=None,
+        evaluator=None,
+        features=None,
+        feature_types=None,
+        max_run_time=None,
+        max_model=None,
+        tolerance=None,
+        nfold=None,
+        ts_split_split_by=None,
+        ts_split_cv=None,
+        ts_split_train=None,
+        ts_split_test=None,
+        seed=None,
+        balance_class=None,
+        max_after_balance=None,
+        sampling_factors=None,
+        validation_percentage=None,
+        holdout_percentage=None,
+        apu=None,
+        preprocessing=None,
+        version=None,
+    ):
         evaluator = check_is_enum(Evaluator, evaluator)
         algos = [check_is_enum(Algo, algo) for algo in algos]
         self.data = data
@@ -76,25 +94,25 @@ class TrainInput:
             train = None
         else:
             train = CoreBody.CVTrain.create(
-                start=ts_split_train['start'], end=ts_split_train['end'])
+                start=ts_split_train["start"], end=ts_split_train["end"]
+            )
 
         if ts_split_test is None:
             test = None
         else:
             test = CoreBody.CVTrain.create(
-                start=ts_split_test['start'], end=ts_split_test['end'])
+                start=ts_split_test["start"], end=ts_split_test["end"]
+            )
 
         cv = CoreBody.cv_obj_array(ts_split_cv)
 
         time_series_split = CoreBody.TimeSeriesSplit.create(
-            split_by=ts_split_split_by,
-            cv=cv,
-            train=train,
-            test=test)
+            split_by=ts_split_split_by, cv=cv, train=train, test=test
+        )
 
         self.train_body = CoreBody.TrainBody.create(
             target=target,
-            train_data_id='tmp_data_id',
+            train_data_id="tmp_data_id",
             algos=algos,
             callback=callback,
             test_base_id=test_base_id,
@@ -115,7 +133,8 @@ class TrainInput:
             holdout_percentage=holdout_percentage,
             apu=apu,
             preprocessing=preprocessing,
-            version=version)
+            version=version,
+        )
 
     def get_train_params(self):
         """Using train_body to create the JSON request body for training.
@@ -123,7 +142,7 @@ class TrainInput:
         Returns:
             :obj:`dict`
         """
-        setattr(self.train_body, 'train_data_id', self.data.id)
+        setattr(self.train_body, "train_data_id", self.data.id)
         params = json.dumps(self.train_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
         return params
@@ -177,25 +196,52 @@ class TrainTSInput:
     """
 
     def __init__(
-            self, data, target, datetime_column, forecast_horizon, gap, algorithms=None, feature_types=None,
-            callback=None, version='v2', max_iteration=None, generation_size=None,
-            mutation_rate=None, crossover_rate=None, tolerance=None, validation_percentage=None,
-            holdout_percentage=None, max_model=None, seed=None, evaluator=None,
-            max_run_time=None, nfold=None, time_unit=None, numerical_groupby_method=None,
-            categorical_groupby_method=None, endogenous_features=None, exogenous_features=None,
-            time_groups=None, max_window_for_feature_derivation=None):
-
+        self,
+        data,
+        target,
+        datetime_column,
+        forecast_horizon,
+        gap,
+        algorithms=None,
+        feature_types=None,
+        callback=None,
+        version="v2",
+        max_iteration=None,
+        generation_size=None,
+        mutation_rate=None,
+        crossover_rate=None,
+        tolerance=None,
+        validation_percentage=None,
+        holdout_percentage=None,
+        max_model=None,
+        seed=None,
+        evaluator=None,
+        max_run_time=None,
+        nfold=None,
+        time_unit=None,
+        numerical_groupby_method=None,
+        categorical_groupby_method=None,
+        endogenous_features=None,
+        exogenous_features=None,
+        time_groups=None,
+        max_window_for_feature_derivation=None,
+        train_fusion_model=False,
+    ):
         evaluator = check_is_enum(Evaluator, evaluator)
         time_unit = check_is_enum(TimeUnit, time_unit)
-        numerical_groupby_method = check_is_enum(NumericalGroupByMethod, numerical_groupby_method)
-        categorical_groupby_method = check_is_enum(CategoricalGroupByMethod, categorical_groupby_method)
+        numerical_groupby_method = check_is_enum(
+            NumericalGroupByMethod, numerical_groupby_method
+        )
+        categorical_groupby_method = check_is_enum(
+            CategoricalGroupByMethod, categorical_groupby_method
+        )
         self.data = data
 
         geneticAlgorithm = CoreBody.GeneticAlgorithmParams.create(
             max_iteration=max_iteration,
             generation_size=generation_size,
             mutation_rate=mutation_rate,
-            crossover_rate=crossover_rate
+            crossover_rate=crossover_rate,
         )
         build_spec = CoreBody.BuildSpec.create(
             tolerance=tolerance,
@@ -206,15 +252,16 @@ class TrainTSInput:
             max_run_time=max_run_time,
             genetic_algorithm=geneticAlgorithm,
             nfold=nfold,
-            algos=algorithms  # user specifies algorithm used in TS analysis
+            algos=algorithms,  # user specifies algorithm used in TS analysis
+            train_fusion_model=train_fusion_model,
         )
         group_by = CoreBody.TSGroupBy.create(
             time_unit=time_unit,
             numerical_groupby_method=numerical_groupby_method,
-            categorical_groupby_method=categorical_groupby_method
+            categorical_groupby_method=categorical_groupby_method,
         )
         input_spec = CoreBody.InputSpec.create(
-            train_data_id='tmp_data_id',
+            train_data_id="tmp_data_id",
             target=target,
             endogenous_features=endogenous_features,
             exogenous_features=exogenous_features,
@@ -225,21 +272,23 @@ class TrainTSInput:
             time_groups=time_groups,
             max_window_for_feature_derivation=max_window_for_feature_derivation,
             group_by=group_by,
-            holdout_percentage=holdout_percentage
+            holdout_percentage=holdout_percentage,
         )
 
         self.train_auto_ts_body = CoreBody.TrainAutoTSBody.create(
             callback=callback,
             version=version,
             build_spec=build_spec,
-            input_spec=input_spec
+            input_spec=input_spec,
         )
 
     @staticmethod
     def get_ts_algorithms():
         core_api = CoreAPI()
-        response = json.loads(getattr(core_api.get_info(), '_content'))['time_series']['algos']
-        algos = [x['key'] for x in response]
+        response = json.loads(getattr(core_api.get_info(), "_content"))["time_series"][
+            "algos"
+        ]
+        algos = [x["key"] for x in response]
         return algos
 
     def get_train_params(self):
@@ -249,8 +298,10 @@ class TrainTSInput:
         Returns:
             :obj:`dict`
         """
-        setattr(self.train_auto_ts_body.input_spec, 'train_data_id', self.data.id)
-        params = json.dumps(self.train_auto_ts_body.jsonable(), cls=CoreBody.ComplexEncoder)
+        setattr(self.train_auto_ts_body.input_spec, "train_data_id", self.data.id)
+        params = json.dumps(
+            self.train_auto_ts_body.jsonable(), cls=CoreBody.ComplexEncoder
+        )
         params = json.loads(params)
         return params
 
@@ -276,18 +327,26 @@ class TrainClusterInput:
     """
 
     def __init__(
-            self, data, callback=None, features=None, feature_types=None, k=None, seed=None, version=None):
-
+        self,
+        data,
+        callback=None,
+        features=None,
+        feature_types=None,
+        k=None,
+        seed=None,
+        version=None,
+    ):
         self.data = data
 
         self.train_body = CoreBody.ClusterTrainBody.create(
-            train_data_id='tmp_data_id',
+            train_data_id="tmp_data_id",
             callback=callback,
             features=features,
             feature_types=feature_types,
             seed=seed,
             k=k,
-            version=version)
+            version=version,
+        )
 
     def get_train_params(self):
         """Using train_body to create the JSON request body for training.
@@ -295,7 +354,7 @@ class TrainClusterInput:
         Returns:
             :obj:`dict`
         """
-        setattr(self.train_body, 'train_data_id', self.data.id)
+        setattr(self.train_body, "train_data_id", self.data.id)
         params = json.dumps(self.train_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
         return params
