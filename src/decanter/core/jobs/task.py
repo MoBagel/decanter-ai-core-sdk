@@ -12,8 +12,13 @@ from functools import partial
 from decanter.core import Context
 from decanter.core.core_api import CoreAPI
 from decanter.core.extra import CoreStatus, CoreKeys
-from decanter.core.extra.utils import check_response, gen_id, isnotebook, \
-    exception_handler, exception_handler_for_class_method
+from decanter.core.extra.utils import (
+    check_response,
+    gen_id,
+    isnotebook,
+    exception_handler,
+    exception_handler_for_class_method,
+)
 
 try:
     if isnotebook():
@@ -70,8 +75,9 @@ class Task:
         Return:
             bool. True for failed, False otherwise.
         """
-        return self.status in CoreStatus.FAIL_STATUS or \
-            (self.status == CoreStatus.DONE and self.result is None)
+        return self.status in CoreStatus.FAIL_STATUS or (
+            self.status == CoreStatus.DONE and self.result is None
+        )
 
     @abc.abstractmethod
     def run(self):
@@ -80,7 +86,7 @@ class Task:
         Raises:
             NotImplementedError: If child class do not implement this function.
         """
-        raise NotImplementedError('Please Implement run method')
+        raise NotImplementedError("Please Implement run method")
 
     @abc.abstractmethod
     async def update(self):
@@ -89,7 +95,7 @@ class Task:
         Raises:
             NotImplementedError: If child class do not implement this function.
         """
-        raise NotImplementedError('Please Implement update method')
+        raise NotImplementedError("Please Implement update method")
 
 
 class CoreTask(Task):
@@ -105,8 +111,9 @@ class CoreTask(Task):
         progress (float): Progress of the task process.
         name (str): Name of task for tracking process.
     """
+
     BAR_CNT = 0
-    'int: The position of progress bar to avoid overlapping.'
+    "int: The position of progress bar to avoid overlapping."
 
     def __init__(self, name=None):
         super().__init__(name=name)
@@ -128,8 +135,7 @@ class CoreTask(Task):
             return
         self.response = check_response(self.response).json()
         self.update_task_response()
-        logger.debug(
-            '[Task]\'%s\' done update. status: %s', self.name, self.status)
+        logger.debug("[Task]'%s' done update. status: %s", self.name, self.status)
 
     @exception_handler_for_class_method
     def update_task_response(self):
@@ -139,12 +145,12 @@ class CoreTask(Task):
         progress key value of response.
         """
         logger.debug(
-            '[Task] \'%s\' start update task resp. status: %s',
-            self.name, self.status)
+            "[Task] '%s' start update task resp. status: %s", self.name, self.status
+        )
 
         @exception_handler
         def update_pbar(resp_progress):
-            diff = int((resp_progress - self.progress)*100)
+            diff = int((resp_progress - self.progress) * 100)
             self.pbar.update(diff)
             self.progress = resp_progress
 
@@ -163,7 +169,7 @@ class CoreTask(Task):
         Raises:
             NotImplementedError: If child class do not implement this function.
         """
-        raise NotImplementedError('Please Implement run method in CoreTask')
+        raise NotImplementedError("Please Implement run method in CoreTask")
 
     @exception_handler_for_class_method
     def run_core_task(self, api_func, **kwargs):
@@ -173,14 +179,17 @@ class CoreTask(Task):
             api_func (func): CoreAPI function.
             kwargs: Parameters for api_func.
         """
-        logger.debug('[%s] \'%s\' start.', self.__class__.__name__, self.name)
-        self.response = check_response(
-            api_func(**kwargs), key=CoreKeys.id.value)
+        logger.debug("[%s] '%s' start.", self.__class__.__name__, self.name)
+        self.response = check_response(api_func(**kwargs), key=CoreKeys.id.value)
         self.response = self.response.json()
         self.id = self.response[CoreKeys.id.value]
         self.pbar = tqdm(
-            total=100, position=CoreTask.BAR_CNT, leave=True,
-            bar_format='{l_bar}{bar}', desc='Progress %s' % self.name)
+            total=100,
+            position=CoreTask.BAR_CNT,
+            leave=True,
+            bar_format="{l_bar}{bar}",
+            desc="Progress %s" % self.name,
+        )
         CoreTask.BAR_CNT += 1
 
         self.status = CoreStatus.RUNNING
@@ -193,8 +202,8 @@ class CoreTask(Task):
         if self.id is not None:
             check_response(self.core_service.put_tasks_stop_by_id(self.id))
         logger.info(
-            '[CoreTask] Stop Task %s id:%s while %s',
-            self.name, self.id, self.status)
+            "[CoreTask] Stop Task %s id:%s while %s", self.name, self.id, self.status
+        )
         self.status = CoreStatus.FAIL
 
 
@@ -206,7 +215,7 @@ class UploadTask(CoreTask):
     """
 
     def __init__(self, file, name=None, eda=True):
-        super().__init__(name=gen_id('UploadTask', name))
+        super().__init__(name=gen_id("UploadTask", name))
         self.file = file
         self.eda = eda
 
@@ -217,7 +226,8 @@ class UploadTask(CoreTask):
             filename=self.file.name,
             file=self.file,
             eda=self.eda,
-            encoding='text/plain(UTF-8)')
+            encoding="text/plain(UTF-8)",
+        )
 
 
 class TrainTask(CoreTask):
@@ -229,13 +239,15 @@ class TrainTask(CoreTask):
     """
 
     def __init__(self, train_input, name=None):
-        super().__init__(name=gen_id('TrainTask', name))
+        super().__init__(name=gen_id("TrainTask", name))
         self.train_input = train_input
 
     def run(self):
         """Execute model training by sending the triain api."""
         train_params = self.train_input.get_train_params()
-        super().run_core_task(api_func=self.core_service.post_tasks_train, **train_params)
+        super().run_core_task(
+            api_func=self.core_service.post_tasks_train, **train_params
+        )
 
 
 class TrainTSTask(CoreTask):
@@ -247,7 +259,7 @@ class TrainTSTask(CoreTask):
     """
 
     def __init__(self, train_input, name=None):
-        super().__init__(name=gen_id('TrainTSTask', name))
+        super().__init__(name=gen_id("TrainTSTask", name))
         self.train_input = train_input
 
     def run(self):
@@ -255,7 +267,8 @@ class TrainTSTask(CoreTask):
         time series forecast train api."""
         train_params = self.train_input.get_train_params()
         super().run_core_task(
-            api_func=self.core_service.post_tasks_auto_ts_train, **train_params)
+            api_func=self.core_service.post_tasks_auto_ts_train, **train_params
+        )
 
 
 class TrainClusterTask(CoreTask):
@@ -267,14 +280,15 @@ class TrainClusterTask(CoreTask):
     """
 
     def __init__(self, train_input, name=None):
-        super().__init__(name=gen_id('TrainClusterTask', name))
+        super().__init__(name=gen_id("TrainClusterTask", name))
         self.train_input = train_input
 
     def run(self):
         """Execute clustering training by sending the cluster triain api."""
         train_params = self.train_input.get_train_params()
         super().run_core_task(
-            api_func=self.core_service.post_tasks_cluster_train, **train_params)
+            api_func=self.core_service.post_tasks_cluster_train, **train_params
+        )
 
 
 class PredictTask(CoreTask):
@@ -286,15 +300,15 @@ class PredictTask(CoreTask):
     """
 
     def __init__(self, predict_input, name=None):
-        super().__init__(name=gen_id('PredictTask', name))
+        super().__init__(name=gen_id("PredictTask", name))
         self.predict_input = predict_input
 
     def run(self):
         """Execute predict model training by sending the predict api."""
         pred_params = self.predict_input.getPredictParams()
         super().run_core_task(
-            api_func=self.core_service.post_tasks_predict,
-            **pred_params)
+            api_func=self.core_service.post_tasks_predict, **pred_params
+        )
 
 
 class PredictTSTask(CoreTask):
@@ -307,7 +321,7 @@ class PredictTSTask(CoreTask):
     """
 
     def __init__(self, predict_input, name=None):
-        super().__init__(name=gen_id('PredictTSTask', name))
+        super().__init__(name=gen_id("PredictTSTask", name))
         self.predict_input = predict_input
 
     def run(self):
@@ -315,8 +329,8 @@ class PredictTSTask(CoreTask):
         series predict api."""
         pred_params = self.predict_input.getPredictParams()
         super().run_core_task(
-            api_func=self.core_service.post_tasks_auto_ts_predict,
-            **pred_params)
+            api_func=self.core_service.post_tasks_auto_ts_predict, **pred_params
+        )
 
 
 class SetupTask(CoreTask):
@@ -328,7 +342,7 @@ class SetupTask(CoreTask):
             Settings for set up data.
     """
 
-    def __init__(self, setup_input, name='Setup'):
+    def __init__(self, setup_input, name="Setup"):
         super().__init__(name=name)
         self.setup_input = setup_input
 
@@ -338,5 +352,5 @@ class SetupTask(CoreTask):
         """
         setup_params = self.setup_input.get_setup_params()
         super().run_core_task(
-            api_func=self.core_service.post_tasks_setup,
-            **setup_params)
+            api_func=self.core_service.post_tasks_setup, **setup_params
+        )

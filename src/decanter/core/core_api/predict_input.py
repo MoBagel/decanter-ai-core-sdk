@@ -50,14 +50,28 @@ class PredictInput:
             )
 
     """
+
     def __init__(
-            self, data, experiment, select_model='best', select_opt=None, callback=None,
-            keep_columns=None, threshold=None, version=None):
+        self,
+        data,
+        experiment,
+        select_model="best",
+        select_opt=None,
+        callback=None,
+        keep_columns=None,
+        threshold=None,
+        version=None,
+    ):
         self.data = data
         self.experiment = experiment
         self.pred_body = CoreBody.PredictBody.create(
-                data_id='tmp_data_id', model_id='tmp_model_id', callback=callback,
-                keep_columns=keep_columns, threshold=threshold, version=version)
+            data_id="tmp_data_id",
+            model_id="tmp_model_id",
+            callback=callback,
+            keep_columns=keep_columns,
+            threshold=threshold,
+            version=version,
+        )
         self.select_model = select_model
         self.select_opt = select_opt
 
@@ -67,31 +81,37 @@ class PredictInput:
         Returns:
             :obj:`dict`
         """
-        if self.select_model == 'best':
+        if self.select_model == "best":
             select_model_id = self.experiment.best_model.id
-        elif self.select_model == 'model_id':
+        elif self.select_model == "model_id":
             if self.select_opt in self.experiment.models:
                 select_model_id = self.select_opt
             else:
-                logger.error('[%s] Invalid input model ID: %s',
-                                self.__class__.__name__, self.select_opt)
-                raise ValueError('Invalid input model ID: %s' %self.select_opt)
-        elif self.select_model == 'recommendation':
+                logger.error(
+                    "[%s] Invalid input model ID: %s",
+                    self.__class__.__name__,
+                    self.select_opt,
+                )
+                raise ValueError("Invalid input model ID: %s" % self.select_opt)
+        elif self.select_model == "recommendation":
             self.select_opt = check_is_enum(Evaluator, self.select_opt)
             for rec in self.experiment.recommendations:
-                if self.select_opt == rec['evaluator']:
-                   select_model_id = rec['model_id']
-            if 'select_model_id' not in locals().keys():
-                logger.error('[%s] Invalid input metric: %s',
-                                self.__class__.__name__, self.select_opt)
-                raise ValueError('Invalid input metric: %s' %self.select_opt)
-        setattr(self.pred_body, 'data_id', self.data.id)
-        setattr(self.pred_body, 'model_id', select_model_id)
+                if self.select_opt == rec["evaluator"]:
+                    select_model_id = rec["model_id"]
+            if "select_model_id" not in locals().keys():
+                logger.error(
+                    "[%s] Invalid input metric: %s",
+                    self.__class__.__name__,
+                    self.select_opt,
+                )
+                raise ValueError("Invalid input metric: %s" % self.select_opt)
+        setattr(self.pred_body, "data_id", self.data.id)
+        setattr(self.pred_body, "model_id", select_model_id)
 
-        params = json.dumps(
-            self.pred_body.jsonable(), cls=CoreBody.ComplexEncoder)
+        params = json.dumps(self.pred_body.jsonable(), cls=CoreBody.ComplexEncoder)
         params = json.loads(params)
         return params
+
 
 class PredictTSInput(PredictInput):
     """Time series predict input for  PredictTSResult Job.
@@ -107,9 +127,16 @@ class PredictTSInput(PredictInput):
             optimizes the given metric.Available options are:precision, f1,
             accuracy, evaluator, recall, specificity, f2, f0point5, mean_per_class_error
     """
-    def __init__(self, data, experiment, callback=None, threshold_max_by=None, version=None):
+
+    def __init__(
+        self, data, experiment, callback=None, threshold_max_by=None, version=None
+    ):
         super().__init__(data=data, experiment=experiment)
 
         self.pred_body = CoreBody.PredictBodyTSModel.create(
-            data_id='tmp_data_id', model_id='tmp_model_id', callback=callback,
-            threshold_max_by=threshold_max_by, version=version)
+            data_id="tmp_data_id",
+            model_id="tmp_model_id",
+            callback=callback,
+            threshold_max_by=threshold_max_by,
+            version=version,
+        )

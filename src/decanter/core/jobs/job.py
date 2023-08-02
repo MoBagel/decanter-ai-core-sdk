@@ -34,6 +34,7 @@ class Job:
         core_service (:class:`~decanter.core.core_api.api.CoreAPI`): Handle the
             calling of api.
     """
+
     def __init__(self, task, jobs=None, name=None):
         self.id = None
         self.status = CoreStatus.PENDING
@@ -69,8 +70,9 @@ class Job:
         Return:
             bool: True for failed, False otherwise.
         """
-        return self.status in CoreStatus.FAIL_STATUS or \
-            (self.status == CoreStatus.DONE and self.result is None)
+        return self.status in CoreStatus.FAIL_STATUS or (
+            self.status == CoreStatus.DONE and self.result is None
+        )
 
     async def wait(self):
         """Mange the Execution of task.
@@ -84,27 +86,32 @@ class Job:
         task.
         """
         if self.jobs is not None and self.status not in CoreStatus.DONE_STATUS:
-
-            while not all(job.is_done() for job in self.jobs) and \
-                    not any(job.is_fail() for job in self.jobs):
+            while not all(job.is_done() for job in self.jobs) and not any(
+                job.is_fail() for job in self.jobs
+            ):
                 ll = [job.status for job in self.jobs]
                 logger.debug(
-                    '[Job] \'%s\' waiting %s pre required jobs. jobs status: %s',
-                    self.name, len(self.jobs), ll)
+                    "[Job] '%s' waiting %s pre required jobs. jobs status: %s",
+                    self.name,
+                    len(self.jobs),
+                    ll,
+                )
                 await asyncio.sleep(5)
 
             # check if any pre_request_jobs has failed
             if not all(job.is_success() for job in self.jobs):
-                message = ' '.join([job.name + ':' + job.status for job in self.jobs])
+                message = " ".join([job.name + ":" + job.status for job in self.jobs])
                 for job in self.jobs:
                     logger.info(job.task.result)
                 self.status = CoreStatus.FAIL
                 logger.info(
-                    '[Job] %s failed due to some job fail in jobs:[%s]',
-                    self.name, message)
+                    "[Job] %s failed due to some job fail in jobs:[%s]",
+                    self.name,
+                    message,
+                )
 
         if self.status in CoreStatus.DONE_STATUS:
-            logger.info('[Job] %s failed status: %s', self.name, self.status)
+            logger.info("[Job] %s failed status: %s", self.name, self.status)
             return
 
         self.status = CoreStatus.RUNNING
@@ -116,7 +123,9 @@ class Job:
                 await asyncio.sleep(3)
 
         self.status = self.task.status
-        logger.info('[Job] \'%s\' done status: %s id: %s', self.name, self.status, self.id)
+        logger.info(
+            "[Job] '%s' done status: %s id: %s", self.name, self.status, self.id
+        )
         return
 
     async def update(self):
@@ -136,7 +145,7 @@ class Job:
         Raises:
             NotImplementedError: If child class do not implement this function.
         """
-        raise NotImplementedError('Please Implement update_result method')
+        raise NotImplementedError("Please Implement update_result method")
 
     def stop(self):
         """Stop Job.
@@ -157,10 +166,10 @@ class Job:
             self.status = CoreStatus.FAIL
         else:
             logger.info(
-                '[Job] %s have finished already status %s',
-                self.name, self.status)
+                "[Job] %s have finished already status %s", self.name, self.status
+            )
 
-        logger.info('[Job] %s stop successfully', self.name)
+        logger.info("[Job] %s stop successfully", self.name)
 
     @block_method
     def get(self, attr):

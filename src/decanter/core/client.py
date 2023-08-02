@@ -6,9 +6,15 @@ import logging
 import pandas as pd
 
 from decanter.core import Context
-from decanter.core.jobs import DataUpload, DataSetup,\
-    Experiment, ExperimentTS, ExperimentCluster,\
-    PredictResult, PredictTSResult
+from decanter.core.jobs import (
+    DataUpload,
+    DataSetup,
+    Experiment,
+    ExperimentTS,
+    ExperimentCluster,
+    PredictResult,
+    PredictTSResult,
+)
 from decanter.core.enums.evaluators import Evaluator
 from decanter.core.enums import check_is_enum
 
@@ -72,13 +78,12 @@ class CoreClient(Context):
 
         try:
             if Context.LOOP is None:
-                raise AttributeError('[Core] event loop is \'NoneType\'')
-            task = Context.LOOP.create_task(
-                data.wait())
+                raise AttributeError("[Core] event loop is 'NoneType'")
+            task = Context.LOOP.create_task(data.wait())
             Context.CORO_TASKS.append(task)
             Context.JOBS.append(data)
         except AttributeError:
-            logger.error('[Core] Context not created')
+            logger.error("[Core] Context not created")
             raise
         return data
 
@@ -103,27 +108,27 @@ class CoreClient(Context):
                 :class:`~decanter.core.context.Context` created.
 
         """
-        logger.debug('[Core] Create DataUpload Job')
+        logger.debug("[Core] Create DataUpload Job")
 
         # check file validation
         if file is None:
-            logger.error('[Core] upload file is \'NoneType\'')
+            logger.error("[Core] upload file is 'NoneType'")
             raise Exception
         if isinstance(file, pd.DataFrame):
             file = file.to_csv(index=False)
             file = io.StringIO(file)
-            file.name = 'no_name'
+            file.name = "no_name"
 
         data = DataUpload(file=file, name=name, eda=eda)
         # check context validation
         try:
             if Context.LOOP is None:
-                raise AttributeError('[Core] event loop is \'NoneType\'')
+                raise AttributeError("[Core] event loop is 'NoneType'")
             task = Context.LOOP.create_task(data.wait())
             Context.CORO_TASKS.append(task)
             Context.JOBS.append(data)
         except AttributeError:
-            logger.error('[Core] Context not created')
+            logger.error("[Core] Context not created")
             raise
         return data
 
@@ -151,18 +156,18 @@ class CoreClient(Context):
                 :class:`~decanter.core.context.Context` created.
         """
         select_model_by = check_is_enum(Evaluator, select_model_by)
-        logger.debug('[Core] Create Train Job')
+        logger.debug("[Core] Create Train Job")
         exp = Experiment(
-            train_input=train_input,
-            select_model_by=select_model_by, name=name)
+            train_input=train_input, select_model_by=select_model_by, name=name
+        )
         try:
             if Context.LOOP is None:
-                raise AttributeError('[Core] event loop is \'NoneType\'')
+                raise AttributeError("[Core] event loop is 'NoneType'")
             task = Context.LOOP.create_task(exp.wait())
             Context.CORO_TASKS.append(task)
             Context.JOBS.append(exp)
         except AttributeError:
-            logger.error('[Core] Context not created')
+            logger.error("[Core] Context not created")
             raise
         return exp
 
@@ -190,19 +195,18 @@ class CoreClient(Context):
                 :class:`~decanter.core.context.Context` created.
         """
         select_model_by = check_is_enum(Evaluator, select_model_by)
-        logger.debug('[Core] Create Train Job')
+        logger.debug("[Core] Create Train Job")
         exp_ts = ExperimentTS(
-            train_input=train_input,
-            select_model_by=select_model_by,
-            name=name)
+            train_input=train_input, select_model_by=select_model_by, name=name
+        )
         try:
             if Context.LOOP is None:
-                raise AttributeError('[Core] event loop is \'NoneType\'')
+                raise AttributeError("[Core] event loop is 'NoneType'")
             task = Context.LOOP.create_task(exp_ts.wait())
             Context.CORO_TASKS.append(task)
             Context.JOBS.append(exp_ts)
         except AttributeError:
-            logger.error('[Core] Context not created')
+            logger.error("[Core] Context not created")
             raise
         return exp_ts
 
@@ -226,18 +230,18 @@ class CoreClient(Context):
             AttributeError: If the function is called without
                 :class:`~decanter.core.context.Context` created.
         """
-        logger.debug('[Core] Create Train Cluster Job')
+        logger.debug("[Core] Create Train Cluster Job")
         exp = ExperimentCluster(
-            train_input=train_input,
-            select_model_by=Evaluator.tot_withinss, name=name)
+            train_input=train_input, select_model_by=Evaluator.tot_withinss, name=name
+        )
         try:
             if Context.LOOP is None:
-                raise AttributeError('[Core] event loop is \'NoneType\'')
+                raise AttributeError("[Core] event loop is 'NoneType'")
             task = Context.LOOP.create_task(exp.wait())
             Context.CORO_TASKS.append(task)
             Context.JOBS.append(exp)
         except AttributeError:
-            logger.error('[Core] Context not created')
+            logger.error("[Core] Context not created")
             raise
         return exp
 
@@ -262,16 +266,16 @@ class CoreClient(Context):
                 :class:`~decanter.core.context.Context` created
 
         """
-        logger.debug('[Core] Create Predict Job')
+        logger.debug("[Core] Create Predict Job")
         predict_res = PredictResult(predict_input=predict_input, name=name)
         try:
             if Context.LOOP is None:
-                raise AttributeError('[Core] event loop is \'NoneType\'')
+                raise AttributeError("[Core] event loop is 'NoneType'")
             task = Context.LOOP.create_task(predict_res.wait())
             Context.CORO_TASKS.append(task)
             Context.JOBS.append(predict_res)
         except AttributeError:
-            logger.error('[Core] Context not created')
+            logger.error("[Core] Context not created")
             raise
         return predict_res
 
@@ -296,17 +300,16 @@ class CoreClient(Context):
             AttributeError: If the function is called without
                 :class:`~decanter.core.context.Context` created
         """
-        logger.debug('[Core] Create Predict Job')
-        predict_ts_res = PredictTSResult(
-            predict_input=predict_input, name=name)
+        logger.debug("[Core] Create Predict Job")
+        predict_ts_res = PredictTSResult(predict_input=predict_input, name=name)
         try:
             if Context.LOOP is None:
-                raise AttributeError('[Core] event loop is \'NoneType\'')
+                raise AttributeError("[Core] event loop is 'NoneType'")
             task = Context.LOOP.create_task(predict_ts_res.wait())
             Context.CORO_TASKS.append(task)
             Context.JOBS.append(predict_ts_res)
         except AttributeError:
-            logger.error('[Core] Context not created')
+            logger.error("[Core] Context not created")
             raise
 
         return predict_ts_res

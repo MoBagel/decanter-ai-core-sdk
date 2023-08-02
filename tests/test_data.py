@@ -9,35 +9,37 @@ from decanter.core.core_api import TrainInput
 from decanter.core.extra import CoreStatus
 from decanter.core.jobs import DataUpload
 
-fail_conds = [(stat, res) for stat in CoreStatus.FAIL_STATUS for res in [None, 'result']]
+fail_conds = [
+    (stat, res) for stat in CoreStatus.FAIL_STATUS for res in [None, "result"]
+]
 fail_conds.append((CoreStatus.DONE, None))
 
 
 @responses.activate
-def test_data_success(
-        globals, client, mock_test_responses, context_fixture):
+def test_data_success(globals, client, mock_test_responses, context_fixture):
     """DataUpload gets the id and result when upload csv file or datafram."""
-    context = context_fixture('Healthy')
-    mock_test_responses(task='upload', status=CoreStatus.DONE)
-    data = client.upload(file=globals['test_csv_file'])
-    data_ = client.upload(file=globals['test_df'])
+    context = context_fixture("Healthy")
+    mock_test_responses(task="upload", status=CoreStatus.DONE)
+    data = client.upload(file=globals["test_csv_file"])
+    data_ = client.upload(file=globals["test_df"])
     context.run()
-    assert data.task.id == data_.task.id == globals['upload']
-    assert data.id == data_.id == globals['data']
+    assert data.task.id == data_.task.id == globals["upload"]
+    assert data.id == data_.id == globals["data"]
     assert data.status == data_.status == CoreStatus.DONE
-    assert data.result == data_.result == globals['results']['upload']
+    assert data.result == data_.result == globals["results"]["upload"]
 
 
 @responses.activate
-@pytest.mark.parametrize('status, result', fail_conds)
+@pytest.mark.parametrize("status, result", fail_conds)
 def test_data_fail(
-        globals, client, status, result, mock_test_responses, context_fixture):
+    globals, client, status, result, mock_test_responses, context_fixture
+):
     """DataUpload fails when status and result create fail conditions."""
-    context = context_fixture('Healthy')
-    mock_test_responses(task='upload', status=status, task_result=result)
-    data = client.upload(file=globals['test_csv_file'])
+    context = context_fixture("Healthy")
+    mock_test_responses(task="upload", status=status, task_result=result)
+    data = client.upload(file=globals["test_csv_file"])
     context.run()
-    assert data.task.id == globals['upload']
+    assert data.task.id == globals["upload"]
     assert data.id is None
     assert data.status == status
     assert data.result == result
@@ -46,42 +48,43 @@ def test_data_fail(
 @responses.activate
 def test_no_file(client, mock_test_responses, context_fixture):
     """Raise exceptions when upload empty files."""
-    context_fixture('Healthy')
-    mock_test_responses(task='upload')
+    context_fixture("Healthy")
+    mock_test_responses(task="upload")
     with pytest.raises(Exception):
         client.upload(file=None)
 
 
 @responses.activate
-@pytest.mark.parametrize('status', [CoreStatus.PENDING, CoreStatus.RUNNING, CoreStatus.FAIL])
-def test_data_stop(
-        globals, urls, client, status, mock_test_responses, context_fixture):
+@pytest.mark.parametrize(
+    "status", [CoreStatus.PENDING, CoreStatus.RUNNING, CoreStatus.FAIL]
+)
+def test_data_stop(globals, urls, client, status, mock_test_responses, context_fixture):
     """DataUpload status is fail if stopped during pending, running, and fail status,
     remains if in done status. The experiment following will failed if data
     failed.
     """
+
     async def cancel(data):
         data.stop()
         return
 
-    context = context_fixture('Healthy')
-    mock_test_responses(task='upload', status=status)
-    mock_test_responses(task='train', status=CoreStatus.DONE)
+    context = context_fixture("Healthy")
+    mock_test_responses(task="upload", status=status)
+    mock_test_responses(task="train", status=CoreStatus.DONE)
     responses.add(
-        responses.PUT, urls('stop', 'upload'),
-        json={
-            'message': 'task removed'
-        },
+        responses.PUT,
+        urls("stop", "upload"),
+        json={"message": "task removed"},
         status=200,
-        content_type='application/json')
+        content_type="application/json",
+    )
     if status == CoreStatus.DONE:
         data = DataUpload()
         data.status = CoreStatus.DONE
     else:
-        data = client.upload(file=globals['test_csv_file'])
+        data = client.upload(file=globals["test_csv_file"])
 
-    exp = client.train(TrainInput(
-        data=data, target='test-target', algos=['test-algo']))
+    exp = client.train(TrainInput(data=data, target="test-target", algos=["test-algo"]))
     cancel_task = Context.LOOP.create_task(cancel(data))
     Context.CORO_TASKS.append(cancel_task)
     context.run()
