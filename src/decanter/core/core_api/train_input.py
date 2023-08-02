@@ -225,6 +225,7 @@ class TrainTSInput:
         exogenous_features=None,
         time_groups=None,
         max_window_for_feature_derivation=None,
+        train_fusion_model=False,
     ):
         evaluator = check_is_enum(Evaluator, evaluator)
         time_unit = check_is_enum(TimeUnit, time_unit)
@@ -252,6 +253,7 @@ class TrainTSInput:
             genetic_algorithm=geneticAlgorithm,
             nfold=nfold,
             algos=algorithms,  # user specifies algorithm used in TS analysis
+            train_fusion_model=train_fusion_model,
         )
         group_by = CoreBody.TSGroupBy.create(
             time_unit=time_unit,
