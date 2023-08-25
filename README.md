@@ -1,3 +1,5 @@
+# DEPRECATED
+Please change to use our latest SDK located at this [repo](https://github.com/MoBagel/decanter-ai-sdk)
 # MoBagel Decanter AI Core SDK
 
 [![PyPI version](https://badge.fury.io/py/decanter-ai-core-sdk.svg)](https://pypi.org/project/decanter-ai-core-sdk/)
